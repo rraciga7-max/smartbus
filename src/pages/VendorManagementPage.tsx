@@ -33,17 +33,17 @@ export const VendorManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Vendor & Procurement Directory</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Managing fuel suppliers, spare parts distributors, maintenance partners, and tech vendors</p>
+      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Vendor & Procurement Directory</h2>
+          <p className="text-xs text-outline dark:text-slate-400 truncate">Managing fuel suppliers, spare parts distributors, maintenance partners, and tech vendors</p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-colors flex items-center gap-2"
+          className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-colors flex items-center gap-2 flex-shrink-0"
         >
           <span className="material-symbols-outlined text-[18px]">add_business</span>
           Add Enterprise Vendor
@@ -51,7 +51,8 @@ export const VendorManagementPage: React.FC = () => {
       </div>
 
       {/* Vendors Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -85,12 +86,13 @@ export const VendorManagementPage: React.FC = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Add Vendor Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
-          <form onSubmit={handleAddVendorSubmit} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 w-full max-w-md shadow-2xl flex flex-col gap-4">
+          <form onSubmit={handleAddVendorSubmit} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 w-full max-w-md shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
             <h3 className="font-bold text-base text-on-surface dark:text-slate-100">Register New Vendor</h3>
 
             <div>
@@ -99,7 +101,7 @@ export const VendorManagementPage: React.FC = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 outline-none"
                 required
               />
             </div>
@@ -109,7 +111,7 @@ export const VendorManagementPage: React.FC = () => {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
-                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 outline-none"
               >
                 <option value="Fuel">Fuel</option>
                 <option value="Spare Parts">Spare Parts</option>
@@ -124,19 +126,19 @@ export const VendorManagementPage: React.FC = () => {
                 type="text"
                 value={contactPerson}
                 onChange={(e) => setContactPerson(e.target.value)}
-                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 outline-none"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-bold text-outline dark:text-slate-400 uppercase mb-1">Phone</label>
                 <input
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                  className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 outline-none"
                 />
               </div>
               <div>
@@ -145,7 +147,7 @@ export const VendorManagementPage: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                  className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 outline-none"
                 />
               </div>
             </div>

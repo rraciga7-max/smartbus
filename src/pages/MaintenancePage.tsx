@@ -43,12 +43,32 @@ export const MaintenancePage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Analytics Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
+      {/* Mobile Page Header (Point 4) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+            Fleet Maintenance & Work Orders
+          </h1>
+          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+            Track workshop work orders, routine servicing, and emergency repairs across the fleet.
+          </p>
+        </div>
+
+        <button
+          onClick={() => setIsScheduleModalOpen(true)}
+          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
+        >
+          <span className="material-symbols-outlined text-[20px]">build</span>
+          <span>Schedule Service</span>
+        </button>
+      </div>
+
+      {/* Analytics Summary Cards (Point 6) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Critical Tasks</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl sm:text-4xl font-extrabold text-error dark:text-rose-400">
+            <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-error dark:text-rose-400">
               {maintenanceRecords.filter(r => r.priority === 'high' || r.priority === 'critical').length}
             </span>
             <span className="text-xs font-bold text-error dark:text-rose-400 flex items-center">
@@ -57,59 +77,49 @@ export const MaintenancePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Scheduled (7d)</span>
-          <span className="text-3xl sm:text-4xl font-extrabold text-on-surface dark:text-slate-100">{maintenanceRecords.length}</span>
+          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface dark:text-slate-100">{maintenanceRecords.length}</span>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">In Progress</span>
-          <span className="text-3xl sm:text-4xl font-extrabold text-amber-600 dark:text-amber-400">
+          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-amber-600 dark:text-amber-400">
             {maintenanceRecords.filter(r => r.status === 'in_progress').length}
           </span>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Est. Cost (Total)</span>
-          <span className="text-3xl sm:text-4xl font-extrabold text-primary dark:text-indigo-400">
+          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary dark:text-indigo-400">
             ₹{maintenanceRecords.reduce((sum, r) => sum + r.estimatedCost, 0).toLocaleString()}
           </span>
         </div>
       </div>
 
-      {/* Header & Filter Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Maintenance Action Orders</h2>
+      {/* Filter Controls */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <h2 className="text-lg font-bold text-on-surface dark:text-slate-100">Maintenance Action Orders</h2>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="flex gap-1 overflow-x-auto no-scrollbar">
-            {(['all', 'high', 'medium', 'low'] as const).map(p => (
-              <button
-                key={p}
-                onClick={() => setActivePriorityFilter(p)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase transition-colors ${
-                  activePriorityFilter === p
-                    ? 'bg-primary dark:bg-indigo-600 text-on-primary'
-                    : 'bg-surface-container dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => setIsScheduleModalOpen(true)}
-            className="px-5 py-2.5 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md flex items-center gap-2 flex-shrink-0 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[18px]">build</span>
-            Schedule Service
-          </button>
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full sm:w-auto py-1">
+          {(['all', 'high', 'medium', 'low'] as const).map(p => (
+            <button
+              key={p}
+              onClick={() => setActivePriorityFilter(p)}
+              className={`px-3.5 py-2 rounded-2xl text-xs font-bold uppercase transition-all min-h-[44px] ${
+                activePriorityFilter === p
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary'
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              {p}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Maintenance Cards List */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-0">
         {filteredRecords.map((record) => {
           let stripBg = 'bg-error';
           if (record.priority === 'medium') stripBg = 'bg-amber-500';
@@ -118,21 +128,21 @@ export const MaintenancePage: React.FC = () => {
           return (
             <div
               key={record.id}
-              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 relative overflow-hidden flex flex-col gap-4 group hover:shadow-lg transition-all"
+              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 relative overflow-hidden flex flex-col gap-4 group hover:shadow-lg transition-all min-w-0"
             >
               {/* Vertical Priority Strip */}
               <div className={`absolute top-0 left-0 w-1.5 h-full ${stripBg}`}></div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold text-on-surface dark:text-slate-100">{record.busRegistration}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 min-w-0">
+                <div className="flex flex-col min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap min-w-0">
+                    <span className="text-lg sm:text-xl font-bold text-on-surface dark:text-slate-100">{record.busRegistration}</span>
                     <StatusBadge status={record.priority} type="priority" />
-                    <span className="text-xs text-on-surface-variant dark:text-slate-400 font-medium">• {record.busModel}</span>
+                    <span className="text-xs text-on-surface-variant dark:text-slate-400 font-medium truncate">• {record.busModel}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-wrap">
                   <span className="text-xs text-outline dark:text-slate-400 font-semibold">Due: <strong className="text-error dark:text-rose-400">{record.dueDate}</strong></span>
                   <span className="px-3 py-1 rounded-full bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200 text-xs font-bold capitalize">
                     {record.status.replace('_', ' ')}
@@ -143,20 +153,20 @@ export const MaintenancePage: React.FC = () => {
               <div className="h-px w-full bg-surface-container/80 dark:bg-slate-800"></div>
 
               {/* Service Description */}
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 min-w-0">
                 <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-semibold tracking-wider">Required Service Work</span>
-                <div className="flex items-center gap-2 text-primary dark:text-indigo-400 font-bold text-base">
-                  <span className="material-symbols-outlined text-[20px]">build_circle</span>
-                  {record.serviceType}
+                <div className="flex items-center gap-2 text-primary dark:text-indigo-400 font-bold text-sm sm:text-base min-w-0">
+                  <span className="material-symbols-outlined text-[20px] flex-shrink-0">build_circle</span>
+                  <span className="truncate">{record.serviceType}</span>
                 </div>
                 <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-1">{record.description}</p>
               </div>
 
               {/* Technician & Action */}
-              <div className="pt-3 border-t border-surface-container/40 dark:border-slate-800 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[16px] text-outline dark:text-slate-400">engineering</span>
-                  <span className="font-semibold text-on-surface dark:text-slate-200">{record.technicianName}</span>
+              <div className="pt-3 border-t border-surface-container/40 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs min-w-0">
+                <div className="flex items-center gap-2 min-w-0 flex-wrap">
+                  <span className="material-symbols-outlined text-[16px] text-outline dark:text-slate-400 flex-shrink-0">engineering</span>
+                  <span className="font-semibold text-on-surface dark:text-slate-200 truncate">{record.technicianName}</span>
                   <span className="text-outline dark:text-slate-400">• Est. ₹{record.estimatedCost}</span>
                 </div>
 

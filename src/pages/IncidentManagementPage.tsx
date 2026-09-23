@@ -23,35 +23,36 @@ export const IncidentManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div>
+      <div className="min-w-0">
         <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Incident Management</h2>
-        <p className="text-xs text-outline dark:text-slate-400">Tracking accidents, breakdowns, emergencies, and safety protocol investigations</p>
+        <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Tracking accidents, breakdowns, emergencies, and safety protocol investigations</p>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-xs font-bold text-outline dark:text-slate-400 uppercase">Open Incidents</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 min-w-0">
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-xs font-bold text-outline dark:text-slate-400 uppercase truncate block">Open Incidents</span>
           <p className="text-2xl font-bold text-on-surface dark:text-slate-100 mt-1">{openCount}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-xs font-bold text-rose-500 uppercase">Critical Severity</span>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-xs font-bold text-rose-500 uppercase truncate block">Critical Severity</span>
           <p className="text-2xl font-bold text-rose-500 mt-1">{criticalCount}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-xs font-bold text-amber-500 uppercase">Under Investigation</span>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-xs font-bold text-amber-500 uppercase truncate block">Under Investigation</span>
           <p className="text-2xl font-bold text-amber-500 mt-1">{investigatingCount}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase">Resolved</span>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase truncate block">Resolved</span>
           <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">{resolvedCount}</p>
         </div>
       </div>
 
       {/* Incident Log Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -101,6 +102,7 @@ export const IncidentManagementPage: React.FC = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
 
       {/* Incident Detail Modal */}

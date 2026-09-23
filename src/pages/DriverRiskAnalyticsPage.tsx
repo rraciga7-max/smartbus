@@ -12,15 +12,16 @@ export const DriverRiskAnalyticsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Driver Risk & Safety Telemetry Analytics</h2>
-        <p className="text-xs text-outline dark:text-slate-400">Behavioral safety scores, harsh braking events, overspeeding telemetry, and coaching plans</p>
+      <div className="min-w-0">
+        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Driver Risk & Safety Telemetry Analytics</h2>
+        <p className="text-xs text-outline dark:text-slate-400 truncate">Behavioral safety scores, harsh braking events, overspeeding telemetry, and coaching plans</p>
       </div>
 
       {/* Driver Risk Rankings Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[800px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -71,6 +72,7 @@ export const DriverRiskAnalyticsPage: React.FC = () => {
             })}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

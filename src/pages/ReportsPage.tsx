@@ -126,11 +126,11 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {/* Driver Safety & On-Time Performance Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-        <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Route Operational Efficiency Summary</h3>
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+        <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Route Operational Efficiency Summary</h3>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-sm">
+        <div className="table-container no-scrollbar">
+          <table className="w-full text-left border-collapse text-xs sm:text-sm min-w-[550px]">
             <thead>
               <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">
                 <th className="py-3 px-4">Route Name</th>

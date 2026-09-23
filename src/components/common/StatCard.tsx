@@ -38,12 +38,12 @@ export const StatCard: React.FC<StatCardProps> = ({
   return (
     <div 
       onClick={onClick}
-      className={`bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl dark:hover:border-slate-700 transition-all duration-200 ${onClick ? 'cursor-pointer active:scale-[0.98]' : ''}`}
+      className={`bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl dark:hover:border-slate-700 transition-all duration-200 min-w-0 ${onClick ? 'cursor-pointer active:scale-[0.98]' : ''}`}
     >
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider font-medium">{title}</span>
-        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${iconBg}`}>
-          <span className="material-symbols-outlined text-[20px]">{icon}</span>
+      <div className="flex items-center justify-between gap-2 mb-2 min-w-0">
+        <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider font-medium truncate">{title}</span>
+        <div className={`w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl flex items-center justify-center flex-shrink-0 ${iconBg}`}>
+          <span className="material-symbols-outlined text-[20px] leading-none">{icon}</span>
         </div>
       </div>
       <div className="flex items-baseline gap-2 flex-wrap">

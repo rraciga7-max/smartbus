@@ -22,53 +22,54 @@ export const PassengerIntelligencePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Passenger Intelligence & Demand Analytics</h2>
-        <p className="text-xs text-outline dark:text-slate-400">Ridership trends, peak hour crowding telemetry, and route heatmaps</p>
+      <div className="min-w-0">
+        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Passenger Intelligence & Demand Analytics</h2>
+        <p className="text-xs text-outline dark:text-slate-400 truncate">Ridership trends, peak hour crowding telemetry, and route heatmaps</p>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Passengers Today</span>
-          <p className="text-2xl font-bold text-primary dark:text-indigo-400 mt-1">{(fleetSummary.totalPassengersToday).toLocaleString()}</p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 min-w-0">
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Passengers Today</span>
+          <p className="text-xl sm:text-2xl font-bold text-primary dark:text-indigo-400 mt-1 truncate">{(fleetSummary.totalPassengersToday).toLocaleString()}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Peak Demand Hour</span>
-          <p className="text-2xl font-bold text-on-surface dark:text-slate-100 mt-1">08:00 - 09:30 AM</p>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Peak Demand Hour</span>
+          <p className="text-base sm:text-xl font-bold text-on-surface dark:text-slate-100 mt-1 truncate">08:00 - 09:30 AM</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Average Occupancy</span>
-          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">82%</p>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Avg Occupancy</span>
+          <p className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 truncate">82%</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-rose-500 uppercase">Overcrowded Trips</span>
-          <p className="text-2xl font-bold text-rose-500 mt-1">4 Trips</p>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-rose-500 uppercase truncate block">Overcrowded Trips</span>
+          <p className="text-xl sm:text-2xl font-bold text-rose-500 mt-1 truncate">4 Trips</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Ridership Growth</span>
-          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">+14.2% MoM</p>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0 col-span-2 sm:col-span-1">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Ridership Growth</span>
+          <p className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 truncate">+14.2% MoM</p>
         </div>
       </div>
 
       {/* Demand Heatmap: Routes x Time Window */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4 overflow-x-auto">
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="font-bold text-base text-on-surface dark:text-slate-100">Passenger Demand Heatmap (Routes × Time)</h3>
-            <p className="text-xs text-outline dark:text-slate-400">Identifies congestion zones to trigger additional bus deployment</p>
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4 min-w-0">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 min-w-0">
+          <div className="min-w-0">
+            <h3 className="font-bold text-base text-on-surface dark:text-slate-100 truncate">Passenger Demand Heatmap</h3>
+            <p className="text-xs text-outline dark:text-slate-400 truncate">Identifies congestion zones to trigger additional bus deployment</p>
           </div>
 
-          <div className="flex gap-2 text-xs">
-            <span className="px-2 py-1 rounded bg-slate-500/10 text-slate-400">Low</span>
-            <span className="px-2 py-1 rounded bg-emerald-500/20 text-emerald-500">Normal</span>
-            <span className="px-2 py-1 rounded bg-amber-500/20 text-amber-500">High</span>
-            <span className="px-2 py-1 rounded bg-rose-500/20 text-rose-500 font-bold">Overcrowded</span>
+          <div className="flex flex-wrap gap-1.5 text-xs">
+            <span className="px-2 py-0.5 rounded bg-slate-500/10 text-slate-400 text-[11px]">Low</span>
+            <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500 text-[11px]">Normal</span>
+            <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-500 text-[11px]">High</span>
+            <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-500 font-bold text-[11px]">Overcrowded</span>
           </div>
         </div>
 
+        <div className="table-container no-scrollbar">
         <table className="w-full text-center border-collapse text-xs min-w-[600px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -99,6 +100,7 @@ export const PassengerIntelligencePage: React.FC = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

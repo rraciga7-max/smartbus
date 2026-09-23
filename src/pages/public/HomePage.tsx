@@ -5,7 +5,7 @@ export const HomePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'command' | 'ai' | 'telemetry'>('command');
 
   return (
-    <div className="space-y-24 pb-16 overflow-hidden">
+    <div className="space-y-24 pb-16 overflow-x-clip">
       {/* HERO SECTION */}
       <section className="relative pt-12 lg:pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Glowing Background Radial Accents */}
@@ -56,46 +56,46 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Floating Live System Metrics Bar */}
-          <div className="pt-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto p-4 bg-surface-container-lowest/80 dark:bg-slate-900/80 backdrop-blur-xl border border-surface-container dark:border-slate-800 rounded-3xl shadow-2xl">
-              <div className="p-3 text-center border-r border-surface-container dark:border-slate-800 last:border-r-0">
-                <div className="text-2xl sm:text-3xl font-black text-primary dark:text-indigo-400">128</div>
-                <div className="text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5">Total Buses</div>
+          <div className="pt-8 min-w-0">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto p-3 sm:p-4 bg-surface-container-lowest/80 dark:bg-slate-900/80 backdrop-blur-xl border border-surface-container dark:border-slate-800 rounded-3xl shadow-2xl min-w-0">
+              <div className="p-2 sm:p-3 text-center border-r border-surface-container dark:border-slate-800 min-w-0">
+                <div className="text-xl sm:text-3xl font-black text-primary dark:text-indigo-400 truncate">128</div>
+                <div className="text-[10px] sm:text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5 truncate">Total Buses</div>
               </div>
-              <div className="p-3 text-center border-r border-surface-container dark:border-slate-800 last:border-r-0">
-                <div className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <div className="p-2 sm:p-3 text-center md:border-r border-surface-container dark:border-slate-800 min-w-0">
+                <div className="text-xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 flex items-center justify-center gap-1 truncate">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
                   96
                 </div>
-                <div className="text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5">Active On Route</div>
+                <div className="text-[10px] sm:text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5 truncate">Active On Route</div>
               </div>
-              <div className="p-3 text-center border-r border-surface-container dark:border-slate-800 last:border-r-0">
-                <div className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-400">248</div>
-                <div className="text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5">Trips Today</div>
+              <div className="p-2 sm:p-3 text-center border-r border-surface-container dark:border-slate-800 min-w-0">
+                <div className="text-xl sm:text-3xl font-black text-amber-600 dark:text-amber-400 truncate">248</div>
+                <div className="text-[10px] sm:text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5 truncate">Trips Today</div>
               </div>
-              <div className="p-3 text-center">
-                <div className="text-2xl sm:text-3xl font-black text-indigo-600 dark:text-purple-400">18,420</div>
-                <div className="text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5">Passengers Today</div>
+              <div className="p-2 sm:p-3 text-center min-w-0">
+                <div className="text-xl sm:text-3xl font-black text-indigo-600 dark:text-purple-400 truncate">18,420</div>
+                <div className="text-[10px] sm:text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-wider mt-0.5 truncate">Riders Today</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* HERO LIVE SYSTEM PREVIEW MOCKUP */}
-        <div className="mt-12 relative max-w-6xl mx-auto">
-          <div className="rounded-[32px] overflow-hidden border-2 border-surface-container dark:border-slate-800 shadow-2xl bg-surface-container-lowest dark:bg-slate-900">
+        <div className="mt-12 relative max-w-6xl mx-auto min-w-0">
+          <div className="rounded-[32px] overflow-hidden border-2 border-surface-container dark:border-slate-800 shadow-2xl bg-surface-container-lowest dark:bg-slate-900 min-w-0">
             {/* Header Mockup Bar */}
-            <div className="px-6 py-4 bg-surface-container dark:bg-slate-850 border-b border-surface-container dark:border-slate-800 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 rounded-full bg-error inline-block"></span>
-                <span className="w-3.5 h-3.5 rounded-full bg-amber-500 inline-block"></span>
-                <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-block"></span>
-                <span className="ml-3 text-xs font-bold text-on-surface dark:text-slate-300">smartbus360-live-command-center.v4</span>
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-surface-container dark:bg-slate-850 border-b border-surface-container dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-3 h-3 rounded-full bg-error inline-block flex-shrink-0"></span>
+                <span className="w-3 h-3 rounded-full bg-amber-500 inline-block flex-shrink-0"></span>
+                <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block flex-shrink-0"></span>
+                <span className="ml-2 text-xs font-bold text-on-surface dark:text-slate-300 truncate">smartbus360-live-command-center</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                 <button
                   onClick={() => setActiveTab('command')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     activeTab === 'command' ? 'bg-primary text-on-primary' : 'text-on-surface-variant dark:text-slate-400'
                   }`}
                 >
@@ -103,7 +103,7 @@ export const HomePage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('ai')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     activeTab === 'ai' ? 'bg-primary text-on-primary' : 'text-on-surface-variant dark:text-slate-400'
                   }`}
                 >
@@ -111,7 +111,7 @@ export const HomePage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('telemetry')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     activeTab === 'telemetry' ? 'bg-primary text-on-primary' : 'text-on-surface-variant dark:text-slate-400'
                   }`}
                 >
@@ -121,38 +121,38 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Visual Content Frame */}
-            <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 bg-surface-container-lowest dark:bg-slate-950">
+            <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 bg-surface-container-lowest dark:bg-slate-950 min-w-0">
               {/* Radar Simulation / Map */}
-              <div className="lg:col-span-2 relative min-h-[320px] rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden flex flex-col justify-between p-6 text-white">
-                <div className="flex items-center justify-between z-10">
-                  <div className="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 text-xs">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>Live GPS Telematics Feed • 50ms Latency</span>
+              <div className="lg:col-span-2 relative min-h-[300px] sm:min-h-[320px] rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden flex flex-col justify-between p-4 sm:p-6 text-white min-w-0">
+                <div className="flex flex-wrap items-center justify-between gap-2 z-10 min-w-0">
+                  <div className="flex items-center gap-2 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700 text-[11px] sm:text-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping flex-shrink-0"></span>
+                    <span>Live GPS Feed • 50ms</span>
                   </div>
-                  <span className="text-xs font-mono text-indigo-400 font-bold">GRID-COIMBATORE-SECTOR-4</span>
+                  <span className="text-[11px] sm:text-xs font-mono text-indigo-400 font-bold truncate">GRID-COIMBATORE-S4</span>
                 </div>
 
                 {/* Grid Visual */}
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
 
                 {/* Simulated Bus Pins */}
-                <div className="absolute top-1/3 left-1/4 flex items-center gap-2 bg-indigo-600 px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-bounce">
-                  <span className="material-symbols-outlined text-[14px]">directions_bus</span>
-                  <span>BUS-1024 (TN 38 N 2481) • 42 km/h</span>
+                <div className="absolute top-1/3 left-6 sm:left-1/4 flex items-center gap-1.5 sm:gap-2 bg-indigo-600 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold shadow-lg animate-bounce max-w-[80%] truncate">
+                  <span className="material-symbols-outlined text-[14px] flex-shrink-0">directions_bus</span>
+                  <span className="truncate">BUS-1024 • 42 km/h</span>
                 </div>
 
-                <div className="absolute bottom-1/3 right-1/3 flex items-center gap-2 bg-emerald-600 px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                  <span className="material-symbols-outlined text-[14px]">directions_bus</span>
-                  <span>BUS-1088 • Route 12B • On Time</span>
+                <div className="absolute bottom-1/3 right-4 sm:right-1/3 flex items-center gap-1.5 sm:gap-2 bg-emerald-600 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold shadow-lg max-w-[80%] truncate">
+                  <span className="material-symbols-outlined text-[14px] flex-shrink-0">directions_bus</span>
+                  <span className="truncate">BUS-1088 • On Time</span>
                 </div>
 
-                <div className="z-10 pt-12 flex items-end justify-between">
-                  <div>
-                    <span className="text-xs text-slate-400 font-medium">Active Dispatch Corridor</span>
-                    <h4 className="text-lg font-bold text-white">Gandhipuram Main Bus Station → Singanallur</h4>
+                <div className="z-10 pt-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[11px] sm:text-xs text-slate-400 font-medium block truncate">Active Dispatch Corridor</span>
+                    <h4 className="text-base sm:text-lg font-bold text-white truncate">Gandhipuram Main Bus Station → Singanallur</h4>
                   </div>
-                  <NavLink to="/tracking" className="px-4 py-2 bg-primary hover:bg-primary/90 text-on-primary text-xs font-bold rounded-xl shadow-md">
-                    Open Full Screen Map ➔
+                  <NavLink to="/tracking" className="w-full sm:w-auto text-center px-4 py-2 bg-primary hover:bg-primary/90 text-on-primary text-xs font-bold rounded-xl shadow-md flex-shrink-0">
+                    Open Full Map ➔
                   </NavLink>
                 </div>
               </div>
@@ -240,21 +240,21 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* BOTTOM CTA BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[36px] bg-gradient-to-r from-primary via-indigo-900 to-slate-950 p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-4 max-w-2xl">
-            <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold border border-white/20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
+        <div className="rounded-[32px] sm:rounded-[36px] bg-gradient-to-r from-primary via-indigo-900 to-slate-950 p-6 sm:p-12 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 min-w-0">
+          <div className="space-y-4 max-w-2xl min-w-0">
+            <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold border border-white/20 inline-block">
               Transform Your Fleet Operations Today
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
               Ready to experience zero-friction transit management?
             </h2>
-            <p className="text-sm text-slate-300">
+            <p className="text-xs sm:text-sm text-slate-300">
               Join leading transit authorities and private bus operators using Smart Bus 360 to increase reliability and slash fuel costs.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full md:w-auto flex-shrink-0">
             <NavLink
               to="/register"
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white text-slate-950 hover:bg-slate-100 font-extrabold text-sm shadow-xl transition-all text-center"

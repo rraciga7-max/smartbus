@@ -46,15 +46,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const navCategories: NavCategory[] = [
     {
-      title: 'OVERVIEW',
+      title: 'OPERATIONS',
       items: [
         { label: 'Dashboard', icon: 'dashboard', path: '/app/dashboard' },
         { label: 'Command Center', icon: 'dashboard_customize', path: '/app/command-center' },
-      ]
-    },
-    {
-      title: 'FLEET',
-      items: [
         { label: 'Buses', icon: 'directions_bus', path: '/app/buses' },
         { label: 'Drivers', icon: 'badge', path: '/app/drivers' },
         { label: 'Routes', icon: 'alt_route', path: '/app/routes' },
@@ -63,11 +58,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ]
     },
     {
-      title: 'MAINTENANCE',
+      title: 'FLEET',
       items: [
         { label: 'Maintenance', icon: 'build_circle', path: '/app/maintenance' },
         { label: 'Inspections', icon: 'fact_check', path: '/app/inspections' },
-        { label: 'Work Orders', icon: 'build', path: '/app/maintenance' },
+        { label: 'Fuel', icon: 'local_gas_station', path: '/app/fuel' },
       ]
     },
     {
@@ -84,7 +79,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { label: 'Revenue', icon: 'payments', path: '/app/revenue' },
         { label: 'Expenses', icon: 'receipt_long', path: '/app/expenses' },
-        { label: 'Fuel', icon: 'local_gas_station', path: '/app/fuel' },
       ]
     },
     {
@@ -96,12 +90,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ]
     },
     {
-      title: 'SYSTEM',
+      title: 'ADMIN & SYSTEM',
       items: [
-        { label: 'Notifications', icon: 'notifications', path: '/app/notifications', badge: unreadCount },
         { label: 'Users', icon: 'manage_accounts', path: '/app/users' },
-        { label: 'Settings', icon: 'settings', path: '/app/settings' },
+        { label: 'Notifications', icon: 'notifications', path: '/app/notifications', badge: unreadCount },
         { label: 'Audit Logs', icon: 'history', path: '/app/audit-logs' },
+        { label: 'Settings', icon: 'settings', path: '/app/settings' },
       ]
     }
   ];
@@ -124,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={isMobile ? onCloseMobile : undefined}
               title={isCollapsed && !isMobile ? item.label : undefined}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-2xl text-body-md font-medium transition-all duration-200 group relative ${
+                `flex items-center gap-3 px-3 py-3 min-h-[44px] rounded-2xl text-body-md font-medium transition-all duration-200 group relative ${
                   isCollapsed && !isMobile ? 'justify-center' : ''
                 } ${
                   isActive
@@ -133,7 +127,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }`
               }
             >
-              <span className="material-symbols-outlined text-[20px] flex-shrink-0">
+              <span className="material-symbols-outlined text-[22px] flex-shrink-0">
                 {item.icon}
               </span>
               {(!isCollapsed || isMobile) && <span className="truncate text-xs font-semibold">{item.label}</span>}
@@ -160,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           to="/"
           onClick={isMobile ? onCloseMobile : undefined}
           title={isCollapsed && !isMobile ? "Website Home" : undefined}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-xs font-bold text-primary dark:text-indigo-400 hover:bg-primary/10 dark:hover:bg-indigo-950/50 transition-colors ${
+          className={`flex items-center gap-3 px-3 py-3 min-h-[44px] rounded-2xl text-xs font-bold text-primary dark:text-indigo-400 hover:bg-primary/10 dark:hover:bg-indigo-950/50 transition-colors ${
             isCollapsed && !isMobile ? 'justify-center' : ''
           }`}
         >
@@ -176,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             openLogoutModal();
           }}
           title={isCollapsed && !isMobile ? "Sign Out" : undefined}
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl text-xs font-bold text-error hover:bg-error/10 transition-colors w-full text-left ${
+          className={`flex items-center gap-3 px-3 py-3 min-h-[44px] rounded-2xl text-xs font-bold text-error hover:bg-error/10 transition-colors w-full text-left ${
             isCollapsed && !isMobile ? 'justify-center' : ''
           }`}
         >
@@ -206,15 +200,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <NavLink
             to="/"
             title="Go to Public Website Home"
-            className="flex items-center gap-3 overflow-visible min-w-0 group cursor-pointer"
+            className="flex items-center gap-3 overflow-visible min-w-0 group cursor-pointer flex-shrink-0"
           >
-            <div className="w-10 h-10 rounded-2xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-stitch-float group-hover:scale-105 transition-transform">
-              <span className="material-symbols-outlined text-[24px]">directions_bus</span>
+            <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-stitch-float group-hover:scale-105 transition-transform overflow-visible">
+              <span className="material-symbols-outlined text-[24px] leading-none select-none">directions_bus</span>
             </div>
             {!isCollapsed && (
-              <div className="flex flex-col truncate">
-                <span className="font-bold text-base text-primary dark:text-indigo-400 leading-tight tracking-tight">Smart Bus 360</span>
-                <span className="text-[10px] text-outline dark:text-slate-400 uppercase tracking-wider font-semibold">Operations Platform</span>
+              <div className="flex flex-col truncate min-w-0">
+                <span className="font-bold text-base text-primary dark:text-indigo-400 leading-tight tracking-tight truncate">Smart Bus 360</span>
+                <span className="text-[10px] text-outline dark:text-slate-400 uppercase tracking-wider font-semibold truncate">Operations Platform</span>
               </div>
             )}
           </NavLink>
@@ -251,7 +245,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <img
               src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120"}
               alt="Profile Avatar"
-              className="w-9 h-9 rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
+              className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
             />
             {!isCollapsed && (
               <div className="flex flex-col truncate">
@@ -273,25 +267,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
 
           {/* Off-Canvas Slide Drawer */}
-          <aside className="relative w-72 max-w-[85vw] h-full bg-surface-container-lowest dark:bg-slate-900 border-r border-surface-container dark:border-slate-800 shadow-2xl flex flex-col z-50 animate-in slide-in-from-left duration-300">
+          <aside className="relative w-80 max-w-[85vw] h-full bg-surface-container-lowest dark:bg-slate-900 border-r border-surface-container dark:border-slate-800 shadow-2xl flex flex-col z-50 animate-in slide-in-from-left duration-300">
             {/* Mobile Sidebar Header */}
-            <div className="h-16 px-4 flex items-center justify-between border-b border-surface-container/60 dark:border-slate-800">
-              <NavLink to="/" onClick={onCloseMobile} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-stitch-float">
-                  <span className="material-symbols-outlined text-[24px]">directions_bus</span>
+            <div className="h-16 px-4 flex items-center justify-between gap-2 border-b border-surface-container/60 dark:border-slate-800 flex-shrink-0">
+              <NavLink to="/" onClick={onCloseMobile} className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-stitch-float overflow-visible">
+                  <span className="material-symbols-outlined text-[24px] leading-none select-none">directions_bus</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-base text-primary dark:text-indigo-400 leading-tight tracking-tight">Smart Bus 360</span>
-                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase tracking-wider font-semibold">Operations Platform</span>
+                <div className="flex flex-col min-w-0">
+                  <span className="font-bold text-base text-primary dark:text-indigo-400 leading-tight tracking-tight truncate">Smart Bus 360</span>
+                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase tracking-wider font-semibold truncate">Operations Platform</span>
                 </div>
               </NavLink>
 
               <button
                 onClick={onCloseMobile}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant dark:text-slate-300 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors"
+                className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center text-on-surface-variant dark:text-slate-300 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors flex-shrink-0"
                 aria-label="Close sidebar"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <span className="material-symbols-outlined text-[22px] leading-none">close</span>
               </button>
             </div>
 
@@ -299,7 +293,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {renderNavContent(true)}
 
             {/* Mobile Footer Profile */}
-            <div className="p-3 border-t border-surface-container/60 dark:border-slate-800">
+            <div className="p-3 border-t border-surface-container/60 dark:border-slate-800 flex-shrink-0">
               <NavLink
                 to="/app/profile"
                 onClick={onCloseMobile}
@@ -308,7 +302,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <img
                   src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120"}
                   alt="Profile Avatar"
-                  className="w-9 h-9 rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
+                  className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-full object-cover border-2 border-primary/20 flex-shrink-0"
                 />
                 <div className="flex flex-col truncate">
                   <span className="text-xs font-semibold text-on-surface dark:text-slate-200 truncate">{user?.name || 'Alexander Pierce'}</span>

@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { AppShell } from './components/layout/AppShell';
 import { PublicLayout } from './components/layout/PublicLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './components/auth/ProtectedRoute';
+import { ScrollToTop } from './components/common/ScrollToTop';
 
 // Public Marketing Website Pages
 import { HomePage } from './pages/public/HomePage';
@@ -72,6 +73,7 @@ export const App: React.FC = () => {
       <AuthProvider>
         <DataProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               {/* AREA A — PUBLIC MARKETING WEBSITE */}
               <Route element={<PublicLayout />}>

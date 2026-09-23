@@ -8,6 +8,7 @@ import { Modal } from '../components/common/Modal';
 export const DriverManagementPage: React.FC = () => {
   const { drivers, addDriver, updateDriver, deleteDriver } = useData();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeStatusFilter, setActiveStatusFilter] = useState<'all' | 'on_duty' | 'off_duty' | 'on_break' | 'on_leave'>('all');
   const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
 
   // Modals
@@ -22,12 +23,16 @@ export const DriverManagementPage: React.FC = () => {
   const [assignedRouteName, setAssignedRouteName] = useState('Route 21A: Gandhipuram ➔ Singanallur');
 
   const filteredDrivers = useMemo(() => {
-    return drivers.filter(d =>
-      d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      d.licenseNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (d.assignedRouteName && d.assignedRouteName.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  }, [drivers, searchQuery]);
+    return drivers.filter(d => {
+      const matchesStatus = activeStatusFilter === 'all' || d.status === activeStatusFilter;
+      const matchesSearch =
+        d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        d.licenseNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (d.assignedRouteName && d.assignedRouteName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (d.phone && d.phone.includes(searchQuery));
+      return matchesStatus && matchesSearch;
+    });
+  }, [drivers, searchQuery, activeStatusFilter]);
 
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,58 +79,102 @@ export const DriverManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Search & Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="relative w-full sm:w-96">
-          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[22px]">
-            search
-          </span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search drivers by name or license ID..."
-            className="w-full pl-12 pr-4 py-3 bg-surface-container dark:bg-slate-900 rounded-full text-body-md text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800"
-          />
+    <div className="flex flex-col gap-6 min-w-0">
+      {/* Mobile Page Header */}
+      <div className="flex flex-col gap-4 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+              Driver Roster & Qualifications
+            </h1>
+            <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+              Manage fleet personnel, license validation, assigned vehicles, and safety performance.
+            </p>
+          </div>
+
+          <button
+            onClick={() => {
+              setName('');
+              setLicenseNumber('');
+              setPhone('');
+              setIsAddModalOpen(true);
+            }}
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
+          >
+            <span className="material-symbols-outlined text-[20px]">person_add</span>
+            <span>Register Driver</span>
+          </button>
         </div>
 
-        <button
-          onClick={() => {
-            setName('');
-            setLicenseNumber('');
-            setPhone('');
-            setIsAddModalOpen(true);
-          }}
-          className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md flex items-center justify-center gap-2 active:scale-95"
-        >
-          <span className="material-symbols-outlined text-[20px]">person_add</span>
-          Add New Driver
-        </button>
+        {/* Search & Filter Toolbar */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 min-w-0">
+          <div className="relative flex-1 min-w-0">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[20px]">
+              search
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search drivers by name, license, or route..."
+              className="w-full pl-11 pr-10 py-3 bg-surface-container dark:bg-slate-900 rounded-2xl text-xs sm:text-sm text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800 min-h-[44px]"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800 transition-colors"
+                aria-label="Clear search"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-shrink-0">
+            {(['all', 'on_duty', 'off_duty', 'on_break', 'on_leave'] as const).map(status => (
+              <button
+                key={status}
+                onClick={() => setActiveStatusFilter(status)}
+                className={`px-3.5 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
+                  activeStatusFilter === status
+                    ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm font-bold'
+                    : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+                }`}
+              >
+                {status === 'all' && `All (${drivers.length})`}
+                {status === 'on_duty' && `On Duty (${drivers.filter(d => d.status === 'on_duty').length})`}
+                {status === 'off_duty' && `Off Duty (${drivers.filter(d => d.status === 'off_duty').length})`}
+                {status === 'on_break' && `On Break (${drivers.filter(d => d.status === 'on_break').length})`}
+                {status === 'on_leave' && `On Leave (${drivers.filter(d => d.status === 'on_leave').length})`}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Driver List Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-0">
         {filteredDrivers.map((driver) => (
           <div
             key={driver.id}
             onClick={() => setSelectedDriver(driver)}
-            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-4 group"
+            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-4 group min-w-0"
           >
-            <div>
+            <div className="min-w-0">
               {/* Profile Top Info */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
+              <div className="flex items-start justify-between gap-3 min-w-0">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <img
                     src={driver.avatar}
                     alt={driver.name}
-                    className="w-14 h-14 rounded-2xl object-cover border-2 border-primary/10 dark:border-indigo-400/20 shadow-sm"
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl object-cover border-2 border-primary/10 dark:border-indigo-400/20 shadow-sm flex-shrink-0"
                   />
-                  <div>
-                    <h3 className="text-lg font-bold text-on-surface dark:text-slate-100 group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100 group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors truncate">
                       {driver.name}
                     </h3>
-                    <p className="text-xs text-on-surface-variant dark:text-slate-400 font-mono">{driver.licenseNumber}</p>
+                    <p className="text-xs text-on-surface-variant dark:text-slate-400 font-mono truncate">{driver.licenseNumber}</p>
                     <div className="mt-1">
                       <StatusBadge status={driver.status} type="driver" />
                     </div>
@@ -133,11 +182,11 @@ export const DriverManagementPage: React.FC = () => {
                 </div>
 
                 {/* Safety Score Meter */}
-                <div className="flex flex-col items-end">
-                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold">Safety Score</span>
+                <div className="flex flex-col items-end flex-shrink-0">
+                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold">Safety</span>
                   <div className="flex items-center gap-1 mt-0.5">
                     <span className="material-symbols-outlined text-[16px] text-amber-500 filled">star</span>
-                    <span className="font-extrabold text-title-lg text-on-surface dark:text-slate-100">{driver.safetyScore}%</span>
+                    <span className="font-extrabold text-base sm:text-lg text-on-surface dark:text-slate-100">{driver.safetyScore}%</span>
                   </div>
                 </div>
               </div>
@@ -145,44 +194,57 @@ export const DriverManagementPage: React.FC = () => {
               <div className="h-px w-full bg-surface-container dark:bg-slate-800 my-3"></div>
 
               {/* Assignment & Qualifications */}
-              <div className="flex flex-col gap-2 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-outline dark:text-slate-400">Assigned Route</span>
-                  <span className="font-semibold text-on-surface dark:text-slate-200 truncate max-w-[180px]">{driver.assignedRouteName || 'Unassigned'}</span>
+              <div className="flex flex-col gap-2 text-xs min-w-0">
+                <div className="flex justify-between items-center gap-2 min-w-0">
+                  <span className="text-outline dark:text-slate-400 flex-shrink-0">Assigned Route</span>
+                  <span className="font-semibold text-on-surface dark:text-slate-200 truncate text-right">{driver.assignedRouteName || 'Unassigned'}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-outline dark:text-slate-400">Assigned Bus</span>
-                  <span className="font-semibold text-primary dark:text-indigo-400">{driver.assignedBusPlate || 'Depot Reserve'}</span>
+                <div className="flex justify-between items-center gap-2 min-w-0">
+                  <span className="text-outline dark:text-slate-400 flex-shrink-0">Assigned Bus</span>
+                  <span className="font-semibold text-primary dark:text-indigo-400 truncate text-right">{driver.assignedBusPlate || 'Depot Reserve'}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-outline dark:text-slate-400">Experience</span>
-                  <span className="font-semibold text-on-surface dark:text-slate-200">{driver.experienceYears} Years</span>
+                <div className="flex justify-between items-center gap-2 min-w-0">
+                  <span className="text-outline dark:text-slate-400 flex-shrink-0">Phone</span>
+                  <span className="font-semibold text-on-surface dark:text-slate-200 truncate text-right">{driver.phone}</span>
+                </div>
+                <div className="flex justify-between items-center gap-2 min-w-0">
+                  <span className="text-outline dark:text-slate-400 flex-shrink-0">Experience</span>
+                  <span className="font-semibold text-on-surface dark:text-slate-200 text-right">{driver.experienceYears} Years</span>
                 </div>
               </div>
 
               {/* Qualification Tags */}
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {driver.qualifications.slice(0, 2).map((q, i) => (
-                  <span key={i} className="px-2.5 py-0.5 rounded-full bg-surface-container dark:bg-slate-800 text-on-surface-variant dark:text-slate-300 text-[11px] font-semibold">
+                  <span key={i} className="px-2.5 py-0.5 rounded-full bg-surface-container dark:bg-slate-800 text-on-surface-variant dark:text-slate-300 text-[11px] font-semibold truncate max-w-full">
                     {q}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Footer Buttons */}
-            <div className="pt-3 border-t border-surface-container dark:border-slate-800 flex items-center justify-between text-xs">
-              <span className="text-on-surface-variant dark:text-slate-400 font-medium">{driver.totalTripsCompleted} Completed Trips</span>
-              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+            {/* Footer Action Buttons */}
+            <div className="pt-3 border-t border-surface-container dark:border-slate-800 flex items-center justify-between gap-2 text-xs min-w-0" onClick={(e) => e.stopPropagation()}>
+              <button
+                onClick={() => setSelectedDriver(driver)}
+                className="px-3 py-1.5 rounded-xl bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200 font-semibold text-xs hover:bg-surface-container-high transition-colors flex items-center gap-1 min-h-[36px]"
+              >
+                <span className="material-symbols-outlined text-[16px]">visibility</span>
+                <span>View</span>
+              </button>
+
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => openEditModal(driver)}
-                  className="p-1.5 rounded-full hover:bg-surface-container dark:hover:bg-slate-800 text-on-surface-variant dark:text-slate-400 hover:text-primary dark:hover:text-indigo-400 transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-primary/10 text-primary dark:text-indigo-400 font-semibold text-xs hover:bg-primary/20 transition-colors flex items-center gap-1 min-h-[36px]"
                 >
-                  <span className="material-symbols-outlined text-[18px]">edit</span>
+                  <span className="material-symbols-outlined text-[16px]">edit</span>
+                  <span>Edit</span>
                 </button>
                 <button
                   onClick={() => deleteDriver(driver.id)}
-                  className="p-1.5 rounded-full hover:bg-error-container/40 dark:hover:bg-rose-950/40 text-on-surface-variant dark:text-slate-400 hover:text-error dark:hover:text-rose-400 transition-colors"
+                  className="p-2 rounded-xl text-on-surface-variant dark:text-slate-400 hover:bg-error/10 hover:text-error transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center"
+                  title="Delete driver"
                 >
                   <span className="material-symbols-outlined text-[18px]">delete</span>
                 </button>

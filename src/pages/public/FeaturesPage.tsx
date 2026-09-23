@@ -183,27 +183,27 @@ export const FeaturesPage: React.FC = () => {
     : featureCards.filter(f => f.category === activeCategory);
 
   return (
-    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 min-w-0">
       {/* PAGE HEADER */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20">
+      <div className="text-center max-w-3xl mx-auto space-y-4 min-w-0">
+        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20 inline-block">
           Complete Modular Capabilities
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-on-surface dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface dark:text-white tracking-tight">
           Smart Bus 360 <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-600">Platform Features</span>
         </h1>
-        <p className="text-base text-on-surface-variant dark:text-slate-300">
+        <p className="text-sm sm:text-base text-on-surface-variant dark:text-slate-300">
           Explore our end-to-end suite of transit intelligence, IoT telematics, AI operations, and driver safety modules.
         </p>
       </div>
 
       {/* CATEGORY FILTER PILLS */}
-      <div className="flex items-center justify-center gap-2 flex-wrap pb-4">
+      <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap pb-4 min-w-0">
         {categories.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl text-[11px] sm:text-xs font-bold transition-all ${
               activeCategory === cat.id
                 ? 'bg-primary text-on-primary shadow-lg shadow-primary/20 scale-105'
                 : 'bg-surface-container dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800'
@@ -215,11 +215,11 @@ export const FeaturesPage: React.FC = () => {
       </div>
 
       {/* FEATURE CARDS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 min-w-0">
         {filteredFeatures.map((feat, idx) => (
           <div
             key={idx}
-            className="p-6 rounded-[30px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 hover:border-primary/50 transition-all flex flex-col justify-between space-y-6 shadow-sm group"
+            className="p-5 sm:p-6 rounded-[28px] sm:rounded-[30px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 hover:border-primary/50 transition-all flex flex-col justify-between space-y-6 shadow-sm group min-w-0"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">

@@ -66,28 +66,28 @@ export const DispatchCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header & Quick Summary */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
           <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Operations Dispatch Board</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Live trip assignment, driver pairing, and conflict resolution center</p>
+          <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Live trip assignment, driver pairing, and conflict resolution center</p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full">
+        <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
+          <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full">
             {inProgressTrips.length} Trips In Transit
           </span>
-          <span className="px-3 py-1 bg-amber-500/10 text-amber-600 text-xs font-bold rounded-full">
+          <span className="px-3 py-1.5 bg-amber-500/10 text-amber-600 text-xs font-bold rounded-full">
             {delayedTrips.length} Delayed
           </span>
         </div>
       </div>
 
       {/* Dispatch Board Kanban Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 min-w-0">
         {/* Column 1: Unassigned / Pending */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3 min-w-0">
           <div className="flex items-center justify-between pb-2 border-b border-surface-container dark:border-slate-800">
             <span className="font-bold text-xs text-on-surface dark:text-slate-200">Unassigned Trips</span>
             <span className="px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-400 text-[11px] font-bold">
@@ -95,21 +95,21 @@ export const DispatchCenterPage: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex flex-col gap-3 min-h-[300px]">
+          <div className="flex flex-col gap-3 min-h-[200px] min-w-0">
             {unassignedTrips.length === 0 ? (
               <p className="text-[11px] text-outline dark:text-slate-500 text-center py-8">All trips assigned!</p>
             ) : (
               unassignedTrips.map(t => (
-                <div key={t.id} className="p-3.5 rounded-2xl bg-surface-container dark:bg-slate-800 border border-slate-700/40 flex flex-col gap-2 shadow-sm">
-                  <div className="flex justify-between items-start">
-                    <span className="font-mono text-[11px] font-bold text-primary dark:text-indigo-400">{t.id}</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-500/20 text-slate-300">Pending</span>
+                <div key={t.id} className="p-3.5 rounded-2xl bg-surface-container dark:bg-slate-800 border border-slate-700/40 flex flex-col gap-2 shadow-sm min-w-0">
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="font-mono text-[11px] font-bold text-primary dark:text-indigo-400 truncate">{t.id}</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-500/20 text-slate-300 flex-shrink-0">Pending</span>
                   </div>
-                  <span className="font-bold text-xs text-on-surface dark:text-slate-100">{t.routeName}</span>
+                  <span className="font-bold text-xs text-on-surface dark:text-slate-100 truncate">{t.routeName}</span>
                   <p className="text-[11px] text-outline dark:text-slate-400">Dep: {t.departureTime}</p>
                   <button
                     onClick={() => handleOpenReassign(t)}
-                    className="mt-1 py-1.5 px-3 bg-primary text-on-primary font-bold text-xs rounded-xl shadow hover:bg-primary/90"
+                    className="mt-1 py-2 px-3 bg-primary text-on-primary font-bold text-xs rounded-xl shadow hover:bg-primary/90 min-h-[40px]"
                   >
                     Assign Bus & Driver
                   </button>
@@ -120,7 +120,7 @@ export const DispatchCenterPage: React.FC = () => {
         </div>
 
         {/* Column 2: Scheduled & Assigned */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3 min-w-0">
           <div className="flex items-center justify-between pb-2 border-b border-surface-container dark:border-slate-800">
             <span className="font-bold text-xs text-on-surface dark:text-slate-200">Scheduled & Ready</span>
             <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500 text-[11px] font-bold">
@@ -128,16 +128,16 @@ export const DispatchCenterPage: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex flex-col gap-3 min-h-[300px]">
+          <div className="flex flex-col gap-3 min-h-[200px] min-w-0">
             {assignedTrips.map(t => (
-              <div key={t.id} className="p-3.5 rounded-2xl bg-surface-container dark:bg-slate-800 border border-slate-700/40 flex flex-col gap-2 shadow-sm">
-                <div className="flex justify-between items-start">
-                  <span className="font-mono text-[11px] font-bold text-primary dark:text-indigo-400">{t.id}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">Scheduled</span>
+              <div key={t.id} className="p-3.5 rounded-2xl bg-surface-container dark:bg-slate-800 border border-slate-700/40 flex flex-col gap-2 shadow-sm min-w-0">
+                <div className="flex justify-between items-start gap-2">
+                  <span className="font-mono text-[11px] font-bold text-primary dark:text-indigo-400 truncate">{t.id}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 flex-shrink-0">Scheduled</span>
                 </div>
-                <span className="font-bold text-xs text-on-surface dark:text-slate-100">{t.routeName}</span>
+                <span className="font-bold text-xs text-on-surface dark:text-slate-100 truncate">{t.routeName}</span>
                 <div className="text-[11px] text-outline dark:text-slate-400">
-                  <p>Bus: <strong className="text-on-surface dark:text-slate-200">{t.busNumber}</strong></p>
+                  <p className="truncate">Bus: <strong className="text-on-surface dark:text-slate-200">{t.busNumber}</strong></p>
                   <p>Driver: <strong className="text-on-surface dark:text-slate-200">{t.driverName}</strong></p>
                 </div>
                 <div className="flex gap-1.5 mt-1">

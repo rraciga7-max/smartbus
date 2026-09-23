@@ -40,19 +40,23 @@ export const TripManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header & Dispatch Action */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Mobile Page Header (Point 4) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Active Trips & Schedule Logs</h2>
-          <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Monitor live departures, passenger loads, and on-time status</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+            Active Trips & Schedule Logs
+          </h1>
+          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+            Monitor live departures, passenger loads, and on-time status across active routes.
+          </p>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md flex items-center justify-center gap-2 active:scale-95"
+          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
         >
           <span className="material-symbols-outlined text-[20px]">departure_board</span>
-          Dispatch New Trip
+          <span>Dispatch New Trip</span>
         </button>
       </div>
 
@@ -62,7 +66,7 @@ export const TripManagementPage: React.FC = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-full text-label-md font-semibold capitalize whitespace-nowrap transition-all ${
+            className={`px-4 py-2.5 rounded-2xl text-xs font-semibold capitalize whitespace-nowrap transition-all min-h-[44px] ${
               activeTab === tab
                 ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm'
                 : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
@@ -74,27 +78,29 @@ export const TripManagementPage: React.FC = () => {
       </div>
 
       {/* Trips Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-0">
         {filteredTrips.map((trip) => (
           <div
             key={trip.id}
-            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-4"
+            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-4 min-w-0"
           >
-            <div>
+            <div className="min-w-0">
               {/* Trip Code & Status */}
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 font-extrabold text-xs">
+              <div className="flex items-start justify-between gap-2 mb-2 min-w-0">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap min-w-0">
+                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 font-extrabold text-xs flex-shrink-0">
                       {trip.routeCode}
                     </span>
-                    <h3 className="text-lg font-bold text-on-surface dark:text-slate-100">{trip.routeName}</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100 truncate min-w-0">{trip.routeName}</h3>
                   </div>
-                  <p className="text-xs text-on-surface-variant dark:text-slate-400 mt-1">
+                  <p className="text-xs text-on-surface-variant dark:text-slate-400 mt-1 truncate">
                     Bus: <strong className="text-on-surface dark:text-slate-200">{trip.busNumber}</strong> • Driver: {trip.driverName}
                   </p>
                 </div>
-                <StatusBadge status={trip.status} type="trip" />
+                <div className="flex-shrink-0">
+                  <StatusBadge status={trip.status} type="trip" />
+                </div>
               </div>
 
               {/* Progress Bar for In Transit */}

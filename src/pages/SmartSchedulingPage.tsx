@@ -22,18 +22,18 @@ export const SmartSchedulingPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Smart Scheduling & Shift Roster Engine</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Automated shift scheduling with AI conflict resolution & driver rest compliance</p>
+      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Smart Scheduling & Shift Roster Engine</h2>
+          <p className="text-xs text-outline dark:text-slate-400 truncate">Automated shift scheduling with AI conflict resolution & driver rest compliance</p>
         </div>
 
         <button
           onClick={handleAutoOptimize}
           disabled={isOptimizing}
-          className="px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-all flex items-center gap-2 disabled:opacity-50"
+          className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-all flex items-center gap-2 disabled:opacity-50 flex-shrink-0"
         >
           <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
           <span>{isOptimizing ? 'AI Optimizing Schedule...' : 'AI Auto-Optimize Roster'}</span>
@@ -41,11 +41,12 @@ export const SmartSchedulingPage: React.FC = () => {
       </div>
 
       {/* Roster Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
-        <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4 truncate">
           Today's Driver-Vehicle Shift Allocations
         </h3>
 
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[700px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -78,6 +79,7 @@ export const SmartSchedulingPage: React.FC = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -31,20 +31,20 @@ export const CommandCenterPage: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Emergency Active Alert Banner if any */}
       {emergencies.length > 0 && (
-        <div className="p-4 rounded-2xl bg-error text-on-error shadow-xl flex items-center justify-between animate-pulse">
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-2xl">warning</span>
-            <div>
-              <span className="font-bold text-sm">CRITICAL OPERATIONS ALERT ({emergencies.length} Active Emergency)</span>
-              <p className="text-xs opacity-90">{emergencies[0].busRegistration} — {emergencies[0].locationName}</p>
+        <div className="p-4 rounded-2xl bg-error text-on-error shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-pulse min-w-0">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <span className="material-symbols-outlined text-2xl flex-shrink-0">warning</span>
+            <div className="min-w-0 flex-1">
+              <span className="font-bold text-sm truncate block">CRITICAL OPERATIONS ALERT ({emergencies.length} Active Emergency)</span>
+              <p className="text-xs opacity-90 truncate">{emergencies[0].busRegistration} — {emergencies[0].locationName}</p>
             </div>
           </div>
           <button
             onClick={() => window.location.href = '/emergency'}
-            className="px-4 py-1.5 bg-surface text-on-surface font-bold text-xs rounded-xl shadow hover:scale-105 transition-transform"
+            className="w-full sm:w-auto px-4 py-2 bg-surface text-on-surface font-bold text-xs rounded-xl shadow hover:scale-105 transition-transform text-center min-h-[44px]"
           >
             Open Emergency Command Center ➔
           </button>

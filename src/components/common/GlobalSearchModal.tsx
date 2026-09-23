@@ -70,8 +70,12 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
           />
           {query && (
             <button
-              onClick={() => setQuery('')}
-              className="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container dark:hover:bg-slate-800"
+              type="button"
+              onClick={() => {
+                setQuery('');
+                inputRef.current?.focus();
+              }}
+              className="w-9 h-9 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors"
               aria-label="Clear search"
             >
               <span className="material-symbols-outlined text-[18px]">close</span>

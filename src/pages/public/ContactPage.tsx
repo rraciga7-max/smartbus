@@ -50,24 +50,24 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 min-w-0">
       {/* PAGE HEADER */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20">
+      <div className="text-center max-w-3xl mx-auto space-y-4 min-w-0">
+        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20 inline-block">
           Get in Touch With Operations Specialists
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-on-surface dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface dark:text-white tracking-tight">
           Contact <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-600">Smart Bus 360</span>
         </h1>
-        <p className="text-base text-on-surface-variant dark:text-slate-300">
+        <p className="text-sm sm:text-base text-on-surface-variant dark:text-slate-300">
           Have questions about fleet integration, AI route optimization, enterprise pricing, or custom hardware support?
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start min-w-0">
         {/* LEFT COLUMN: CONTACT CHANNELS & ASSISTANCE */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="p-8 rounded-[32px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6">
+        <div className="lg:col-span-5 space-y-6 min-w-0">
+          <div className="p-6 sm:p-8 rounded-[28px] sm:rounded-[32px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6 min-w-0">
             <h3 className="text-xl font-bold text-on-surface dark:text-slate-100">Global Assistance Desk</h3>
 
             <div className="space-y-4 text-xs">
@@ -120,8 +120,8 @@ export const ContactPage: React.FC = () => {
         </div>
 
         {/* RIGHT COLUMN: CONTACT FORM */}
-        <div className="lg:col-span-7">
-          <div className="p-8 sm:p-10 rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6">
+        <div className="lg:col-span-7 min-w-0">
+          <div className="p-6 sm:p-10 rounded-[28px] sm:rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6 min-w-0">
             {isSubmitted ? (
               <div className="py-12 text-center space-y-4 animate-in fade-in duration-300">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center">

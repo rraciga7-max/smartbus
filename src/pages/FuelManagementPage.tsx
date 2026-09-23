@@ -77,36 +77,36 @@ export const FuelManagementPage: React.FC = () => {
       </div>
 
       {/* Top Banner KPIs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800">
-          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold">Total Spend</span>
-          <p className="text-2xl font-extrabold text-primary dark:text-indigo-400 mt-1">₹{totalFuelSpend.toLocaleString()}</p>
-          <span className="text-xs text-outline dark:text-slate-400 mt-1 block">Logged across {fuelRecords.length} sessions</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 min-w-0">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 min-w-0">
+          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold truncate block">Total Spend</span>
+          <p className="text-2xl font-extrabold text-primary dark:text-indigo-400 mt-1 truncate">₹{totalFuelSpend.toLocaleString()}</p>
+          <span className="text-xs text-outline dark:text-slate-400 mt-1 block truncate">Logged across {fuelRecords.length} sessions</span>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800">
-          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold">Avg Fleet Mileage</span>
-          <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">{avgMileage} km/L</p>
-          <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-1 block">+0.3 km/L vs target</span>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 min-w-0">
+          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold truncate block">Avg Fleet Mileage</span>
+          <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1 truncate">{avgMileage} km/L</p>
+          <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-1 block truncate">+0.3 km/L vs target</span>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800">
-          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold">Total Litres Consumed</span>
-          <p className="text-2xl font-extrabold text-on-surface dark:text-slate-100 mt-1">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 min-w-0">
+          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold truncate block">Total Litres Consumed</span>
+          <p className="text-2xl font-extrabold text-on-surface dark:text-slate-100 mt-1 truncate">
             {fuelRecords.reduce((sum, f) => sum + f.litres, 0)} L
           </p>
-          <span className="text-xs text-outline dark:text-slate-400 mt-1 block">100% verified fuel cards</span>
+          <span className="text-xs text-outline dark:text-slate-400 mt-1 block truncate">100% verified fuel cards</span>
         </div>
 
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800">
-          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold">EV Charging Units</span>
-          <p className="text-2xl font-extrabold text-indigo-500 mt-1">180 kWh</p>
-          <span className="text-xs text-outline dark:text-slate-400 mt-1 block">Tata Starbus EV Fleet</span>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 min-w-0">
+          <span className="text-[11px] text-outline dark:text-slate-400 uppercase font-bold truncate block">EV Charging Units</span>
+          <p className="text-2xl font-extrabold text-indigo-500 mt-1 truncate">180 kWh</p>
+          <span className="text-xs text-outline dark:text-slate-400 mt-1 block truncate">Tata Starbus EV Fleet</span>
         </div>
       </div>
 
       {/* Fuel Consumption Chart */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
         <h3 className="text-base font-bold text-on-surface dark:text-slate-100">Fuel & Energy Spend Per Vehicle</h3>
 
         <div className="h-56 sm:h-64 w-full pt-2">
@@ -125,10 +125,10 @@ export const FuelManagementPage: React.FC = () => {
       </div>
 
       {/* Fuel Log Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
         <h3 className="text-base font-bold text-on-surface dark:text-slate-100">Fueling Log & Telemetry Verification</h3>
 
-        <div className="w-full overflow-x-auto no-scrollbar">
+        <div className="table-container no-scrollbar">
           <table className="w-full text-left border-collapse text-xs min-w-[650px]">
             <thead>
               <tr className="border-b border-surface-container text-outline text-xs uppercase tracking-wider font-bold">

@@ -55,16 +55,16 @@ export const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-6 sm:space-y-8 pb-12 min-w-0">
       {/* HEADER BAR */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 rounded-[24px] sm:rounded-[28px] shadow-sm">
-        <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 rounded-[24px] sm:rounded-[28px] shadow-sm min-w-0">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
           <img
             src={user.avatar}
             alt={user.name}
             className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 border-primary/30 shadow-md flex-shrink-0"
           />
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <h1 className="text-lg sm:text-xl font-extrabold text-on-surface dark:text-slate-100 truncate">{user.name}</h1>
             <div className="flex flex-wrap items-center gap-2 mt-1">
               <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary dark:text-indigo-400 text-xs font-bold uppercase">

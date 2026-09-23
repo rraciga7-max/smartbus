@@ -76,13 +76,13 @@ export const PublicFooter: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-surface-container dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant dark:text-slate-400">
+        <div className="pt-8 border-t border-surface-container dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant dark:text-slate-400 text-center sm:text-left">
           <p>© {new Date().getFullYear()} Smart Bus 360 Inc. All rights reserved. Built for Next-Gen Transit Operators.</p>
-          <div className="flex items-center gap-4">
-            <span className="hover:text-primary cursor-pointer">Twitter / X</span>
-            <span className="hover:text-primary cursor-pointer">LinkedIn</span>
-            <span className="hover:text-primary cursor-pointer">GitHub</span>
-            <span className="hover:text-primary cursor-pointer">YouTube</span>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <span className="hover:text-primary cursor-pointer transition-colors">Twitter / X</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">LinkedIn</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">GitHub</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">YouTube</span>
           </div>
         </div>
       </div>

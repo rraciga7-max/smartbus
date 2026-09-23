@@ -59,47 +59,47 @@ export const NotificationsPage: React.FC = () => {
             <div
               key={n.id}
               onClick={() => markNotificationAsRead(n.id)}
-              className={`p-5 rounded-[24px] border transition-all duration-200 flex items-start justify-between gap-4 cursor-pointer ${
+              className={`p-4 sm:p-5 rounded-[24px] border transition-all duration-200 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 cursor-pointer min-w-0 ${
                 n.read 
                   ? 'bg-surface-container-lowest dark:bg-slate-900 border-surface-container/60 dark:border-slate-800 opacity-80' 
                   : 'bg-surface-container-lowest dark:bg-slate-900 border-primary/30 dark:border-indigo-500/40 shadow-stitch-card ring-1 ring-primary/10 dark:ring-indigo-500/20'
               }`}
             >
-              <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-2xl ${iconBg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                  <span className="material-symbols-outlined text-[22px]">
+              <div className="flex items-start gap-3 sm:gap-4 min-w-0 flex-1">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl ${iconBg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                  <span className="material-symbols-outlined text-[20px] sm:text-[22px] leading-none">
                     {n.category === 'maintenance' ? 'build' : n.category === 'driver' ? 'badge' : 'notifications'}
                   </span>
                 </div>
 
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-on-surface dark:text-slate-100 text-base">{n.title}</h3>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap min-w-0">
+                    <h3 className="font-bold text-on-surface dark:text-slate-100 text-sm sm:text-base">{n.title}</h3>
                     {!n.read && (
-                      <span className="w-2.5 h-2.5 bg-primary dark:bg-indigo-400 rounded-full"></span>
+                      <span className="w-2.5 h-2.5 bg-primary dark:bg-indigo-400 rounded-full flex-shrink-0"></span>
                     )}
                   </div>
-                  <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-sm mt-1">{n.message}</p>
-                  <span className="text-xs text-outline dark:text-slate-500 font-semibold mt-2 block">{n.timestamp}</span>
+                  <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs sm:text-sm mt-1">{n.message}</p>
+                  <span className="text-[11px] text-outline dark:text-slate-500 font-semibold mt-2 block">{n.timestamp}</span>
                 </div>
               </div>
 
               {/* Action Link & Delete */}
-              <div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-start pt-2 sm:pt-0 border-t sm:border-t-0 border-surface-container/40 dark:border-slate-800 w-full sm:w-auto justify-end" onClick={(e) => e.stopPropagation()}>
                 {n.actionUrl && (
                   <button
                     onClick={() => {
                       markNotificationAsRead(n.id);
                       navigate(n.actionUrl!);
                     }}
-                    className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-500/20 hover:bg-primary/20 text-primary dark:text-indigo-400 font-bold text-xs transition-colors"
+                    className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-500/20 hover:bg-primary/20 text-primary dark:text-indigo-400 font-bold text-xs transition-colors min-h-[36px]"
                   >
                     View
                   </button>
                 )}
                 <button
                   onClick={() => deleteNotification(n.id)}
-                  className="p-1.5 rounded-full hover:bg-surface-container dark:hover:bg-slate-800 text-outline dark:text-slate-400 hover:text-error dark:hover:text-rose-400 transition-colors"
+                  className="p-1.5 rounded-full hover:bg-surface-container dark:hover:bg-slate-800 text-outline dark:text-slate-400 hover:text-error dark:hover:text-rose-400 transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center"
                   title="Delete notification"
                 >
                   <span className="material-symbols-outlined text-[18px]">close</span>

@@ -44,39 +44,39 @@ export const VehicleInspectionPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div>
+      <div className="min-w-0">
         <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Daily Pre-Trip Vehicle Inspection</h2>
-        <p className="text-xs text-outline dark:text-slate-400">Driver & Technician 10-Point Safety Audit Checklist</p>
+        <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Driver & Technician 10-Point Safety Audit Checklist</p>
       </div>
 
       {/* Critical Failure Warning Banner */}
       {hasCriticalFail && (
-        <div className="p-5 rounded-2xl bg-error text-on-error shadow-2xl flex items-center justify-between border-2 border-error animate-pulse">
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-3xl">block</span>
-            <div>
-              <h3 className="font-extrabold text-base tracking-tight">VEHICLE UNSAFE — DO NOT DISPATCH</h3>
+        <div className="p-4 sm:p-5 rounded-2xl bg-error text-on-error shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-2 border-error animate-pulse min-w-0">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <span className="material-symbols-outlined text-3xl flex-shrink-0">block</span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-extrabold text-base tracking-tight truncate">VEHICLE UNSAFE — DO NOT DISPATCH</h3>
               <p className="text-xs opacity-90">One or more critical safety items failed. Vehicle will be automatically locked out from dispatch.</p>
             </div>
           </div>
-          <span className="px-3 py-1 bg-surface text-on-surface font-extrabold text-xs rounded-xl">
+          <span className="px-3 py-1 bg-surface text-on-surface font-extrabold text-xs rounded-xl self-start sm:self-auto flex-shrink-0">
             STATUS: LOCKOUT
           </span>
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start min-w-0">
         {/* Left Form: Checklist Selection */}
-        <form onSubmit={handleSubmitInspection} className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-5">
+        <form onSubmit={handleSubmitInspection} className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-5 min-w-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-outline dark:text-slate-400 uppercase mb-1">Select Bus Plate</label>
               <select
                 value={selectedBusId}
                 onChange={(e) => setSelectedBusId(e.target.value)}
-                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 min-h-[44px]"
               >
                 {buses.map(b => (
                   <option key={b.id} value={b.id}>{b.registrationNumber} ({b.model})</option>
@@ -89,7 +89,7 @@ export const VehicleInspectionPage: React.FC = () => {
               <select
                 value={selectedDriverId}
                 onChange={(e) => setSelectedDriverId(e.target.value)}
-                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100"
+                className="w-full p-2.5 bg-surface-container dark:bg-slate-800 rounded-xl text-xs font-bold text-on-surface dark:text-slate-100 min-h-[44px]"
               >
                 {drivers.map(d => (
                   <option key={d.id} value={d.id}>{d.name} ({d.licenseNumber})</option>
@@ -99,26 +99,26 @@ export const VehicleInspectionPage: React.FC = () => {
           </div>
 
           {/* Checklist Grid */}
-          <div className="flex flex-col gap-3 pt-2">
+          <div className="flex flex-col gap-3 pt-2 min-w-0">
             <span className="font-bold text-xs text-on-surface dark:text-slate-200 border-b border-surface-container dark:border-slate-800 pb-2">
               10-Point Safety Audit Checklist
             </span>
             {items.map(item => (
-              <div key={item.id} className="p-3.5 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2.5">
+              <div key={item.id} className="p-3.5 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   {item.isCritical && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-500 uppercase">Critical</span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-500 uppercase flex-shrink-0">Critical</span>
                   )}
-                  <span className="font-bold text-xs text-on-surface dark:text-slate-100">{item.name}</span>
+                  <span className="font-bold text-xs text-on-surface dark:text-slate-100 truncate">{item.name}</span>
                 </div>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 flex-shrink-0 self-end sm:self-auto">
                   {(['pass', 'warning', 'fail'] as const).map(st => (
                     <button
                       key={st}
                       type="button"
                       onClick={() => handleStatusChange(item.id, st)}
-                      className={`px-3 py-1 rounded-xl text-xs font-bold uppercase transition-all ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase transition-all min-h-[36px] ${
                         item.status === st
                           ? st === 'pass' ? 'bg-emerald-600 text-white shadow-md' :
                             st === 'warning' ? 'bg-amber-500 text-white shadow-md' : 'bg-rose-600 text-white shadow-md'

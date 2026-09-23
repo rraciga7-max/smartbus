@@ -5,6 +5,7 @@ import type { Bus, BusStatus } from '../types';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Drawer } from '../components/common/Drawer';
 import { Modal } from '../components/common/Modal';
+import { MobileFilterSheet } from '../components/common/MobileFilterSheet';
 
 export const BusManagementPage: React.FC = () => {
   const { buses, addBus, updateBus, deleteBus, changeBusStatus } = useData();
@@ -102,74 +103,122 @@ export const BusManagementPage: React.FC = () => {
     setRegNum('');
   };
 
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+
   return (
     <div className="flex flex-col gap-6">
-      {/* Sticky Header Filter & Search Bar */}
-      <div className="sticky top-16 bg-background/95 dark:bg-slate-950/95 backdrop-blur-md z-20 pt-2 pb-4 flex flex-col gap-3 transition-colors">
-        {/* Search Input */}
-        <div className="relative w-full">
-          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[22px]">
-            search
-          </span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search buses by plate, route, or driver name..."
-            className="w-full pl-12 pr-4 py-3 bg-surface-container dark:bg-slate-900 rounded-full text-body-md text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800"
-          />
+      {/* Mobile Page Header (Point 4) */}
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+              Bus Fleet Management
+            </h1>
+            <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+              Monitor, configure, and manage transit vehicles across all active depots and routes.
+            </p>
+          </div>
+
+          <button
+            onClick={() => {
+              setRegNum('');
+              setIsAddModalOpen(true);
+            }}
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
+          >
+            <span className="material-symbols-outlined text-[20px]">add_bus</span>
+            <span>Register Bus</span>
+          </button>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
+        {/* Search & Filter Controls (Point 8 & Point 9) */}
+        <div className="mt-2 flex flex-col sm:flex-row items-center gap-2.5">
+          <div className="relative flex-1 w-full">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[20px]">
+              search
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search buses by plate, route, or driver name..."
+              className="w-full pl-11 pr-10 py-3 bg-surface-container dark:bg-slate-900 rounded-2xl text-xs sm:text-sm text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800 min-h-[44px]"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800 transition-colors"
+                aria-label="Clear search"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            )}
+          </div>
+
+          {/* Mobile Filter Toggle Button */}
           <button
-            onClick={() => setActiveFilter('all')}
-            className={`px-4 py-2 rounded-full text-label-md font-semibold whitespace-nowrap transition-all ${
-              activeFilter === 'all' 
-                ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
-                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-            }`}
+            onClick={() => setIsFilterSheetOpen(true)}
+            className="sm:hidden w-full py-3 px-4 rounded-2xl bg-surface-container dark:bg-slate-900 border border-surface-container-high dark:border-slate-800 text-on-surface dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-2 min-h-[44px]"
           >
-            All Buses ({buses.length})
+            <span className="material-symbols-outlined text-[18px] text-primary dark:text-indigo-400">tune</span>
+            <span>Filter Status</span>
+            {activeFilter !== 'all' && (
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            )}
           </button>
 
-          <button
-            onClick={() => setActiveFilter('active')}
-            className={`px-4 py-2 rounded-full text-label-md font-semibold whitespace-nowrap transition-all ${
-              activeFilter === 'active' 
-                ? 'bg-success text-on-success shadow-sm' 
-                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-            }`}
-          >
-            Active ({buses.filter(b => b.status === 'active').length})
-          </button>
+          {/* Desktop Filter Pills */}
+          <div className="hidden sm:flex gap-2 overflow-x-auto no-scrollbar py-1">
+            <button
+              onClick={() => setActiveFilter('all')}
+              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
+                activeFilter === 'all' 
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              All Buses ({buses.length})
+            </button>
 
-          <button
-            onClick={() => setActiveFilter('idle')}
-            className={`px-4 py-2 rounded-full text-label-md font-semibold whitespace-nowrap transition-all ${
-              activeFilter === 'idle' 
-                ? 'bg-amber-500 text-white shadow-sm' 
-                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-            }`}
-          >
-            Idle ({buses.filter(b => b.status === 'idle').length})
-          </button>
+            <button
+              onClick={() => setActiveFilter('active')}
+              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
+                activeFilter === 'active' 
+                  ? 'bg-success text-on-success shadow-sm' 
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              Active ({buses.filter(b => b.status === 'active').length})
+            </button>
 
-          <button
-            onClick={() => setActiveFilter('maintenance')}
-            className={`px-4 py-2 rounded-full text-label-md font-semibold whitespace-nowrap transition-all ${
-              activeFilter === 'maintenance' 
-                ? 'bg-error text-on-error shadow-sm' 
-                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-            }`}
-          >
-            Maintenance ({buses.filter(b => b.status === 'maintenance').length})
-          </button>
+            <button
+              onClick={() => setActiveFilter('idle')}
+              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
+                activeFilter === 'idle' 
+                  ? 'bg-amber-500 text-white shadow-sm' 
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              Idle ({buses.filter(b => b.status === 'idle').length})
+            </button>
+
+            <button
+              onClick={() => setActiveFilter('maintenance')}
+              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
+                activeFilter === 'maintenance' 
+                  ? 'bg-error text-on-error shadow-sm' 
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              Maintenance ({buses.filter(b => b.status === 'maintenance').length})
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Bus Grid Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-w-0">
         {filteredBuses.map((bus) => {
           let accentBg = 'bg-success';
           if (bus.status === 'maintenance') accentBg = 'bg-error';
@@ -179,24 +228,26 @@ export const BusManagementPage: React.FC = () => {
             <div
               key={bus.id}
               onClick={() => setSelectedBus(bus)}
-              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card relative overflow-hidden border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between"
+              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 shadow-stitch-card relative overflow-hidden border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between min-w-0"
             >
               {/* Status Color Strip */}
               <div className={`absolute top-0 left-0 w-1.5 h-full ${accentBg}`}></div>
 
-              <div>
+              <div className="min-w-0">
                 {/* Header info */}
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="text-xl font-bold text-on-surface dark:text-slate-100 tracking-tight group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors">
+                <div className="flex justify-between items-start gap-2 mb-3 min-w-0">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-xl font-bold text-on-surface dark:text-slate-100 tracking-tight group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors truncate">
                       {bus.registrationNumber}
                     </h3>
-                    <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs flex items-center gap-1 mt-1">
-                      <span className="material-symbols-outlined text-[16px]">alt_route</span>
-                      {bus.routeName}
+                    <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs flex items-center gap-1 mt-1 min-w-0">
+                      <span className="material-symbols-outlined text-[16px] flex-shrink-0">alt_route</span>
+                      <span className="truncate">{bus.routeName}</span>
                     </p>
                   </div>
-                  <StatusBadge status={bus.status} type="bus" />
+                  <div className="flex-shrink-0">
+                    <StatusBadge status={bus.status} type="bus" />
+                  </div>
                 </div>
 
                 <div className="h-px w-full bg-surface-container dark:bg-slate-800 my-3"></div>
@@ -498,6 +549,71 @@ export const BusManagementPage: React.FC = () => {
           </div>
         </form>
       </Modal>
+
+      {/* Mobile Filter Bottom Sheet (Point 9) */}
+      <MobileFilterSheet
+        isOpen={isFilterSheetOpen}
+        onClose={() => setIsFilterSheetOpen(false)}
+        onReset={() => setActiveFilter('all')}
+        activeFilterCount={activeFilter !== 'all' ? 1 : 0}
+        title="Filter Bus Fleet"
+      >
+        <div className="space-y-3">
+          <label className="text-xs font-bold text-outline dark:text-slate-400 uppercase tracking-wider block">
+            Filter by Bus Operational Status
+          </label>
+          <div className="grid grid-cols-1 gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveFilter('all')}
+              className={`p-3 rounded-2xl text-xs font-bold text-left flex items-center justify-between transition-colors min-h-[44px] ${
+                activeFilter === 'all'
+                  ? 'bg-primary text-on-primary'
+                  : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+              }`}
+            >
+              <span>All Fleet Vehicles</span>
+              <span className="text-[11px] opacity-80">({buses.length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveFilter('active')}
+              className={`p-3 rounded-2xl text-xs font-bold text-left flex items-center justify-between transition-colors min-h-[44px] ${
+                activeFilter === 'active'
+                  ? 'bg-success text-on-success'
+                  : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+              }`}
+            >
+              <span>Active On-Route</span>
+              <span className="text-[11px] opacity-80">({buses.filter(b => b.status === 'active').length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveFilter('idle')}
+              className={`p-3 rounded-2xl text-xs font-bold text-left flex items-center justify-between transition-colors min-h-[44px] ${
+                activeFilter === 'idle'
+                  ? 'bg-amber-500 text-white'
+                  : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+              }`}
+            >
+              <span>Idle at Depot</span>
+              <span className="text-[11px] opacity-80">({buses.filter(b => b.status === 'idle').length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveFilter('maintenance')}
+              className={`p-3 rounded-2xl text-xs font-bold text-left flex items-center justify-between transition-colors min-h-[44px] ${
+                activeFilter === 'maintenance'
+                  ? 'bg-error text-on-error'
+                  : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+              }`}
+            >
+              <span>In Maintenance Workshop</span>
+              <span className="text-[11px] opacity-80">({buses.filter(b => b.status === 'maintenance').length})</span>
+            </button>
+          </div>
+        </div>
+      </MobileFilterSheet>
     </div>
   );
 };

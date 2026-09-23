@@ -56,40 +56,40 @@ export const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Top Banner / Welcome Bar */}
-      <div className="bg-gradient-to-r from-primary via-primary-container to-primary/90 dark:from-indigo-900 dark:via-indigo-800 dark:to-slate-900 rounded-[28px] p-6 text-on-primary shadow-stitch-float relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20">
-        <div className="z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-white/15 backdrop-blur-md text-label-sm font-semibold mb-3">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse"></span>
-            Live Telematics Online • Coimbatore Central HQ
+      <div className="bg-gradient-to-r from-primary via-primary-container to-primary/90 dark:from-indigo-900 dark:via-indigo-800 dark:to-slate-900 rounded-[28px] p-5 sm:p-6 text-on-primary shadow-stitch-float relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20 min-w-0">
+        <div className="z-10 min-w-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-white/15 backdrop-blur-md text-label-sm font-semibold mb-3 max-w-full">
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse flex-shrink-0"></span>
+            <span className="truncate">Live Telematics Online • Coimbatore Central HQ</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Fleet Operations Center</h2>
-          <p className="text-on-primary/80 text-body-md mt-1 max-w-xl">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight">Fleet Operations Center</h2>
+          <p className="text-on-primary/80 text-body-md mt-1 max-w-xl text-xs sm:text-sm">
             Real-time monitoring for {fleetSummary.totalBuses} buses across 48 city routes. High efficiency rate recorded today.
           </p>
         </div>
         
-        <div className="flex items-center gap-3 z-10 flex-shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 z-10 flex-shrink-0 w-full sm:w-auto">
           <button
             onClick={() => setIsAddBusModalOpen(true)}
-            className="px-4 py-2.5 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center gap-2 active:scale-95"
+            className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px]"
           >
             <span className="material-symbols-outlined text-[20px]">add</span>
-            Add New Bus
+            <span>Add New Bus</span>
           </button>
           <button
             onClick={() => navigate('/tracking')}
-            className="px-4 py-2.5 rounded-full bg-white/20 backdrop-blur-md text-on-primary font-bold text-label-md hover:bg-white/30 transition-colors flex items-center gap-2"
+            className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-white/20 backdrop-blur-md text-on-primary font-bold text-label-md hover:bg-white/30 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
           >
             <span className="material-symbols-outlined text-[20px]">near_me</span>
-            Live Map
+            <span>Live Map</span>
           </button>
         </div>
       </div>
 
       {/* Primary Key Metrics Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatCard
           title="Total Fleet"
           value={fleetSummary.totalBuses}
@@ -224,27 +224,27 @@ export const DashboardPage: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 min-w-0">
             {buses.slice(0, 3).map(bus => (
               <div
                 key={bus.id}
                 onClick={() => navigate(`/buses`)}
-                className="p-4 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors cursor-pointer border border-surface-container/60 dark:border-slate-700/60 flex items-center justify-between"
+                className="p-4 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors cursor-pointer border border-surface-container/60 dark:border-slate-700/60 flex items-center justify-between gap-3 min-w-0"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 flex items-center justify-center">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-[22px]">directions_bus</span>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-on-surface dark:text-slate-100 text-base">{bus.registrationNumber}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-bold text-on-surface dark:text-slate-100 text-sm sm:text-base truncate">{bus.registrationNumber}</span>
                       <StatusBadge status={bus.status} type="bus" />
                     </div>
-                    <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-0.5">{bus.routeName}</p>
+                    <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-0.5 truncate">{bus.routeName}</p>
                   </div>
                 </div>
 
-                <div className="text-right hidden sm:block">
+                <div className="text-right hidden sm:block flex-shrink-0">
                   <span className="text-label-sm text-outline dark:text-slate-400 uppercase">Driver</span>
                   <p className="text-body-md font-semibold text-on-surface dark:text-slate-200 text-sm">{bus.driverName}</p>
                 </div>

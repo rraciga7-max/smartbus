@@ -71,51 +71,51 @@ export const SolutionsPage: React.FC = () => {
   const currentSolution = solutions.find(s => s.id === selectedSolution) || solutions[0];
 
   return (
-    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 min-w-0">
       {/* PAGE HEADER */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20">
+      <div className="text-center max-w-3xl mx-auto space-y-4 min-w-0">
+        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20 inline-block">
           Tailored Industry Vertical Solutions
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-on-surface dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface dark:text-white tracking-tight">
           Solutions for Every <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-600">Transit Operator</span>
         </h1>
-        <p className="text-base text-on-surface-variant dark:text-slate-300">
+        <p className="text-sm sm:text-base text-on-surface-variant dark:text-slate-300">
           Tailored transit intelligence built for city authorities, private luxury coaches, school districts, and corporate fleets.
         </p>
       </div>
 
       {/* SOLUTION CATEGORY BUTTONS */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 min-w-0">
         {solutions.map((sol) => {
           const isSelected = selectedSolution === sol.id;
           return (
             <button
               key={sol.id}
               onClick={() => setSelectedSolution(sol.id)}
-              className={`p-4 rounded-3xl text-left border transition-all flex flex-col justify-between h-28 ${
+              className={`p-3 sm:p-4 rounded-2xl sm:rounded-3xl text-left border transition-all flex flex-col justify-between h-24 sm:h-28 min-w-0 ${
                 isSelected
-                  ? 'bg-primary text-on-primary border-primary shadow-xl scale-105 font-bold z-10'
+                  ? 'bg-primary text-on-primary border-primary shadow-xl scale-102 sm:scale-105 font-bold z-10'
                   : 'bg-surface-container-lowest dark:bg-slate-900 border-surface-container dark:border-slate-800 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800'
               }`}
             >
-              <span className="material-symbols-outlined text-[24px]">{sol.iconSymbol || sol.icon}</span>
-              <span className="text-xs font-bold truncate mt-2">{sol.title}</span>
+              <span className="material-symbols-outlined text-[20px] sm:text-[24px]">{sol.iconSymbol || sol.icon}</span>
+              <span className="text-[11px] sm:text-xs font-bold truncate mt-2">{sol.title}</span>
             </button>
           );
         })}
       </div>
 
       {/* DETAILED SOLUTION CARD */}
-      <div className="p-8 sm:p-12 rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-surface-container dark:border-slate-800 pb-6">
-          <div className="space-y-1">
-            <h2 className="text-3xl font-black text-on-surface dark:text-white">{currentSolution.title}</h2>
-            <p className="text-sm font-semibold text-primary dark:text-indigo-400">{currentSolution.subtitle}</p>
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-8 sm:space-y-10 min-w-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-surface-container dark:border-slate-800 pb-6 min-w-0">
+          <div className="space-y-1 min-w-0 flex-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-on-surface dark:text-white truncate">{currentSolution.title}</h2>
+            <p className="text-xs sm:text-sm font-semibold text-primary dark:text-indigo-400 truncate">{currentSolution.subtitle}</p>
           </div>
           <NavLink
             to="/register"
-            className="px-6 py-3 rounded-2xl bg-primary text-on-primary font-bold text-xs shadow-md shadow-primary/20 hover:bg-primary/90 transition-all flex items-center gap-2"
+            className="w-full sm:w-auto justify-center px-6 py-3 rounded-2xl bg-primary text-on-primary font-bold text-xs shadow-md shadow-primary/20 hover:bg-primary/90 transition-all flex items-center gap-2 flex-shrink-0"
           >
             <span>Request {currentSolution.title} Demo</span>
             <span className="material-symbols-outlined text-[16px]">arrow_forward</span>

@@ -13,25 +13,25 @@ export const AuditLogPage: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
           <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Audit Log & Event History</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Immutable administrative trail of all user actions, dispatch overrides, and system events</p>
+          <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Immutable administrative trail of all user actions, dispatch overrides, and system events</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search audit trail..."
-            className="px-3.5 py-1.5 bg-surface-container dark:bg-slate-800 rounded-full text-xs font-medium text-on-surface dark:text-slate-100 outline-none border border-transparent dark:border-slate-700"
+            className="flex-1 sm:flex-none px-3.5 py-2.5 bg-surface-container dark:bg-slate-800 rounded-2xl text-xs font-medium text-on-surface dark:text-slate-100 outline-none border border-transparent dark:border-slate-700 min-h-[44px]"
           />
           <button
             onClick={() => showToast('Audit logs exported to CSV file successfully.')}
-            className="px-4 py-1.5 bg-primary text-on-primary font-bold text-xs rounded-full shadow"
+            className="w-full sm:w-auto px-4 py-2.5 bg-primary text-on-primary font-bold text-xs rounded-2xl shadow min-h-[44px]"
           >
             Export Audit CSV
           </button>
@@ -39,7 +39,8 @@ export const AuditLogPage: React.FC = () => {
       </div>
 
       {/* Audit Log Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -75,6 +76,7 @@ export const AuditLogPage: React.FC = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -48,29 +48,29 @@ export const SafetyPage: React.FC = () => {
   ];
 
   return (
-    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 min-w-0">
       {/* PAGE HEADER */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20">
+      <div className="text-center max-w-3xl mx-auto space-y-4 min-w-0">
+        <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20 inline-block">
           Zero-Compromise Security Architecture
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-on-surface dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface dark:text-white tracking-tight">
           Safety, Compliance & <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 via-teal-500 to-primary">Enterprise Security</span>
         </h1>
-        <p className="text-base text-on-surface-variant dark:text-slate-300">
+        <p className="text-sm sm:text-base text-on-surface-variant dark:text-slate-300">
           Built from the ground up to protect passenger lives, vehicle assets, driver safety, and sensitive transit data.
         </p>
       </div>
 
       {/* PILLARS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 min-w-0">
         {safetyPillars.map((p, idx) => (
           <div
             key={idx}
-            className="p-8 rounded-[32px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6 flex flex-col justify-between"
+            className="p-5 sm:p-8 rounded-[28px] sm:rounded-[32px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl space-y-6 flex flex-col justify-between min-w-0"
           >
-            <div className="space-y-4">
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${p.color}`}>
+            <div className="space-y-4 min-w-0">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${p.color} flex-shrink-0`}>
                 <span className="material-symbols-outlined text-[28px]">{p.icon}</span>
               </div>
 
@@ -81,10 +81,10 @@ export const SafetyPage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-surface-container dark:border-slate-800">
+              <div className="space-y-2 pt-2 border-t border-surface-container dark:border-slate-800 min-w-0">
                 {p.highlights.map((h, hIdx) => (
                   <div key={hIdx} className="flex items-center gap-2 text-xs font-semibold text-on-surface dark:text-slate-200">
-                    <span className="material-symbols-outlined text-emerald-500 text-[16px]">check_circle</span>
+                    <span className="material-symbols-outlined text-emerald-500 text-[16px] flex-shrink-0">check_circle</span>
                     <span>{h}</span>
                   </div>
                 ))}
@@ -95,28 +95,28 @@ export const SafetyPage: React.FC = () => {
       </div>
 
       {/* ENTERPRISE TRUST & DATA GOVERNANCE CARD */}
-      <div className="p-8 sm:p-12 rounded-[36px] bg-slate-950 border border-slate-800 text-white space-y-8 shadow-2xl">
-        <div className="max-w-2xl space-y-3">
-          <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/30">
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-slate-950 border border-slate-800 text-white space-y-6 sm:space-y-8 shadow-2xl min-w-0">
+        <div className="max-w-2xl space-y-3 min-w-0">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/30 inline-block">
             ENTERPRISE GOVERNANCE & PRIVACY
           </span>
-          <h2 className="text-3xl font-extrabold tracking-tight">Enterprise Trust & Data Sovereignty</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Enterprise Trust & Data Sovereignty</h2>
           <p className="text-xs text-slate-300 leading-relaxed">
             Smart Bus 360 enforces end-to-end encryption in transit (TLS 1.3) and at rest (AES-256). Detailed audit logs capture every operator action, route override, and ticket transaction.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Role-Based Access Control</span>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-800 min-w-0">
+          <div className="space-y-2 min-w-0">
+            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Role-Based Access Control</span>
             <p className="text-xs text-slate-400">Strict permission boundaries for Super Admins, Fleet Managers, Dispatchers, Drivers, and Maintenance Crews.</p>
           </div>
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Immutable Audit Logging</span>
+          <div className="space-y-2 min-w-0">
+            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Immutable Audit Logging</span>
             <p className="text-xs text-slate-400">Every dispatch change, driver reassignment, and maintenance work order is permanently logged with IP & timestamp.</p>
           </div>
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Real-Time Security Monitoring</span>
+          <div className="space-y-2 min-w-0">
+            <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Real-Time Security Monitoring</span>
             <p className="text-xs text-slate-400">Automated intrusion detection, rate limiting, and 99.99% uptime guarantee with multi-region failover.</p>
           </div>
         </div>
@@ -124,7 +124,7 @@ export const SafetyPage: React.FC = () => {
         <div className="pt-4 flex items-center gap-4">
           <RouterLink
             to="/compliance"
-            className="px-6 py-3 rounded-2xl bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-extrabold text-xs shadow-lg transition-all"
+            className="w-full sm:w-auto text-center px-6 py-3 rounded-2xl bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-extrabold text-xs shadow-lg transition-all"
           >
             Launch Compliance & Security Center ➔
           </RouterLink>

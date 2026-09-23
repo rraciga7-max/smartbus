@@ -29,34 +29,38 @@ export const ExpenseManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Expense & Cost Management</h2>
-        <p className="text-xs text-outline dark:text-slate-400">Budget vs actual expenditure audit across fuel, maintenance, payroll, and parts</p>
+    <div className="flex flex-col gap-6 min-w-0">
+      {/* Mobile Page Header (Point 4) */}
+      <div className="flex flex-col gap-1 min-w-0">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight truncate">
+          Enterprise Expense & Cost Management
+        </h1>
+        <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1 truncate">
+          Budget vs actual expenditure audit across fuel, maintenance, payroll, and parts.
+        </p>
       </div>
 
       {/* Variance KPI Banner */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Total Budget Allocated</span>
-          <p className="text-2xl font-black text-on-surface dark:text-slate-100 mt-1">₹{totalBudget.toLocaleString()}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 min-w-0">
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Total Budget Allocated</span>
+          <p className="text-xl sm:text-2xl font-black text-on-surface dark:text-slate-100 mt-1 truncate">₹{totalBudget.toLocaleString()}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase">Actual Expenditure</span>
-          <p className="text-2xl font-black text-primary dark:text-indigo-400 mt-1">₹{totalActual.toLocaleString()}</p>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Actual Expenditure</span>
+          <p className="text-xl sm:text-2xl font-black text-primary dark:text-indigo-400 mt-1 truncate">₹{totalActual.toLocaleString()}</p>
         </div>
-        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm">
-          <span className="text-[11px] font-bold uppercase text-emerald-600 dark:text-emerald-400">Budget Variance</span>
-          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
-            +₹{variance.toLocaleString()} <span className="text-xs font-normal text-slate-400">(Under Budget)</span>
+        <div className="p-4 rounded-2xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-sm min-w-0">
+          <span className="text-[11px] font-bold uppercase text-emerald-600 dark:text-emerald-400 truncate block">Budget Variance</span>
+          <p className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1 truncate">
+            +₹{variance.toLocaleString()} <span className="text-xs font-normal text-slate-400">(Under)</span>
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start min-w-0">
         {/* Expense Creation Form */}
-        <form onSubmit={handleAddExpenseSubmit} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4">
+        <form onSubmit={handleAddExpenseSubmit} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4 min-w-0">
           <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3">
             Record Operational Expense
           </h3>
@@ -116,11 +120,12 @@ export const ExpenseManagementPage: React.FC = () => {
         </form>
 
         {/* Expenses List Table */}
-        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
-          <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4">
+        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+          <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4 truncate">
             Expense Audit Trail Log
           </h3>
 
+          <div className="table-container no-scrollbar">
           <table className="w-full text-left border-collapse text-xs min-w-[600px]">
             <thead>
               <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -148,6 +153,7 @@ export const ExpenseManagementPage: React.FC = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

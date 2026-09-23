@@ -42,19 +42,23 @@ export const RouteManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Top Action Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Mobile Page Header (Point 4) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Transit Routes & Stop Timelines</h2>
-          <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Manage active route corridors, frequency, and stop schedules</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+            Transit Routes & Stop Timelines
+          </h1>
+          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+            Manage active route corridors, frequency, and stop schedules.
+          </p>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md flex items-center justify-center gap-2 active:scale-95"
+          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
         >
           <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
-          Create New Route
+          <span>Create New Route</span>
         </button>
       </div>
 
@@ -99,22 +103,22 @@ export const RouteManagementPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Selected Route Stop Sequence Timeline View (Matching Stitch Screen 10) */}
-        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-surface-container dark:border-slate-800">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-primary dark:bg-indigo-600 text-on-primary text-label-sm font-extrabold">
+        {/* Selected Route Stop Sequence Timeline View */}
+        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-6 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-surface-container dark:border-slate-800 min-w-0">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 flex-wrap min-w-0">
+                <span className="px-3 py-1 rounded-full bg-primary dark:bg-indigo-600 text-on-primary text-label-sm font-extrabold flex-shrink-0">
                   Route {selectedRoute.code}
                 </span>
-                <h3 className="text-xl font-extrabold text-on-surface dark:text-slate-100">{selectedRoute.name}</h3>
+                <h3 className="text-lg sm:text-xl font-extrabold text-on-surface dark:text-slate-100 truncate min-w-0">{selectedRoute.name}</h3>
               </div>
-              <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-1">
+              <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-1 truncate">
                 {selectedRoute.origin} ➔ {selectedRoute.destination} ({selectedRoute.distanceKm} km • ~{selectedRoute.avgDurationMins} mins)
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <span className="px-3 py-1.5 rounded-full bg-success-container dark:bg-emerald-950/60 text-[#065F46] dark:text-emerald-300 font-bold text-xs">
                 Active Operational
               </span>

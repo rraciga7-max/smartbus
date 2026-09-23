@@ -22,15 +22,15 @@ export const AppShell: React.FC = () => {
     if (isMobileDrawerOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [isMobileDrawerOpen]);
 
   return (
-    <div className="min-h-screen bg-background dark:bg-slate-950 text-on-background dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 overflow-x-hidden">
+    <div className="min-h-screen bg-background dark:bg-slate-950 text-on-background dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       {/* Sidebar (Desktop + Mobile Off-Canvas Drawer) */}
       <Sidebar
         isCollapsed={isSidebarCollapsed}
@@ -40,12 +40,12 @@ export const AppShell: React.FC = () => {
       />
 
       {/* Main Content Column */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
         {/* Top Header */}
         <TopHeader onOpenMobileMenu={() => setIsMobileDrawerOpen(true)} />
 
         {/* Page Main Content Area */}
-        <main className="flex-1 p-3 sm:p-5 lg:p-6 pb-20 md:pb-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 min-w-0 p-3 sm:p-5 lg:p-6 pb-24 md:pb-8 max-w-7xl w-full mx-auto">
           <Outlet />
         </main>
       </div>

@@ -24,18 +24,18 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 max-w-4xl">
-      <div>
+    <div className="flex flex-col gap-6 max-w-4xl w-full min-w-0">
+      <div className="min-w-0">
         <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Configuration & Settings</h2>
-        <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Manage telematics gateway parameters, theme rules, and depot preferences</p>
+        <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-0.5">Manage telematics gateway parameters, theme rules, and depot preferences</p>
       </div>
 
-      <form onSubmit={handleSaveSettings} className="flex flex-col gap-6">
+      <form onSubmit={handleSaveSettings} className="flex flex-col gap-6 min-w-0">
         {/* Theme Preferences */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-          <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Appearance & Theme Mode</h3>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Appearance & Theme Mode</h3>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
             {[
               { id: 'light', label: 'Light Theme', icon: 'light_mode' },
               { id: 'dark', label: 'Dark Theme', icon: 'dark_mode' },
@@ -45,13 +45,13 @@ export const SettingsPage: React.FC = () => {
                 key={t.id}
                 type="button"
                 onClick={() => setTheme(t.id as Theme)}
-                className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all ${
+                className={`p-3.5 sm:p-4 rounded-2xl border flex flex-row sm:flex-col items-center justify-center gap-2.5 transition-all min-h-[44px] ${
                   theme === t.id
                     ? 'bg-primary/10 dark:bg-indigo-500/20 border-primary dark:border-indigo-500 text-primary dark:text-indigo-400 font-bold shadow-sm'
                     : 'bg-surface-container-low dark:bg-slate-800/60 border-surface-container dark:border-slate-700 text-on-surface-variant dark:text-slate-300 hover:bg-surface-container dark:hover:bg-slate-800'
                 }`}
               >
-                <span className="material-symbols-outlined text-[24px]">{t.icon}</span>
+                <span className="material-symbols-outlined text-[22px] sm:text-[24px]">{t.icon}</span>
                 <span className="text-xs font-semibold">{t.label}</span>
               </button>
             ))}
@@ -59,8 +59,8 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {/* Depot & Hub Settings */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-          <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Depot & Headquarters Info</h3>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Depot & Headquarters Info</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -69,7 +69,7 @@ export const SettingsPage: React.FC = () => {
                 type="text"
                 value={depotName}
                 onChange={(e) => setDepotName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-2xl bg-surface-container dark:bg-slate-800 text-body-md text-on-surface dark:text-slate-100 border border-outline/30 dark:border-slate-700 outline-none"
+                className="w-full px-4 py-2.5 rounded-2xl bg-surface-container dark:bg-slate-800 text-body-md text-on-surface dark:text-slate-100 border border-outline/30 dark:border-slate-700 outline-none min-h-[44px]"
               />
             </div>
 
@@ -79,55 +79,55 @@ export const SettingsPage: React.FC = () => {
                 type="number"
                 value={gpsIntervalSecs}
                 onChange={(e) => setGpsIntervalSecs(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-2xl bg-surface-container dark:bg-slate-800 text-body-md text-on-surface dark:text-slate-100 border border-outline/30 dark:border-slate-700 outline-none"
+                className="w-full px-4 py-2.5 rounded-2xl bg-surface-container dark:bg-slate-800 text-body-md text-on-surface dark:text-slate-100 border border-outline/30 dark:border-slate-700 outline-none min-h-[44px]"
               />
             </div>
           </div>
         </div>
 
         {/* System Rules & Toggles */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-          <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Automated Alert Rules</h3>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Automated Alert Rules</h3>
 
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 border border-transparent dark:border-slate-700/50">
-              <div>
-                <span className="font-bold text-on-surface dark:text-slate-200 text-sm">Critical Maintenance Sound Notifications</span>
-                <p className="text-xs text-on-surface-variant dark:text-slate-400">Play audio ping when high priority brake or engine alerts occur</p>
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 border border-transparent dark:border-slate-700/50 gap-3">
+              <div className="min-w-0 flex-1">
+                <span className="font-bold text-on-surface dark:text-slate-200 text-xs sm:text-sm block">Critical Maintenance Sound Notifications</span>
+                <p className="text-xs text-on-surface-variant dark:text-slate-400 mt-0.5">Play audio ping when high priority brake or engine alerts occur</p>
               </div>
               <input
                 type="checkbox"
                 checked={enableSoundAlerts}
                 onChange={(e) => setEnableSoundAlerts(e.target.checked)}
-                className="w-5 h-5 accent-primary dark:accent-indigo-500 cursor-pointer"
+                className="w-5 h-5 accent-primary dark:accent-indigo-500 cursor-pointer flex-shrink-0"
               />
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 border border-transparent dark:border-slate-700/50">
-              <div>
-                <span className="font-bold text-on-surface dark:text-slate-200 text-sm">Automatic Schedule Dispatching</span>
-                <p className="text-xs text-on-surface-variant dark:text-slate-400 font-medium">Auto transition scheduled trips to In Transit at departure time</p>
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 border border-transparent dark:border-slate-700/50 gap-3">
+              <div className="min-w-0 flex-1">
+                <span className="font-bold text-on-surface dark:text-slate-200 text-xs sm:text-sm block">Automatic Schedule Dispatching</span>
+                <p className="text-xs text-on-surface-variant dark:text-slate-400 font-medium mt-0.5">Auto transition scheduled trips to In Transit at departure time</p>
               </div>
               <input
                 type="checkbox"
                 checked={enableAutoSchedule}
                 onChange={(e) => setEnableAutoSchedule(e.target.checked)}
-                className="w-5 h-5 accent-primary dark:accent-indigo-500 cursor-pointer"
+                className="w-5 h-5 accent-primary dark:accent-indigo-500 cursor-pointer flex-shrink-0"
               />
             </div>
           </div>
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 shadow-stitch-card border border-error/30 dark:border-rose-900/50 flex flex-col gap-3">
-          <h3 className="text-title-lg font-bold text-error dark:text-rose-400">Data Storage Options</h3>
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 sm:p-6 shadow-stitch-card border border-error/30 dark:border-rose-900/50 flex flex-col gap-3 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold text-error dark:text-rose-400">Data Storage Options</h3>
           <p className="text-xs text-on-surface-variant dark:text-slate-400">Reset local state or purge cached fleet database mock entries.</p>
           
           <div>
             <button
               type="button"
               onClick={handleResetData}
-              className="px-5 py-2.5 rounded-full bg-error-container dark:bg-rose-950/60 text-on-error-container dark:text-rose-300 font-bold text-label-md hover:bg-error-container/80 transition-colors"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-error-container dark:bg-rose-950/60 text-on-error-container dark:text-rose-300 font-bold text-xs sm:text-sm hover:bg-error-container/80 transition-colors min-h-[44px]"
             >
               Reset Mock Data To Defaults
             </button>
@@ -138,7 +138,7 @@ export const SettingsPage: React.FC = () => {
         <div className="flex justify-end gap-3">
           <button
             type="submit"
-            className="px-8 py-3 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md active:scale-95"
+            className="w-full sm:w-auto px-8 py-3 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md active:scale-95 min-h-[44px]"
           >
             Save Configuration
           </button>

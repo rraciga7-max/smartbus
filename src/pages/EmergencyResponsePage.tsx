@@ -32,26 +32,26 @@ export const EmergencyResponsePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* High Visibility Emergency Command Header */}
-      <div className="p-6 rounded-[28px] bg-gradient-to-r from-rose-950 via-slate-900 to-slate-900 border-2 border-error/50 text-white shadow-2xl flex flex-wrap items-center justify-between gap-4 relative overflow-hidden">
-        <div className="flex items-center gap-4 relative z-10">
-          <div className="w-14 h-14 rounded-2xl bg-error text-on-error flex items-center justify-center font-bold text-2xl shadow-lg shadow-error/40 animate-pulse">
-            <span className="material-symbols-outlined text-[32px]">warning</span>
+      <div className="p-4 sm:p-6 rounded-[28px] bg-gradient-to-r from-rose-950 via-slate-900 to-slate-900 border-2 border-error/50 text-white shadow-2xl flex flex-wrap items-center justify-between gap-4 relative overflow-hidden min-w-0">
+        <div className="flex items-center gap-3 sm:gap-4 relative z-10 min-w-0">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-error text-on-error flex items-center justify-center font-bold text-2xl shadow-lg shadow-error/40 animate-pulse flex-shrink-0">
+            <span className="material-symbols-outlined text-[28px] sm:text-[32px]">warning</span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-2xl font-black tracking-tight text-white">EMERGENCY RESPONSE CENTER</h2>
-              <span className="px-3 py-0.5 rounded-full bg-error text-on-error font-extrabold text-xs uppercase animate-bounce">
-                CRITICAL PRIORITY
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white truncate">EMERGENCY RESPONSE</h2>
+              <span className="px-2.5 py-0.5 rounded-full bg-error text-on-error font-extrabold text-[10px] sm:text-xs uppercase animate-bounce">
+                CRITICAL
               </span>
             </div>
-            <p className="text-xs text-rose-200 mt-1">High-priority incident intervention & emergency service dispatch console</p>
+            <p className="text-xs text-rose-200 mt-1 line-clamp-1">High-priority incident intervention & dispatch console</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4 relative z-10">
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-start sm:items-end">
             <span className="text-[10px] uppercase font-bold text-rose-300">Active Emergencies</span>
             <span className="text-2xl font-black text-rose-400">{emergencies.length}</span>
           </div>
@@ -59,42 +59,42 @@ export const EmergencyResponsePage: React.FC = () => {
       </div>
 
       {emergencies.length === 0 ? (
-        <div className="p-12 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 text-center flex flex-col items-center gap-3">
+        <div className="p-12 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 text-center flex flex-col items-center gap-3 min-w-0">
           <span className="material-symbols-outlined text-6xl text-emerald-500">check_circle</span>
           <h3 className="font-bold text-lg text-on-surface dark:text-slate-100">All Operations Normal</h3>
           <p className="text-xs text-outline dark:text-slate-400 max-w-md">No active emergency alerts or SOS signals in the system at this time.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start min-w-0">
           {/* Main Emergency Map & Telemetry Panel */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
+          <div className="lg:col-span-2 flex flex-col gap-6 min-w-0">
             {/* Active Emergency Telemetry Banner */}
-            <div className="p-6 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4">
-              <div className="flex items-center justify-between border-b border-surface-container dark:border-slate-800 pb-3">
-                <span className="font-bold text-sm text-error flex items-center gap-2">
-                  <span className="material-symbols-outlined">report_problem</span>
+            <div className="p-4 sm:p-6 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4 min-w-0">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-surface-container dark:border-slate-800 pb-3 min-w-0">
+                <span className="font-bold text-sm text-error flex items-center gap-2 truncate">
+                  <span className="material-symbols-outlined flex-shrink-0">report_problem</span>
                   INCIDENT #{activeEm.incidentId} — {activeEm.busRegistration}
                 </span>
                 <span className="text-xs font-bold text-outline dark:text-slate-400">{activeEm.timeAgo}</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Driver</span>
-                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5">{activeEm.driverName}</p>
-                  <p className="text-[11px] text-primary dark:text-indigo-400 font-semibold">{activeEm.driverPhone}</p>
+                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Driver</span>
+                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5 truncate">{activeEm.driverName}</p>
+                  <p className="text-[11px] text-primary dark:text-indigo-400 font-semibold truncate">{activeEm.driverPhone}</p>
                 </div>
-                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Passengers</span>
-                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5">{activeEm.passengerCount} Boarded</p>
+                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Passengers</span>
+                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5 truncate">{activeEm.passengerCount} Boarded</p>
                 </div>
-                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Nearest Depot</span>
-                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5">{activeEm.nearestDepot}</p>
+                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Nearest Depot</span>
+                  <p className="font-bold text-on-surface dark:text-slate-100 mt-0.5 truncate">{activeEm.nearestDepot}</p>
                 </div>
-                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Support Unit</span>
-                  <p className="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{activeEm.nearestSupportTeam}</p>
+                <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                  <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Support Unit</span>
+                  <p className="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 truncate">{activeEm.nearestSupportTeam}</p>
                 </div>
               </div>
 

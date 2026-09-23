@@ -102,7 +102,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenMobileMenu }) => {
             {/* Mobile Hamburger Button */}
             <button
               onClick={onOpenMobileMenu}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl text-on-surface-variant dark:text-slate-200 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors flex-shrink-0"
+              className="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-on-surface-variant dark:text-slate-200 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors flex-shrink-0"
               aria-label="Open navigation menu"
               title="Open navigation menu"
             >
@@ -137,7 +137,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenMobileMenu }) => {
 
               {/* Switcher Dropdown Menu */}
               {showSwitcherDropdown && (
-                <div className="absolute left-0 mt-2 w-64 bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] shadow-2xl border border-surface-container dark:border-slate-800 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-200 space-y-1">
+                <div className="absolute left-0 mt-2 w-64 max-w-[calc(100vw-24px)] bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] shadow-2xl border border-surface-container dark:border-slate-800 p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-200 space-y-1">
                   <div className="px-3 py-1.5 text-[10px] font-bold text-outline dark:text-slate-400 uppercase tracking-wider">
                     Switch Area
                   </div>
@@ -260,7 +260,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenMobileMenu }) => {
 
               {/* Notification Popover Dropdown */}
               {showNotificationPopover && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] shadow-2xl border border-surface-container dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-24px)] bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] shadow-2xl border border-surface-container dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="flex items-center justify-between pb-3 border-b border-surface-container/60 dark:border-slate-800">
                     <span className="font-bold text-on-surface dark:text-slate-100 text-sm">Notifications ({unreadNotifications.length} unread)</span>
                     {unreadNotifications.length > 0 && (
@@ -318,7 +318,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenMobileMenu }) => {
                   setShowProfileDropdown(!showProfileDropdown);
                   setShowNotificationPopover(false);
                 }}
-                className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-container dark:hover:bg-slate-800 transition-colors focus:outline-none"
+                className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-container dark:hover:bg-slate-800 transition-colors focus:outline-none min-h-[44px] min-w-[44px]"
                 aria-label="User Menu"
               >
                 <img
@@ -333,7 +333,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onOpenMobileMenu }) => {
 
               {/* Profile Dropdown Content */}
               {showProfileDropdown && (
-                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] shadow-2xl border border-surface-container dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] shadow-2xl border border-surface-container dark:border-slate-800 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   {/* User Overview */}
                   <div className="flex items-center gap-3 pb-3 border-b border-surface-container/60 dark:border-slate-800">
                     <img

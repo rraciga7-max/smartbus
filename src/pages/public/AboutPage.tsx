@@ -90,29 +90,29 @@ export const AboutPage: React.FC = () => {
       </div>
 
       {/* THE PROBLEM WE SOLVE & HOW WE HELP */}
-      <div className="rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6">
-          <span className="px-3.5 py-1.5 rounded-full bg-error/10 text-error text-xs font-bold border border-error/20">
+      <div className="rounded-[32px] sm:rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 p-6 sm:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start min-w-0">
+        <div className="space-y-4 sm:space-y-6 min-w-0">
+          <span className="px-3.5 py-1.5 rounded-full bg-error/10 text-error text-xs font-bold border border-error/20 inline-block">
             The Industry Challenge
           </span>
-          <h2 className="text-3xl font-extrabold text-on-surface dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface dark:text-white tracking-tight">
             The Problem Transit Operators Face Today
           </h2>
           <div className="space-y-4 text-xs text-on-surface-variant dark:text-slate-300 leading-relaxed">
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-error text-[20px] mt-0.5">cancel</span>
+              <span className="material-symbols-outlined text-error text-[20px] mt-0.5 flex-shrink-0">cancel</span>
               <div>
                 <strong>Unplanned Vehicle Breakdowns:</strong> Component failures during active passenger routes cause costly towing fees and severe brand damage.
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-error text-[20px] mt-0.5">cancel</span>
+              <span className="material-symbols-outlined text-error text-[20px] mt-0.5 flex-shrink-0">cancel</span>
               <div>
                 <strong>Unmonitored Fuel Theft & Siphoning:</strong> Disconnected fuel receipts mask fuel theft anomalies costing operators 15-22% of total operational expenditure.
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-error text-[20px] mt-0.5">cancel</span>
+              <span className="material-symbols-outlined text-error text-[20px] mt-0.5 flex-shrink-0">cancel</span>
               <div>
                 <strong>Lack of Driver Behavior Visibility:</strong> Speeding, harsh braking, and driver fatigue go unmonitored until an accident occurs.
               </div>
@@ -120,28 +120,28 @@ export const AboutPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="space-y-6 lg:border-l lg:border-surface-container lg:dark:border-slate-800 lg:pl-12">
-          <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20">
+        <div className="space-y-4 sm:space-y-6 border-t pt-8 lg:border-t-0 lg:pt-0 lg:border-l lg:border-surface-container lg:dark:border-slate-800 lg:pl-12 min-w-0">
+          <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20 inline-block">
             The Smart Bus 360 Advantage
           </span>
-          <h2 className="text-3xl font-extrabold text-on-surface dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface dark:text-white tracking-tight">
             How We Help Operators Succeed
           </h2>
           <div className="space-y-4 text-xs text-on-surface-variant dark:text-slate-300 leading-relaxed">
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5">check_circle</span>
+              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5 flex-shrink-0">check_circle</span>
               <div>
                 <strong>Predictive Maintenance Alerts:</strong> Automated sensor algorithms detect oil degradation, brake wear, and battery dips 72 hours early.
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5">check_circle</span>
+              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5 flex-shrink-0">check_circle</span>
               <div>
                 <strong>AI Fuel Anomaly Detection:</strong> Real-time fuel sensor correlation flags sudden tank drops or fuel siphoning instantly.
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5">check_circle</span>
+              <span className="material-symbols-outlined text-emerald-500 text-[20px] mt-0.5 flex-shrink-0">check_circle</span>
               <div>
                 <strong>Driver Safety Scoring & Coaching:</strong> Gamified safety scorecards motivate drivers to adopt fuel-efficient and safe driving habits.
               </div>
@@ -151,13 +151,13 @@ export const AboutPage: React.FC = () => {
       </div>
 
       {/* KEY STATISTICS GRID */}
-      <div className="space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
+      <div className="space-y-8 min-w-0">
+        <div className="text-center max-w-2xl mx-auto space-y-2 min-w-0">
           <h2 className="text-2xl font-extrabold text-on-surface dark:text-white">Measurable Operational Impact</h2>
           <p className="text-xs text-on-surface-variant dark:text-slate-400">Validated benchmarks across 120+ fleet deployments</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 min-w-0">
           {stats.map((stat, i) => (
             <div key={i} className="p-6 rounded-3xl bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 text-center space-y-2">
               <div className="text-3xl font-black text-primary dark:text-indigo-400">{stat.value}</div>

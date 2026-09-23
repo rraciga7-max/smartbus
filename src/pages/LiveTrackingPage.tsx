@@ -33,16 +33,16 @@ export const LiveTrackingPage: React.FC = () => {
   }, [isSimulating]);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Map Control Header */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary flex items-center justify-center">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 min-w-0">
+        <div className="flex items-center gap-3 min-w-0 w-full sm:w-auto">
+          <div className="w-10 h-10 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary flex items-center justify-center flex-shrink-0">
             <span className="material-symbols-outlined text-[24px]">near_me</span>
           </div>
-          <div>
-            <h2 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Live Fleet GPS Tracker</h2>
-            <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Simulating real-time transit telemetry & passenger loads</p>
+          <div className="min-w-0">
+            <h2 className="text-title-lg font-bold text-on-surface dark:text-slate-100 truncate">Live Fleet GPS Tracker</h2>
+            <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs truncate">Simulating real-time transit telemetry & passenger loads</p>
           </div>
         </div>
 
@@ -64,7 +64,7 @@ export const LiveTrackingPage: React.FC = () => {
       </div>
 
       {/* Main Interactive Simulated Map Canvas Area */}
-      <div className="relative w-full h-[520px] rounded-[32px] overflow-hidden bg-slate-900 border border-slate-700 shadow-2xl">
+      <div className="relative w-full h-[380px] sm:h-[520px] rounded-[32px] overflow-hidden bg-slate-900 border border-slate-700 shadow-2xl min-w-0">
         {/* Map Grid Pattern Overlay */}
         <div 
           className="absolute inset-0 opacity-20"
@@ -102,18 +102,18 @@ export const LiveTrackingPage: React.FC = () => {
         </svg>
 
         {/* Floating City Landmarks */}
-        <div className="absolute top-8 left-8 px-3 py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-xs font-semibold border border-slate-700">
+        <div className="absolute top-4 sm:top-8 left-4 sm:left-8 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-[10px] sm:text-xs font-semibold border border-slate-700 pointer-events-none">
           📍 Gandhipuram Central Hub
         </div>
-        <div className="absolute bottom-12 right-12 px-3 py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-xs font-semibold border border-slate-700">
+        <div className="absolute bottom-16 sm:bottom-12 right-4 sm:right-12 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-[10px] sm:text-xs font-semibold border border-slate-700 pointer-events-none">
           📍 Singanallur Terminal
         </div>
-        <div className="absolute top-12 right-24 px-3 py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-xs font-semibold border border-slate-700">
+        <div className="hidden sm:block absolute top-12 right-24 px-3 py-1.5 rounded-full bg-slate-800/80 backdrop-blur-md text-slate-200 text-xs font-semibold border border-slate-700 pointer-events-none">
           📍 Peelamedu Tech Park
         </div>
 
         {/* Interactive Bus Markers overlay on Map Canvas */}
-        <div className="absolute inset-0 p-8 flex items-center justify-around flex-wrap">
+        <div className="absolute inset-0 p-4 sm:p-8 flex items-center justify-around flex-wrap">
           {simulatedBuses.map((bus, idx) => {
             const isSelected = selectedBus?.id === bus.id;
             let markerBg = 'bg-success text-on-success ring-success/30';
@@ -125,22 +125,22 @@ export const LiveTrackingPage: React.FC = () => {
                 key={bus.id}
                 onClick={() => setSelectedBus(bus)}
                 style={{
-                  transform: `translate(${(idx % 3) * 20 - 10}px, ${(idx % 2) * 40 - 20}px)`
+                  transform: `translate(${(idx % 3) * 16 - 8}px, ${(idx % 2) * 30 - 15}px)`
                 }}
                 className={`relative cursor-pointer transition-all duration-500 transform hover:scale-110 z-10 ${
                   isSelected ? 'scale-125 z-20' : ''
                 }`}
               >
                 {/* Bus Marker Pulse */}
-                <div className={`w-12 h-12 rounded-2xl ${markerBg} flex flex-col items-center justify-center shadow-2xl ring-4 transition-all`}>
-                  <span className="material-symbols-outlined text-[20px]">directions_bus</span>
-                  <span className="text-[9px] font-extrabold truncate max-w-[40px]">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl ${markerBg} flex flex-col items-center justify-center shadow-2xl ring-4 transition-all`}>
+                  <span className="material-symbols-outlined text-[18px] sm:text-[20px]">directions_bus</span>
+                  <span className="text-[8px] sm:text-[9px] font-extrabold truncate max-w-[36px] sm:max-w-[40px]">
                     {bus.registrationNumber.split(' ').pop()}
                   </span>
                 </div>
 
                 {/* Info Tooltip on hover/selected */}
-                <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white text-xs py-1.5 px-3 rounded-xl whitespace-nowrap border border-slate-700 shadow-xl flex flex-col items-center">
+                <div className="hidden sm:flex absolute top-14 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white text-xs py-1.5 px-3 rounded-xl whitespace-nowrap border border-slate-700 shadow-xl flex-col items-center">
                   <span className="font-bold">{bus.registrationNumber}</span>
                   <span className="text-[10px] text-emerald-400">{bus.speedKmH} km/h • {bus.currentPassengers} Riders</span>
                 </div>
@@ -150,18 +150,18 @@ export const LiveTrackingPage: React.FC = () => {
         </div>
 
         {/* Map Legend Footer Overlay */}
-        <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-700/80 flex items-center gap-4 text-slate-300 text-xs">
+        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-auto bg-slate-900/90 backdrop-blur-md p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-slate-700/80 flex flex-wrap items-center gap-2 sm:gap-4 text-slate-300 text-[10px] sm:text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-success"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-success"></span>
             <span>Active ({simulatedBuses.filter(b => b.status === 'active').length})</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
             <span>Idle ({simulatedBuses.filter(b => b.status === 'idle').length})</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-error"></span>
-            <span>Maintenance ({simulatedBuses.filter(b => b.status === 'maintenance').length})</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-error"></span>
+            <span>Maint. ({simulatedBuses.filter(b => b.status === 'maintenance').length})</span>
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@ export const LiveTrackingPage: React.FC = () => {
         <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Active Route Dispatch Corridors</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {routes.map(r => (
-            <div key={r.id} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-2">
+            <div key={r.id} className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-2 min-w-0">
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <span className="px-2.5 py-0.5 rounded-full bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 font-bold text-label-sm">

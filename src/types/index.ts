@@ -44,7 +44,7 @@ export interface Bus {
   lastGpsUpdate?: string;
 }
 
-export type DriverStatus = 'on_duty' | 'off_duty' | 'on_break' | 'suspended';
+export type DriverStatus = 'on_duty' | 'off_duty' | 'on_break' | 'on_leave' | 'suspended';
 
 export interface DriverSafetyMetrics {
   overspeedEvents: number;

@@ -11,14 +11,14 @@ export const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 pb-safe bg-surface/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-surface-container/60 dark:border-slate-800 shadow-[0_-1px_8px_rgba(0,0,0,0.04)]">
-      <div className="h-16 flex items-center justify-around px-2">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 pb-safe bg-surface/90 dark:bg-slate-900/90 backdrop-blur-xl border-t border-surface-container/60 dark:border-slate-800 shadow-[0_-1px_8px_rgba(0,0,0,0.04)] w-full max-w-full overflow-hidden">
+      <div className="h-16 flex items-center justify-around px-1 w-full max-w-full">
         {tabs.map((tab) => (
           <NavLink
             key={tab.path}
             to={tab.path}
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center w-full h-full transition-colors relative ${
+              `flex flex-col items-center justify-center flex-1 min-w-0 h-full transition-colors relative ${
                 isActive 
                   ? 'text-primary dark:text-indigo-400 font-bold' 
                   : 'text-on-surface-variant dark:text-slate-400 hover:text-on-surface dark:hover:text-slate-200'

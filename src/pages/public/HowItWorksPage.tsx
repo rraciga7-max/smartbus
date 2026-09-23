@@ -88,63 +88,63 @@ export const HowItWorksPage: React.FC = () => {
   const currentStep = steps.find(s => s.number === selectedStep) || steps[0];
 
   return (
-    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 min-w-0">
       {/* PAGE TITLE */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20">
+      <div className="text-center max-w-3xl mx-auto space-y-4 min-w-0">
+        <span className="px-3.5 py-1.5 rounded-full bg-primary/10 dark:bg-indigo-950 text-primary dark:text-indigo-400 text-xs font-bold border border-primary/20 inline-block">
           6-Step Operational Pipeline
         </span>
-        <h1 className="text-4xl sm:text-5xl font-black text-on-surface dark:text-white tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface dark:text-white tracking-tight">
           How <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-600">Smart Bus 360</span> Works
         </h1>
-        <p className="text-base text-on-surface-variant dark:text-slate-300">
+        <p className="text-sm sm:text-base text-on-surface-variant dark:text-slate-300">
           From hardware telemetry connection to autonomous AI dispatch and passenger satisfaction.
         </p>
       </div>
 
       {/* STEP PROCESS TIMELINE PIPELINE */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 min-w-0">
         {steps.map((step) => {
           const isSelected = selectedStep === step.number;
           return (
             <button
               key={step.number}
               onClick={() => setSelectedStep(step.number)}
-              className={`p-4 rounded-3xl text-left border transition-all flex flex-col justify-between h-32 relative ${
+              className={`p-3 sm:p-4 rounded-2xl sm:rounded-3xl text-left border transition-all flex flex-col justify-between h-28 sm:h-32 relative min-w-0 ${
                 isSelected
-                  ? 'bg-primary text-on-primary border-primary shadow-xl scale-105 z-10 font-bold'
+                  ? 'bg-primary text-on-primary border-primary shadow-xl scale-102 sm:scale-105 z-10 font-bold'
                   : 'bg-surface-container-lowest dark:bg-slate-900 border-surface-container dark:border-slate-800 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-xs font-black px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary dark:text-indigo-400'}`}>
+                <span className={`text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary dark:text-indigo-400'}`}>
                   0{step.number}
                 </span>
-                <span className="material-symbols-outlined text-[20px]">{step.icon}</span>
+                <span className="material-symbols-outlined text-[18px] sm:text-[20px]">{step.icon}</span>
               </div>
-              <div className="text-xs font-extrabold truncate mt-2">{step.title}</div>
+              <div className="text-[11px] sm:text-xs font-extrabold truncate mt-2">{step.title}</div>
             </button>
           );
         })}
       </div>
 
       {/* DETAILED INTERACTIVE STEP DISPLAY CARD */}
-      <div className="p-8 sm:p-12 rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-7 space-y-6">
-          <div className="flex items-center gap-3">
-            <span className="w-10 h-10 rounded-2xl bg-primary text-on-primary font-black text-sm flex items-center justify-center shadow-md">
+      <div className="p-6 sm:p-12 rounded-[32px] sm:rounded-[36px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-w-0">
+        <div className="lg:col-span-7 space-y-6 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+            <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-primary text-on-primary font-black text-sm flex items-center justify-center shadow-md flex-shrink-0">
               0{currentStep.number}
             </span>
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/20 truncate">
               {currentStep.previewTag}
             </span>
           </div>
 
-          <div>
-            <h2 className="text-3xl font-black text-on-surface dark:text-white tracking-tight">
+          <div className="min-w-0">
+            <h2 className="text-2xl sm:text-3xl font-black text-on-surface dark:text-white tracking-tight">
               {currentStep.title}
             </h2>
-            <h3 className="text-sm font-semibold text-primary dark:text-indigo-400 mt-1">
+            <h3 className="text-xs sm:text-sm font-semibold text-primary dark:text-indigo-400 mt-1">
               {currentStep.subtitle}
             </h3>
             <p className="text-xs text-on-surface-variant dark:text-slate-300 mt-3 leading-relaxed">
@@ -152,11 +152,11 @@ export const HowItWorksPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="space-y-3 pt-2">
-            <span className="text-xs font-bold text-on-surface dark:text-slate-200 uppercase tracking-wider">Key Step Highlights:</span>
+          <div className="space-y-3 pt-2 min-w-0">
+            <span className="text-xs font-bold text-on-surface dark:text-slate-200 uppercase tracking-wider block">Key Step Highlights:</span>
             {currentStep.details.map((detail, dIdx) => (
               <div key={dIdx} className="flex items-start gap-3 text-xs text-on-surface-variant dark:text-slate-300 font-medium">
-                <span className="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
+                <span className="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0">check_circle</span>
                 <span>{detail}</span>
               </div>
             ))}
@@ -165,7 +165,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="pt-4 flex items-center gap-4">
             <button
               onClick={() => setSelectedStep(prev => (prev % 6) + 1)}
-              className="px-6 py-3 rounded-2xl bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-all flex items-center gap-2"
+              className="w-full sm:w-auto justify-center px-6 py-3 rounded-2xl bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-all flex items-center gap-2"
             >
               <span>Next Step: 0{((currentStep.number % 6) + 1)}</span>
               <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -173,7 +173,7 @@ export const HowItWorksPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-5 p-6 rounded-3xl bg-slate-950 border border-slate-800 text-white space-y-6 shadow-2xl relative overflow-hidden">
+        <div className="lg:col-span-5 p-4 sm:p-6 rounded-3xl bg-slate-950 border border-slate-800 text-white space-y-6 shadow-2xl relative overflow-hidden min-w-0">
           <div className="flex items-center justify-between border-b border-slate-800 pb-4">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-primary text-[24px]">{currentStep.icon}</span>

@@ -18,21 +18,21 @@ export const ComplianceCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Compliance & Document Vault</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Tracking vehicle registration, fitness certificates, pollution permits, and driver licenses</p>
+      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Enterprise Compliance & Document Vault</h2>
+          <p className="text-xs text-outline dark:text-slate-400 truncate">Tracking vehicle registration, fitness certificates, pollution permits, and driver licenses</p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 text-xs font-bold">
+        <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold min-w-0">
           {(['all', 'valid', 'expiring_0_7', 'expiring_8_30', 'expiring_31_90', 'expired'] as const).map(st => (
             <button
               key={st}
               onClick={() => setFilterStatus(st)}
-              className={`px-3 py-1 rounded-full capitalize transition-all ${
+              className={`px-3 py-1 rounded-full capitalize transition-all text-[11px] ${
                 filterStatus === st ? 'bg-primary text-on-primary shadow' : 'bg-surface-container dark:bg-slate-800 text-on-surface-variant dark:text-slate-300'
               }`}
             >
@@ -43,7 +43,8 @@ export const ComplianceCenterPage: React.FC = () => {
       </div>
 
       {/* Compliance Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md overflow-x-auto">
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        <div className="table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
@@ -82,6 +83,7 @@ export const ComplianceCenterPage: React.FC = () => {
             })}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

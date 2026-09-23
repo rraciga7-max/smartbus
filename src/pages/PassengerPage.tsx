@@ -32,18 +32,18 @@ export const PassengerPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Top Banner / Passenger Home header (Stitch Screen 15) */}
-      <div className="bg-gradient-to-r from-primary to-primary-container dark:from-indigo-900 dark:to-slate-900 rounded-[28px] p-6 text-on-primary shadow-stitch-float flex flex-col md:flex-row items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20">
-        <div>
+      <div className="bg-gradient-to-r from-primary to-primary-container dark:from-indigo-900 dark:to-slate-900 rounded-[28px] p-4 sm:p-6 text-on-primary shadow-stitch-float flex flex-col md:flex-row items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20 min-w-0">
+        <div className="min-w-0 w-full md:w-auto">
           <span className="text-label-sm uppercase tracking-wider font-semibold opacity-80">CityTransit Commuter Portal</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">Book Digital Bus Pass & Tickets</h2>
-          <p className="text-on-primary/80 text-body-md text-sm mt-1">Contactless QR tickets, real-time fare calculation & live seat tracking</p>
+          <p className="text-on-primary/80 text-body-md text-xs sm:text-sm mt-1">Contactless QR tickets, real-time fare calculation & live seat tracking</p>
         </div>
 
         <button
           onClick={() => setIsBookModalOpen(true)}
-          className="px-6 py-3 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center gap-2 active:scale-95 flex-shrink-0"
+          className="w-full sm:w-auto justify-center px-6 py-3 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center gap-2 active:scale-95 flex-shrink-0"
         >
           <span className="material-symbols-outlined text-[20px]">confirmation_number</span>
           Book New Ticket
@@ -51,53 +51,53 @@ export const PassengerPage: React.FC = () => {
       </div>
 
       {/* Issued Digital Ticket View (Matching Stitch Screen 2 & 4) */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-0">
         <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Your Active Digital Passes & Tickets</h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 min-w-0">
           {tickets.map((tkt) => (
             <div
               key={tkt.id}
               onClick={() => setSelectedTicket(tkt)}
-              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[32px] p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-6 relative overflow-hidden group"
+              className="bg-surface-container-lowest dark:bg-slate-900 rounded-[32px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-5 sm:gap-6 relative overflow-hidden group min-w-0"
             >
               {/* Ticket Top */}
-              <div className="flex items-start justify-between border-b border-dashed border-surface-container dark:border-slate-800 pb-4">
-                <div>
-                  <span className="text-[10px] text-outline dark:text-slate-400 font-extrabold uppercase tracking-wider">Pass ID: #{tkt.id}</span>
-                  <h4 className="text-xl font-bold text-on-surface dark:text-slate-100 group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors mt-0.5">
+              <div className="flex items-start justify-between gap-2 border-b border-dashed border-surface-container dark:border-slate-800 pb-4 min-w-0">
+                <div className="min-w-0 flex-1">
+                  <span className="text-[10px] text-outline dark:text-slate-400 font-extrabold uppercase tracking-wider block">Pass ID: #{tkt.id}</span>
+                  <h4 className="text-lg sm:text-xl font-bold text-on-surface dark:text-slate-100 group-hover:text-primary dark:group-hover:text-indigo-400 transition-colors mt-0.5 truncate">
                     {tkt.passengerName}
                   </h4>
-                  <p className="text-xs text-primary dark:text-indigo-400 font-semibold mt-1">{tkt.routeName}</p>
+                  <p className="text-xs text-primary dark:text-indigo-400 font-semibold mt-1 truncate">{tkt.routeName}</p>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-success-container dark:bg-emerald-950/60 text-[#065F46] dark:text-emerald-300 font-bold text-xs">
+                <span className="px-3 py-1 rounded-full bg-success-container dark:bg-emerald-950/60 text-[#065F46] dark:text-emerald-300 font-bold text-xs flex-shrink-0">
                   {tkt.status.toUpperCase()}
                 </span>
               </div>
 
               {/* Stop Origin ➔ Destination */}
-              <div className="flex items-center justify-between text-sm">
-                <div>
-                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold">Boarding</span>
-                  <p className="font-bold text-on-surface dark:text-slate-100">{tkt.fromStop}</p>
+              <div className="flex items-center justify-between gap-2 text-sm min-w-0">
+                <div className="min-w-0 flex-1">
+                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold block truncate">Boarding</span>
+                  <p className="font-bold text-on-surface dark:text-slate-100 truncate">{tkt.fromStop}</p>
                 </div>
-                <span className="material-symbols-outlined text-primary dark:text-indigo-400 text-[20px]">arrow_forward</span>
-                <div className="text-right">
-                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold">Alighting</span>
-                  <p className="font-bold text-on-surface dark:text-slate-100">{tkt.toStop}</p>
+                <span className="material-symbols-outlined text-primary dark:text-indigo-400 text-[20px] flex-shrink-0">arrow_forward</span>
+                <div className="min-w-0 flex-1 text-right">
+                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold block truncate">Alighting</span>
+                  <p className="font-bold text-on-surface dark:text-slate-100 truncate">{tkt.toStop}</p>
                 </div>
               </div>
 
               {/* QR Code Section (Simulated Canvas QR) */}
-              <div className="bg-surface-container-low dark:bg-slate-800/60 p-4 rounded-2xl flex items-center justify-between gap-4">
-                <div className="flex flex-col">
-                  <span className="text-xs text-outline dark:text-slate-400 font-semibold">Seat Number</span>
-                  <span className="text-lg font-extrabold text-on-surface dark:text-slate-100">{tkt.seatNumber}</span>
-                  <span className="text-xs font-bold text-primary dark:text-indigo-400 mt-1">₹{tkt.fareAmount} Paid</span>
+              <div className="bg-surface-container-low dark:bg-slate-800/60 p-4 rounded-2xl flex items-center justify-between gap-4 min-w-0">
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs text-outline dark:text-slate-400 font-semibold truncate">Seat Number</span>
+                  <span className="text-lg font-extrabold text-on-surface dark:text-slate-100 truncate">{tkt.seatNumber}</span>
+                  <span className="text-xs font-bold text-primary dark:text-indigo-400 mt-1 truncate">₹{tkt.fareAmount} Paid</span>
                 </div>
 
                 {/* QR Code Icon Visual */}
-                <div className="w-16 h-16 bg-white p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center shadow-sm">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center shadow-sm flex-shrink-0">
                   <span className="material-symbols-outlined text-[40px] text-slate-800">qr_code_2</span>
                 </div>
               </div>

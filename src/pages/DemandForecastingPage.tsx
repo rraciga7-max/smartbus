@@ -53,16 +53,16 @@ export const DemandForecastingPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-w-0">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">AI Predictive Demand Forecasting</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Machine learning capacity planning & ridership peak forecasting</p>
+      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
+        <div className="min-w-0">
+          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">AI Predictive Demand Forecasting</h2>
+          <p className="text-xs text-outline dark:text-slate-400 truncate">Machine learning capacity planning & ridership peak forecasting</p>
         </div>
 
         {/* Horizon Picker */}
-        <div className="flex bg-surface-container dark:bg-slate-800 p-1 rounded-full text-xs font-bold">
+        <div className="flex bg-surface-container dark:bg-slate-800 p-1 rounded-full text-xs font-bold flex-wrap">
           {(['tomorrow', '7days', '30days'] as const).map(h => (
             <button
               key={h}
@@ -78,47 +78,47 @@ export const DemandForecastingPage: React.FC = () => {
       </div>
 
       {/* AI Insight Forecast Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 min-w-0">
         {forecasts.map(fc => (
-          <div key={fc.id} className="p-6 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4">
-            <div className="flex justify-between items-start border-b border-surface-container dark:border-slate-800 pb-3">
-              <div>
-                <span className="font-mono text-xs font-bold text-primary dark:text-indigo-400">ROUTE {fc.routeCode}</span>
-                <h3 className="font-bold text-base text-on-surface dark:text-slate-100">{fc.routeName}</h3>
-                <span className="text-xs font-semibold text-outline dark:text-slate-400">{fc.timeSlot}</span>
+          <div key={fc.id} className="p-4 sm:p-6 rounded-[28px] bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 shadow-stitch-md flex flex-col gap-4 min-w-0">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-surface-container dark:border-slate-800 pb-3 min-w-0">
+              <div className="min-w-0 flex-1">
+                <span className="font-mono text-xs font-bold text-primary dark:text-indigo-400 block truncate">ROUTE {fc.routeCode}</span>
+                <h3 className="font-bold text-base text-on-surface dark:text-slate-100 truncate">{fc.routeName}</h3>
+                <span className="text-xs font-semibold text-outline dark:text-slate-400 block truncate">{fc.timeSlot}</span>
               </div>
-              <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-black rounded-full border border-emerald-500/20">
+              <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-black rounded-full border border-emerald-500/20 flex-shrink-0">
                 {fc.confidencePercent}% Confidence
               </span>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-surface-container/50 dark:bg-slate-800/50 text-xs flex flex-col gap-1">
+            <div className="p-3.5 rounded-2xl bg-surface-container/50 dark:bg-slate-800/50 text-xs flex flex-col gap-1 min-w-0">
               <span className="font-bold text-outline dark:text-slate-400 uppercase text-[10px]">AI Predictive Insight</span>
               <p className="font-semibold text-on-surface dark:text-slate-200">{fc.insightText}</p>
             </div>
 
             {/* Capacity Gap Breakdown */}
-            <div className="grid grid-cols-3 gap-3 text-xs text-center">
-              <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Expected Demand</span>
-                <p className="font-bold text-on-surface dark:text-slate-100 mt-1">{fc.expectedPassengers} Riders</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-xs text-center min-w-0">
+              <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Expected Demand</span>
+                <p className="font-bold text-on-surface dark:text-slate-100 mt-1 truncate">{fc.expectedPassengers} Riders</p>
               </div>
-              <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800">
-                <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase">Current Capacity</span>
-                <p className="font-bold text-on-surface dark:text-slate-100 mt-1">{fc.currentCapacity} Seats</p>
+              <div className="p-3 rounded-2xl bg-surface-container dark:bg-slate-800 min-w-0">
+                <span className="text-[10px] font-bold text-outline dark:text-slate-400 uppercase truncate block">Current Capacity</span>
+                <p className="font-bold text-on-surface dark:text-slate-100 mt-1 truncate">{fc.currentCapacity} Seats</p>
               </div>
-              <div className="p-3 rounded-2xl bg-rose-500/10 text-rose-500 font-bold">
-                <span className="text-[10px] uppercase block">Capacity Deficit</span>
-                <p className="font-extrabold text-base mt-0.5">-{fc.capacityGap} Seats</p>
+              <div className="p-3 rounded-2xl bg-rose-500/10 text-rose-500 font-bold min-w-0">
+                <span className="text-[10px] uppercase block truncate">Capacity Deficit</span>
+                <p className="font-extrabold text-base mt-0.5 truncate">-{fc.capacityGap} Seats</p>
               </div>
             </div>
 
             <button
               onClick={() => handleApplyRecommendation(fc)}
-              className="w-full py-3 bg-primary text-on-primary font-bold text-xs rounded-xl shadow-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 px-3 bg-primary text-on-primary font-bold text-xs rounded-xl shadow-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 text-center leading-snug"
             >
-              <span className="material-symbols-outlined text-[18px]">add_task</span>
-              {fc.recommendation}
+              <span className="material-symbols-outlined text-[18px] flex-shrink-0">add_task</span>
+              <span>{fc.recommendation}</span>
             </button>
           </div>
         ))}

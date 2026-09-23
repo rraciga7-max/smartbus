@@ -42,7 +42,7 @@ export const ForgotPasswordPage: React.FC = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 rounded-[32px] p-8 shadow-2xl space-y-6">
+        <div className="bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 rounded-2xl sm:rounded-[32px] p-5 sm:p-8 shadow-2xl space-y-6">
           {isSubmitted ? (
             <div className="py-6 text-center space-y-4 animate-in fade-in duration-300">
               <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center">
