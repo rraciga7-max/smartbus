@@ -2,34 +2,35 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../context/DataContext';
 import type { NotificationCategory } from '../types';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const NotificationsPage: React.FC = () => {
   const navigate = useNavigate();
   const { notifications, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification } = useData();
   const [activeCategory, setActiveCategory] = useState<'all' | NotificationCategory>('all');
 
+  const unreadCount = notifications.filter(n => !n.read).length;
+
   const filteredNotifications = notifications.filter(n =>
     activeCategory === 'all' || n.category === activeCategory
   );
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Notification Center</h2>
-          <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Real-time telematics alerts, maintenance warnings, and system logs</p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={markAllNotificationsAsRead}
-            className="px-4 py-2 rounded-full bg-surface-container dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-primary dark:text-indigo-400 font-bold text-label-md transition-colors"
-          >
-            Mark All Read
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Notifications Center"
+        badge={unreadCount > 0 ? `${unreadCount} Unread Alerts` : 'All Caught Up'}
+        subtitle="Real-time telematics alerts, maintenance warnings, and system logs."
+        breadcrumb="Account"
+        actions={[
+          {
+            label: 'Mark All Read',
+            icon: 'done_all',
+            onClick: markAllNotificationsAsRead,
+            variant: 'outline'
+          }
+        ]}
+      />
 
       {/* Category Tabs */}
       <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">

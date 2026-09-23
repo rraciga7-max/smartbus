@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const ComplianceCenterPage: React.FC = () => {
   const { complianceRecords, showToast } = useData();
@@ -19,32 +20,62 @@ export const ComplianceCenterPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
-        <div className="min-w-0">
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Enterprise Compliance & Document Vault</h2>
-          <p className="text-xs text-outline dark:text-slate-400 truncate">Tracking vehicle registration, fitness certificates, pollution permits, and driver licenses</p>
-        </div>
+      <PageHeader
+        title="Compliance & Vault"
+        badge="Audit Ready"
+        subtitle="Tracking vehicle registration, fitness certificates, pollution permits, and driver licenses."
+        breadcrumb="Safety"
+      />
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold min-w-0">
-          {(['all', 'valid', 'expiring_0_7', 'expiring_8_30', 'expiring_31_90', 'expired'] as const).map(st => (
-            <button
-              key={st}
-              onClick={() => setFilterStatus(st)}
-              className={`px-3 py-1 rounded-full capitalize transition-all text-[11px] ${
-                filterStatus === st ? 'bg-primary text-on-primary shadow' : 'bg-surface-container dark:bg-slate-800 text-on-surface-variant dark:text-slate-300'
-              }`}
-            >
-              {st.replace('_', ' ')}
-            </button>
-          ))}
-        </div>
+      {/* Filter Pills */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+        {(['all', 'valid', 'expiring_0_7', 'expiring_8_30', 'expiring_31_90', 'expired'] as const).map(st => (
+          <button
+            key={st}
+            onClick={() => setFilterStatus(st)}
+            className={`px-3.5 py-1.5 rounded-full capitalize transition-all text-xs font-bold whitespace-nowrap ${
+              filterStatus === st ? 'bg-primary text-on-primary shadow' : 'bg-surface-container dark:bg-slate-800 text-on-surface-variant dark:text-slate-300'
+            }`}
+          >
+            {st.replace('_', ' ')}
+          </button>
+        ))}
       </div>
 
-      {/* Compliance Table */}
+      {/* Compliance Container */}
       <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
-        <div className="table-container no-scrollbar">
+        {/* Mobile View: Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:hidden">
+          {filtered.map(c => {
+            const badge = getStatusBadge(c.status);
+            return (
+              <div key={c.id} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-sm text-on-surface dark:text-slate-100">{c.entityName}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase ${badge.class}`}>
+                    {badge.label}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-semibold text-xs text-primary dark:text-indigo-400 block">{c.documentType}</span>
+                  <p className="font-mono text-xs text-outline dark:text-slate-400">{c.documentNumber}</p>
+                </div>
+                <div className="flex items-center justify-between text-xs text-outline dark:text-slate-400 pt-2 border-t border-surface-container/40 dark:border-slate-700/40">
+                  <span>Expires: <strong className="text-on-surface dark:text-slate-200">{c.expiryDate}</strong></span>
+                  <button
+                    onClick={() => showToast(`Document renewal requested for ${c.documentType} (${c.documentNumber}).`)}
+                    className="px-3 py-1.5 bg-primary text-on-primary font-bold text-xs rounded-xl shadow-sm"
+                  >
+                    Renew
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden sm:block table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">

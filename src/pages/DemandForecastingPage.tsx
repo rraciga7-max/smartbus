@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const DemandForecastingPage: React.FC = () => {
   const { addTrip, showToast } = useData();
@@ -54,15 +55,17 @@ export const DemandForecastingPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
-        <div className="min-w-0">
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">AI Predictive Demand Forecasting</h2>
-          <p className="text-xs text-outline dark:text-slate-400 truncate">Machine learning capacity planning & ridership peak forecasting</p>
-        </div>
+      <PageHeader
+        title="Demand Forecasting"
+        badge="ML Ridership Predictor"
+        subtitle="Machine learning capacity planning & ridership peak forecasting."
+        breadcrumb="Intelligence"
+      />
 
-        {/* Horizon Picker */}
-        <div className="flex bg-surface-container dark:bg-slate-800 p-1 rounded-full text-xs font-bold flex-wrap">
+      {/* Horizon Picker */}
+      <div className="flex items-center justify-between gap-3 bg-surface-container-lowest dark:bg-slate-900 p-3 rounded-2xl border border-surface-container/60 dark:border-slate-800">
+        <span className="text-xs font-bold text-outline dark:text-slate-400 uppercase tracking-wider">Forecast Horizon</span>
+        <div className="flex bg-surface-container dark:bg-slate-800 p-1 rounded-full text-xs font-bold">
           {(['tomorrow', '7days', '30days'] as const).map(h => (
             <button
               key={h}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const EmergencyResponsePage: React.FC = () => {
   const { emergencies, resolveEmergency, lockTripEmergency, showToast } = useData();
@@ -33,6 +34,13 @@ export const EmergencyResponsePage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Emergency Response"
+        badge={emergencies.length > 0 ? `${emergencies.length} ACTIVE SOS` : 'All Clear'}
+        subtitle="High-priority incident intervention, driver link & emergency dispatch console."
+        breadcrumb="Safety"
+      />
+
       {/* High Visibility Emergency Command Header */}
       <div className="p-4 sm:p-6 rounded-[28px] bg-gradient-to-r from-rose-950 via-slate-900 to-slate-900 border-2 border-error/50 text-white shadow-2xl flex flex-wrap items-center justify-between gap-4 relative overflow-hidden min-w-0">
         <div className="flex items-center gap-3 sm:gap-4 relative z-10 min-w-0">

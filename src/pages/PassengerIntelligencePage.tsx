@@ -1,5 +1,6 @@
 import React from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const PassengerIntelligencePage: React.FC = () => {
   const { fleetSummary } = useData();
@@ -23,11 +24,12 @@ export const PassengerIntelligencePage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Passenger Intelligence & Demand Analytics</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Ridership trends, peak hour crowding telemetry, and route heatmaps</p>
-      </div>
+      <PageHeader
+        title="Passenger Intelligence"
+        badge="Demand Analytics"
+        subtitle="Ridership trends, peak hour crowding telemetry, and route heatmaps."
+        breadcrumb="Intelligence"
+      />
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 min-w-0">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 export const RevenueManagementPage: React.FC = () => {
@@ -17,11 +18,12 @@ export const RevenueManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Revenue Analytics & Fare Collections</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Realtime ticket sales, pass subscription earnings, and route yield breakdown</p>
-      </div>
+      <PageHeader
+        title="Revenue & Fare Collections"
+        badge={`₹${totalTodayRev.toLocaleString()} Today`}
+        subtitle="Realtime ticket sales, pass subscription earnings, and route yield breakdown."
+        breadcrumb="Finance"
+      />
 
       {/* KPI Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 min-w-0">

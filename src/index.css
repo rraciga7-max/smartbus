@@ -37,6 +37,16 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Card Responsive Safety Utility */
+.card-responsive {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 /* Touch targets */
 .touch-target {
   min-height: 44px;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { useTheme, type Theme } from '../context/ThemeContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const SettingsPage: React.FC = () => {
   const { showToast } = useData();
@@ -25,10 +26,12 @@ export const SettingsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl w-full min-w-0">
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Configuration & Settings</h2>
-        <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-0.5">Manage telematics gateway parameters, theme rules, and depot preferences</p>
-      </div>
+      <PageHeader
+        title="Settings & System Config"
+        badge="Enterprise Rules"
+        subtitle="Manage telematics gateway parameters, theme rules, and depot preferences."
+        breadcrumb="Administration"
+      />
 
       <form onSubmit={handleSaveSettings} className="flex flex-col gap-6 min-w-0">
         {/* Theme Preferences */}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const AIOperationsAssistantPage: React.FC = () => {
   const { buses, drivers, trips, aiRecommendations, applyAIRecommendation } = useData();
@@ -52,11 +53,12 @@ export const AIOperationsAssistantPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">SmartBus AI Operations Assistant</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Conversational AI operations engine with automated recommendation execution</p>
-      </div>
+      <PageHeader
+        title="AI Operations Assistant"
+        badge="Autonomous Fleet AI"
+        subtitle="Conversational AI operations engine with automated recommendation execution."
+        breadcrumb="Intelligence"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start min-w-0">
         {/* Left Interactive Chat Interface */}

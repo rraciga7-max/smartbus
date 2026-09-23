@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const IncidentManagementPage: React.FC = () => {
   const { incidents, resolveIncident } = useData();
@@ -24,11 +25,12 @@ export const IncidentManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Incident Management</h2>
-        <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Tracking accidents, breakdowns, emergencies, and safety protocol investigations</p>
-      </div>
+      <PageHeader
+        title="Incident Management"
+        badge={`${incidents.length} Incidents Logged`}
+        subtitle="Tracking accidents, breakdowns, emergencies, and safety protocol investigations."
+        breadcrumb="Safety"
+      />
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 min-w-0">
@@ -50,9 +52,46 @@ export const IncidentManagementPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Incident Log Table */}
+      {/* Incident Log Container */}
       <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
-        <div className="table-container no-scrollbar">
+        {/* Mobile View: Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:hidden">
+          {incidents.map(inc => (
+            <div key={inc.id} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2.5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono font-bold text-xs text-primary dark:text-indigo-400">{inc.id}</span>
+                <span className={`px-2.5 py-0.5 rounded-full font-bold text-[10px] uppercase ${
+                  inc.status === 'resolved' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/10 text-amber-600'
+                }`}>
+                  {inc.status}
+                </span>
+              </div>
+              <div>
+                <span className="font-bold text-sm text-on-surface dark:text-slate-100">{inc.busRegistration}</span>
+                <p className="text-xs text-outline dark:text-slate-400">{inc.driverName} • {inc.location}</p>
+              </div>
+              <div className="flex items-center justify-between pt-2 border-t border-surface-container/40 dark:border-slate-700/40">
+                <div>
+                  <span className="font-bold text-xs text-on-surface dark:text-slate-200 capitalize">{inc.type.replace('_', ' ')}</span>
+                  <span className={`block text-[10px] font-bold uppercase ${
+                    inc.severity === 'critical' ? 'text-rose-500' : 'text-amber-500'
+                  }`}>
+                    {inc.severity} Severity
+                  </span>
+                </div>
+                <button
+                  onClick={() => setSelectedIncidentId(inc.id)}
+                  className="px-3.5 py-1.5 bg-primary text-on-primary font-bold text-xs rounded-xl shadow-sm min-h-[36px]"
+                >
+                  Details ➔
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden sm:block table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">

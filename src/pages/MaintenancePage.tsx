@@ -3,11 +3,15 @@ import { useData } from '../context/DataContext';
 import type { MaintenancePriority } from '../types';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Modal } from '../components/common/Modal';
+import { PageHeader } from '../components/common/PageHeader';
+import { MobileFilterSheet } from '../components/common/MobileFilterSheet';
 
 export const MaintenancePage: React.FC = () => {
   const { maintenanceRecords, addMaintenanceRecord, updateMaintenanceStatus, buses } = useData();
+  const [searchTerm, setSearchTerm] = useState('');
   const [activePriorityFilter, setActivePriorityFilter] = useState<'all' | MaintenancePriority>('all');
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
 
   // Form state
   const [busId, setBusId] = useState('bus-1');
@@ -18,9 +22,15 @@ export const MaintenancePage: React.FC = () => {
   const [estimatedCost, setEstimatedCost] = useState('5000');
   const [technicianName, setTechnicianName] = useState('Karthik S. (Master Tech)');
 
-  const filteredRecords = maintenanceRecords.filter(r => 
-    activePriorityFilter === 'all' || r.priority === activePriorityFilter
-  );
+  const filteredRecords = maintenanceRecords.filter(r => {
+    const matchesPriority = activePriorityFilter === 'all' || r.priority === activePriorityFilter;
+    const matchesSearch = !searchTerm ||
+      r.busRegistration.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.serviceType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.technicianName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesPriority && matchesSearch;
+  });
 
   const handleScheduleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,33 +52,33 @@ export const MaintenancePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Mobile Page Header (Point 4) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
-            Fleet Maintenance & Work Orders
-          </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
-            Track workshop work orders, routine servicing, and emergency repairs across the fleet.
-          </p>
-        </div>
+    <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Fleet Maintenance"
+        badge={`${maintenanceRecords.length} Work Orders`}
+        subtitle="Track workshop work orders, routine servicing, and emergency repairs across the fleet."
+        breadcrumb="Fleet"
+        searchValue={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder="Search vehicle, service, technician..."
+        onFilterClick={() => setIsFilterSheetOpen(true)}
+        isFilterActive={activePriorityFilter !== 'all'}
+        actions={[
+          {
+            label: 'Schedule Service',
+            icon: 'build',
+            onClick: () => setIsScheduleModalOpen(true),
+            variant: 'primary'
+          }
+        ]}
+      />
 
-        <button
-          onClick={() => setIsScheduleModalOpen(true)}
-          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[20px]">build</span>
-          <span>Schedule Service</span>
-        </button>
-      </div>
-
-      {/* Analytics Summary Cards (Point 6) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* Analytics Summary Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Critical Tasks</span>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-error dark:text-rose-400">
+            <span className="text-2xl sm:text-3xl font-extrabold text-error dark:text-rose-400">
               {maintenanceRecords.filter(r => r.priority === 'high' || r.priority === 'critical').length}
             </span>
             <span className="text-xs font-bold text-error dark:text-rose-400 flex items-center">
@@ -78,35 +88,35 @@ export const MaintenancePage: React.FC = () => {
         </div>
 
         <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
-          <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Scheduled (7d)</span>
-          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface dark:text-slate-100">{maintenanceRecords.length}</span>
+          <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Scheduled</span>
+          <span className="text-2xl sm:text-3xl font-extrabold text-on-surface dark:text-slate-100">{maintenanceRecords.length}</span>
         </div>
 
         <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">In Progress</span>
-          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-amber-600 dark:text-amber-400">
+          <span className="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400">
             {maintenanceRecords.filter(r => r.status === 'in_progress').length}
           </span>
         </div>
 
         <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-1">
           <span className="text-label-sm text-outline dark:text-slate-400 uppercase tracking-wider">Est. Cost (Total)</span>
-          <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary dark:text-indigo-400">
+          <span className="text-2xl sm:text-3xl font-extrabold text-primary dark:text-indigo-400">
             ₹{maintenanceRecords.reduce((sum, r) => sum + r.estimatedCost, 0).toLocaleString()}
           </span>
         </div>
       </div>
 
-      {/* Filter Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+      {/* Desktop Filter Pills */}
+      <div className="hidden md:flex items-center justify-between gap-3">
         <h2 className="text-lg font-bold text-on-surface dark:text-slate-100">Maintenance Action Orders</h2>
 
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full sm:w-auto py-1">
-          {(['all', 'high', 'medium', 'low'] as const).map(p => (
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          {(['all', 'critical', 'high', 'medium', 'low'] as const).map(p => (
             <button
               key={p}
-              onClick={() => setActivePriorityFilter(p)}
-              className={`px-3.5 py-2 rounded-2xl text-xs font-bold uppercase transition-all min-h-[44px] ${
+              onClick={() => setActivePriorityFilter(p as any)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase transition-all ${
                 activePriorityFilter === p
                   ? 'bg-primary dark:bg-indigo-600 text-on-primary'
                   : 'bg-surface-container dark:bg-slate-900 text-on-surface-variant dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
@@ -207,6 +217,44 @@ export const MaintenancePage: React.FC = () => {
           </button>
         </div>
       )}
+
+      {/* Mobile Filter Sheet */}
+      <MobileFilterSheet
+        isOpen={isFilterSheetOpen}
+        onClose={() => setIsFilterSheetOpen(false)}
+        title="Filter Maintenance Orders"
+        onReset={() => setActivePriorityFilter('all')}
+      >
+        <div className="flex flex-col gap-4">
+          <div>
+            <label className="text-label-md font-bold text-on-surface dark:text-slate-200 block mb-2">Priority Level</label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { id: 'all', label: 'All Priorities' },
+                { id: 'critical', label: 'Critical' },
+                { id: 'high', label: 'High' },
+                { id: 'medium', label: 'Medium' },
+                { id: 'low', label: 'Low' }
+              ].map(p => (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    setActivePriorityFilter(p.id as any);
+                    setIsFilterSheetOpen(false);
+                  }}
+                  className={`py-3 px-3 rounded-2xl text-xs font-bold transition-all text-center ${
+                    activePriorityFilter === p.id
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </MobileFilterSheet>
 
       {/* Schedule Service Modal */}
       <Modal

@@ -4,12 +4,15 @@ import type { Driver } from '../types';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Drawer } from '../components/common/Drawer';
 import { Modal } from '../components/common/Modal';
+import { MobileFilterSheet } from '../components/common/MobileFilterSheet';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const DriverManagementPage: React.FC = () => {
   const { drivers, addDriver, updateDriver, deleteDriver } = useData();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeStatusFilter, setActiveStatusFilter] = useState<'all' | 'on_duty' | 'off_duty' | 'on_break' | 'on_leave'>('all');
   const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
 
   // Modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -80,78 +83,97 @@ export const DriverManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Mobile Page Header */}
-      <div className="flex flex-col gap-4 min-w-0">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
-          <div className="min-w-0">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
-              Driver Roster & Qualifications
-            </h1>
-            <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
-              Manage fleet personnel, license validation, assigned vehicles, and safety performance.
-            </p>
-          </div>
-
-          <button
-            onClick={() => {
-              setName('');
-              setLicenseNumber('');
-              setPhone('');
-              setIsAddModalOpen(true);
-            }}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
-          >
-            <span className="material-symbols-outlined text-[20px]">person_add</span>
-            <span>Register Driver</span>
-          </button>
+      {/* Standard Mobile Page Header */}
+      <PageHeader
+        title="Driver Roster & Qualifications"
+        description="Manage fleet personnel, license validation, assigned vehicles, and safety performance."
+        primaryAction={{
+          label: 'Register Driver',
+          icon: 'person_add',
+          onClick: () => {
+            setName('');
+            setLicenseNumber('');
+            setPhone('');
+            setIsAddModalOpen(true);
+          }
+        }}
+        search={{
+          value: searchQuery,
+          onChange: setSearchQuery,
+          placeholder: 'Search drivers by name, license, or route...',
+          onClear: () => setSearchQuery('')
+        }}
+        filter={{
+          label: 'Filters',
+          activeCount: activeStatusFilter !== 'all' ? 1 : 0,
+          onClick: () => setIsFilterSheetOpen(true)
+        }}
+      >
+        {/* Desktop Quick Status Filters */}
+        <div className="hidden sm:flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+          {(['all', 'on_duty', 'off_duty', 'on_break', 'on_leave'] as const).map(status => (
+            <button
+              key={status}
+              type="button"
+              onClick={() => setActiveStatusFilter(status)}
+              className={`px-3.5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[40px] ${
+                activeStatusFilter === status
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm font-bold'
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              {status === 'all' && `All (${drivers.length})`}
+              {status === 'on_duty' && `On Duty (${drivers.filter(d => d.status === 'on_duty').length})`}
+              {status === 'off_duty' && `Off Duty (${drivers.filter(d => d.status === 'off_duty').length})`}
+              {status === 'on_break' && `On Break (${drivers.filter(d => d.status === 'on_break').length})`}
+              {status === 'on_leave' && `On Leave (${drivers.filter(d => d.status === 'on_leave').length})`}
+            </button>
+          ))}
         </div>
+      </PageHeader>
 
-        {/* Search & Filter Toolbar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 min-w-0">
-          <div className="relative flex-1 min-w-0">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[20px]">
-              search
-            </span>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search drivers by name, license, or route..."
-              className="w-full pl-11 pr-10 py-3 bg-surface-container dark:bg-slate-900 rounded-2xl text-xs sm:text-sm text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800 min-h-[44px]"
-            />
-            {searchQuery && (
+      {/* Mobile Filter Sheet */}
+      <MobileFilterSheet
+        isOpen={isFilterSheetOpen}
+        onClose={() => setIsFilterSheetOpen(false)}
+        onReset={() => setActiveStatusFilter('all')}
+        activeFilterCount={activeStatusFilter !== 'all' ? 1 : 0}
+        title="Filter Drivers"
+      >
+        <div className="space-y-3">
+          <label className="text-xs font-bold text-outline dark:text-slate-400 uppercase tracking-wider block">
+            Duty Status
+          </label>
+          <div className="flex flex-col gap-2">
+            {[
+              { id: 'all', label: `All Drivers (${drivers.length})` },
+              { id: 'on_duty', label: `On Duty (${drivers.filter(d => d.status === 'on_duty').length})` },
+              { id: 'off_duty', label: `Off Duty (${drivers.filter(d => d.status === 'off_duty').length})` },
+              { id: 'on_break', label: `On Break (${drivers.filter(d => d.status === 'on_break').length})` },
+              { id: 'on_leave', label: `On Leave (${drivers.filter(d => d.status === 'on_leave').length})` },
+            ].map(opt => (
               <button
+                key={opt.id}
                 type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800 transition-colors"
-                aria-label="Clear search"
-              >
-                <span className="material-symbols-outlined text-[18px]">close</span>
-              </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-shrink-0">
-            {(['all', 'on_duty', 'off_duty', 'on_break', 'on_leave'] as const).map(status => (
-              <button
-                key={status}
-                onClick={() => setActiveStatusFilter(status)}
-                className={`px-3.5 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
-                  activeStatusFilter === status
-                    ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm font-bold'
-                    : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+                onClick={() => {
+                  setActiveStatusFilter(opt.id as any);
+                  setIsFilterSheetOpen(false);
+                }}
+                className={`w-full p-3 rounded-xl text-left text-xs font-bold flex items-center justify-between transition-colors ${
+                  activeStatusFilter === opt.id
+                    ? 'bg-primary text-on-primary shadow-sm'
+                    : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
                 }`}
               >
-                {status === 'all' && `All (${drivers.length})`}
-                {status === 'on_duty' && `On Duty (${drivers.filter(d => d.status === 'on_duty').length})`}
-                {status === 'off_duty' && `Off Duty (${drivers.filter(d => d.status === 'off_duty').length})`}
-                {status === 'on_break' && `On Break (${drivers.filter(d => d.status === 'on_break').length})`}
-                {status === 'on_leave' && `On Leave (${drivers.filter(d => d.status === 'on_leave').length})`}
+                <span>{opt.label}</span>
+                {activeStatusFilter === opt.id && (
+                  <span className="material-symbols-outlined text-[18px]">check</span>
+                )}
               </button>
             ))}
           </div>
         </div>
-      </div>
+      </MobileFilterSheet>
 
       {/* Driver List Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-0">
@@ -159,7 +181,7 @@ export const DriverManagementPage: React.FC = () => {
           <div
             key={driver.id}
             onClick={() => setSelectedDriver(driver)}
-            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-4 group min-w-0"
+            className="card-responsive bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between gap-4 group min-w-0"
           >
             <div className="min-w-0">
               {/* Profile Top Info */}
@@ -224,8 +246,9 @@ export const DriverManagementPage: React.FC = () => {
             </div>
 
             {/* Footer Action Buttons */}
-            <div className="pt-3 border-t border-surface-container dark:border-slate-800 flex items-center justify-between gap-2 text-xs min-w-0" onClick={(e) => e.stopPropagation()}>
+            <div className="pt-3 border-t border-surface-container dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs min-w-0" onClick={(e) => e.stopPropagation()}>
               <button
+                type="button"
                 onClick={() => setSelectedDriver(driver)}
                 className="px-3 py-1.5 rounded-xl bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200 font-semibold text-xs hover:bg-surface-container-high transition-colors flex items-center gap-1 min-h-[36px]"
               >

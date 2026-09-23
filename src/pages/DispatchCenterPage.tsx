@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const DispatchCenterPage: React.FC = () => {
   const { trips, buses, drivers, reassignTrip, updateTripStatus, showToast } = useData();
@@ -7,6 +8,7 @@ export const DispatchCenterPage: React.FC = () => {
   const [reassignModalTripId, setReassignModalTripId] = useState<string | null>(null);
   const [selectedBusId, setSelectedBusId] = useState<string>('');
   const [selectedDriverId, setSelectedDriverId] = useState<string>('');
+  const [activeMobileColumn, setActiveMobileColumn] = useState<'all' | 'unassigned' | 'scheduled' | 'in_transit' | 'delayed' | 'completed'>('all');
 
   const unassignedTrips = trips.filter(t => t.status === 'scheduled' && (!t.busNumber || t.busNumber === 'Unassigned'));
   const assignedTrips = trips.filter(t => t.status === 'scheduled' && t.busNumber && t.busNumber !== 'Unassigned');
@@ -66,28 +68,57 @@ export const DispatchCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 min-w-0">
-      {/* Header & Quick Summary */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 min-w-0">
-        <div className="min-w-0">
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Operations Dispatch Board</h2>
-          <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Live trip assignment, driver pairing, and conflict resolution center</p>
+    <div className="flex flex-col gap-5 sm:gap-6 min-w-0">
+      {/* Standard Mobile Page Header */}
+      <PageHeader
+        title="Fleet Operations Dispatch Board"
+        description="Live trip assignment, vehicle telemetry coordination, and driver conflict resolution center."
+      >
+        {/* Mobile Column Filter Pills */}
+        <div className="flex lg:hidden gap-1.5 overflow-x-auto no-scrollbar py-1">
+          {[
+            { id: 'all', label: `All Columns` },
+            { id: 'in_transit', label: `In Transit (${inProgressTrips.length})` },
+            { id: 'delayed', label: `Delayed (${delayedTrips.length})` },
+            { id: 'unassigned', label: `Pending (${unassignedTrips.length})` },
+            { id: 'scheduled', label: `Ready (${assignedTrips.length})` },
+            { id: 'completed', label: `Done (${completedTrips.length})` },
+          ].map(col => (
+            <button
+              key={col.id}
+              type="button"
+              onClick={() => setActiveMobileColumn(col.id as any)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-colors min-h-[36px] ${
+                activeMobileColumn === col.id
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm'
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300'
+              }`}
+            >
+              {col.label}
+            </button>
+          ))}
         </div>
+      </PageHeader>
 
-        <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
-          <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full">
-            {inProgressTrips.length} Trips In Transit
-          </span>
-          <span className="px-3 py-1.5 bg-amber-500/10 text-amber-600 text-xs font-bold rounded-full">
-            {delayedTrips.length} Delayed
-          </span>
-        </div>
+      {/* Summary Chips */}
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full">
+          {inProgressTrips.length} In Transit
+        </span>
+        <span className="px-3 py-1.5 bg-amber-500/10 text-amber-600 text-xs font-bold rounded-full">
+          {delayedTrips.length} Delayed
+        </span>
+        <span className="px-3 py-1.5 bg-slate-500/10 text-slate-400 text-xs font-bold rounded-full">
+          {unassignedTrips.length} Pending Assignment
+        </span>
       </div>
 
       {/* Dispatch Board Kanban Columns */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 min-w-0">
         {/* Column 1: Unassigned / Pending */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3 min-w-0">
+        <div className={`card-responsive bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 border border-surface-container dark:border-slate-800 flex flex-col gap-3 min-w-0 ${
+          activeMobileColumn !== 'all' && activeMobileColumn !== 'unassigned' ? 'hidden lg:flex' : 'flex'
+        }`}>
           <div className="flex items-center justify-between pb-2 border-b border-surface-container dark:border-slate-800">
             <span className="font-bold text-xs text-on-surface dark:text-slate-200">Unassigned Trips</span>
             <span className="px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-400 text-[11px] font-bold">

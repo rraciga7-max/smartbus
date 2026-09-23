@@ -56,31 +56,37 @@ export const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 min-w-0">
-      {/* Top Banner / Welcome Bar */}
-      <div className="bg-gradient-to-r from-primary via-primary-container to-primary/90 dark:from-indigo-900 dark:via-indigo-800 dark:to-slate-900 rounded-[28px] p-5 sm:p-6 text-on-primary shadow-stitch-float relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20 min-w-0">
-        <div className="z-10 min-w-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-white/15 backdrop-blur-md text-label-sm font-semibold mb-3 max-w-full">
-            <span className="w-2 h-2 rounded-full bg-success animate-pulse flex-shrink-0"></span>
-            <span className="truncate">Live Telematics Online • Coimbatore Central HQ</span>
+    <div className="flex flex-col gap-5 sm:gap-6 min-w-0">
+      {/* Page Title & Context Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
+              Operations Dashboard
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-extrabold uppercase">
+              Live
+            </span>
           </div>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight">Fleet Operations Center</h2>
-          <p className="text-on-primary/80 text-body-md mt-1 max-w-xl text-xs sm:text-sm">
-            Real-time monitoring for {fleetSummary.totalBuses} buses across 48 city routes. High efficiency rate recorded today.
+          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
+            Real-time transit command, fleet load telemetry, and maintenance surveillance.
           </p>
         </div>
-        
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 z-10 flex-shrink-0 w-full sm:w-auto">
+
+        {/* Quick Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 flex-shrink-0 w-full sm:w-auto">
           <button
+            type="button"
             onClick={() => setIsAddBusModalOpen(true)}
-            className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px]"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px]"
           >
             <span className="material-symbols-outlined text-[20px]">add</span>
             <span>Add New Bus</span>
           </button>
           <button
-            onClick={() => navigate('/tracking')}
-            className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-white/20 backdrop-blur-md text-on-primary font-bold text-label-md hover:bg-white/30 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
+            type="button"
+            onClick={() => navigate('/app/tracking')}
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200 font-bold text-xs sm:text-sm hover:bg-surface-container-high dark:hover:bg-slate-700 transition-colors flex items-center justify-center gap-2 min-h-[44px]"
           >
             <span className="material-symbols-outlined text-[20px]">near_me</span>
             <span>Live Map</span>
@@ -88,14 +94,28 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Primary Key Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* Welcome / Overview Banner */}
+      <div className="bg-gradient-to-r from-primary via-primary-container to-primary/90 dark:from-indigo-950 dark:via-indigo-900 dark:to-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 text-on-primary shadow-stitch-float relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20 min-w-0">
+        <div className="z-10 min-w-0">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 dark:bg-white/15 backdrop-blur-md text-label-sm font-semibold mb-2 max-w-full">
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse flex-shrink-0"></span>
+            <span className="truncate text-xs">Live Telematics Online • Central Control Depot</span>
+          </div>
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-black tracking-tight">Active Fleet Operations</h2>
+          <p className="text-on-primary/80 text-body-md mt-1 max-w-xl text-xs sm:text-sm">
+            Managing {fleetSummary.totalBuses} transit buses across active urban corridors with high punctuality.
+          </p>
+        </div>
+      </div>
+
+      {/* KPI Cards: 1 column on mobile, 2 columns on tablet, 4 columns on desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 min-w-0">
         <StatCard
           title="Total Fleet"
           value={fleetSummary.totalBuses}
           subtitle={`${fleetSummary.activeBuses} Active • ${fleetSummary.idleBuses} Idle`}
           icon="directions_bus"
-          onClick={() => navigate('/buses')}
+          onClick={() => navigate('/app/buses')}
         />
         <StatCard
           title="Fleet Utilization"
@@ -104,7 +124,7 @@ export const DashboardPage: React.FC = () => {
           isPositive={true}
           icon="insights"
           colorVariant="primary"
-          onClick={() => navigate('/reports')}
+          onClick={() => navigate('/app/reports')}
         />
         <StatCard
           title="Maintenance Alert"
@@ -114,7 +134,7 @@ export const DashboardPage: React.FC = () => {
           isPositive={false}
           icon="build"
           colorVariant="error"
-          onClick={() => navigate('/maintenance')}
+          onClick={() => navigate('/app/maintenance')}
         />
         <StatCard
           title="On-Time Rate"
@@ -123,25 +143,115 @@ export const DashboardPage: React.FC = () => {
           isPositive={true}
           icon="schedule"
           colorVariant="success"
-          onClick={() => navigate('/trips')}
+          onClick={() => navigate('/app/trips')}
         />
       </div>
 
-      {/* Analytics Charts & Live Telematics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Fleet Passenger & Peak Hour Analytics Chart */}
-        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
+      {/* Fleet Status & Active Trips Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 min-w-0">
+        {/* Fleet Status Breakdown */}
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Hourly Passenger & Fleet Load</h3>
-              <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-sm">Real-time rider volume vs vehicle capacity percentage</p>
+            <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Fleet Status Overview</h3>
+            <span className="text-xs text-outline dark:text-slate-400 font-medium">Real-time</span>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex justify-between items-center p-3 rounded-2xl bg-success-container/30 dark:bg-emerald-950/40 border border-success/20 dark:border-emerald-500/20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-success animate-pulse flex-shrink-0"></div>
+                <span className="font-semibold text-on-surface dark:text-slate-200 text-xs sm:text-sm">Active In Service</span>
+              </div>
+              <span className="font-extrabold text-base sm:text-lg text-[#065F46] dark:text-emerald-400">{fleetSummary.activeBuses}</span>
             </div>
-            <span className="px-3 py-1 rounded-full bg-surface-container dark:bg-slate-800 text-label-sm font-semibold text-primary dark:text-indigo-400">
-              Today's Realtime Data
+
+            <div className="flex justify-between items-center p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0"></div>
+                <span className="font-semibold text-on-surface dark:text-slate-200 text-xs sm:text-sm">Standby / Idle</span>
+              </div>
+              <span className="font-extrabold text-base sm:text-lg text-amber-800 dark:text-amber-400">{fleetSummary.idleBuses}</span>
+            </div>
+
+            <div className="flex justify-between items-center p-3 rounded-2xl bg-error-container/40 dark:bg-rose-950/40 border border-error/20 dark:border-rose-500/20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-error flex-shrink-0"></div>
+                <span className="font-semibold text-on-surface dark:text-slate-200 text-xs sm:text-sm">In Maintenance</span>
+              </div>
+              <span className="font-extrabold text-base sm:text-lg text-error dark:text-rose-400">{fleetSummary.maintenanceBuses}</span>
+            </div>
+          </div>
+
+          <div className="mt-auto pt-2 border-t border-surface-container/60 dark:border-slate-800">
+            <button
+              type="button"
+              onClick={() => navigate('/app/buses')}
+              className="w-full py-2.5 rounded-xl bg-surface-container dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-primary dark:text-indigo-400 font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 min-h-[44px]"
+            >
+              Manage All Buses
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Active Fleet Highlights */}
+        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Active Fleet Highlights</h3>
+            <button 
+              type="button"
+              onClick={() => navigate('/app/buses')}
+              className="text-xs sm:text-sm text-primary dark:text-indigo-400 font-semibold hover:underline"
+            >
+              View All ➔
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-3 min-w-0">
+            {buses.slice(0, 3).map(bus => (
+              <div
+                key={bus.id}
+                onClick={() => navigate('/app/buses')}
+                className="p-3.5 sm:p-4 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors cursor-pointer border border-surface-container/60 dark:border-slate-700/60 flex items-center justify-between gap-3 min-w-0"
+              >
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined text-[22px]">directions_bus</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-bold text-on-surface dark:text-slate-100 text-xs sm:text-sm truncate">{bus.registrationNumber}</span>
+                      <StatusBadge status={bus.status} type="bus" />
+                    </div>
+                    <p className="text-on-surface-variant dark:text-slate-400 text-xs mt-0.5 truncate">{bus.routeName}</p>
+                  </div>
+                </div>
+
+                <div className="text-right hidden sm:block flex-shrink-0">
+                  <span className="text-[10px] text-outline dark:text-slate-400 uppercase font-semibold">Driver</span>
+                  <p className="font-semibold text-on-surface dark:text-slate-200 text-xs sm:text-sm">{bus.driverName}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Analytics Chart & Urgent Maintenance Tasks */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 min-w-0">
+        {/* Hourly Passenger & Fleet Load Area Chart */}
+        <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Hourly Passenger & Fleet Load</h3>
+              <p className="text-on-surface-variant dark:text-slate-400 text-xs">Real-time rider volume vs vehicle capacity percentage</p>
+            </div>
+            <span className="self-start sm:self-auto px-3 py-1 rounded-full bg-surface-container dark:bg-slate-800 text-xs font-semibold text-primary dark:text-indigo-400">
+              Today's Live Load
             </span>
           </div>
 
-          <div className="h-64 sm:h-72 w-full pt-4">
+          <div className="h-64 sm:h-72 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
@@ -151,8 +261,8 @@ export const DashboardPage: React.FC = () => {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#334155" : "#edeef0"} />
-                <XAxis dataKey="time" stroke={isDark ? "#94a3b8" : "#757684"} fontSize={12} tickLine={false} />
-                <YAxis stroke={isDark ? "#94a3b8" : "#757684"} fontSize={12} tickLine={false} />
+                <XAxis dataKey="time" stroke={isDark ? "#94a3b8" : "#757684"} fontSize={11} tickLine={false} />
+                <YAxis stroke={isDark ? "#94a3b8" : "#757684"} fontSize={11} tickLine={false} />
                 <Tooltip
                   contentStyle={{ 
                     backgroundColor: isDark ? '#0f172a' : '#191c1e', 
@@ -168,120 +278,47 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Fleet Status Breakdown */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-          <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Fleet Status Overview</h3>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 rounded-2xl bg-success-container/30 dark:bg-emerald-950/40 border border-success/20 dark:border-emerald-500/20">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-success animate-pulse"></div>
-                <span className="font-semibold text-on-surface dark:text-slate-200 text-sm">Active In Service</span>
-              </div>
-              <span className="font-bold text-title-lg text-[#065F46] dark:text-emerald-400">{fleetSummary.activeBuses}</span>
-            </div>
-
-            <div className="flex justify-between items-center p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/20">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                <span className="font-semibold text-on-surface dark:text-slate-200 text-sm">Standby / Idle</span>
-              </div>
-              <span className="font-bold text-title-lg text-amber-800 dark:text-amber-400">{fleetSummary.idleBuses}</span>
-            </div>
-
-            <div className="flex justify-between items-center p-3 rounded-2xl bg-error-container/40 dark:bg-rose-950/40 border border-error/20 dark:border-rose-500/20">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-error"></div>
-                <span className="font-semibold text-on-surface dark:text-slate-200 text-sm">In Maintenance</span>
-              </div>
-              <span className="font-bold text-title-lg text-error dark:text-rose-400">{fleetSummary.maintenanceBuses}</span>
-            </div>
-          </div>
-
-          <div className="mt-auto pt-4 border-t border-surface-container/60 dark:border-slate-800">
-            <button
-              onClick={() => navigate('/buses')}
-              className="w-full py-2.5 rounded-full bg-surface-container dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-primary dark:text-indigo-400 font-bold text-label-md transition-colors flex items-center justify-center gap-2"
-            >
-              Manage All Buses
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Active Fleet List & Urgent Maintenance Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Active Fleet Quick View */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
+        {/* Urgent Maintenance Tasks (Alerts) */}
+        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
           <div className="flex items-center justify-between">
-            <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Active Fleet Highlights</h3>
+            <h3 className="text-base sm:text-lg font-bold text-on-surface dark:text-slate-100">Urgent Maintenance Tasks</h3>
             <button 
-              onClick={() => navigate('/buses')}
-              className="text-label-md text-primary dark:text-indigo-400 font-semibold hover:underline"
+              type="button"
+              onClick={() => navigate('/app/maintenance')}
+              className="text-xs sm:text-sm text-primary dark:text-indigo-400 font-semibold hover:underline"
             >
-              View All
+              View All ➔
             </button>
           </div>
 
           <div className="flex flex-col gap-3 min-w-0">
-            {buses.slice(0, 3).map(bus => (
-              <div
-                key={bus.id}
-                onClick={() => navigate(`/buses`)}
-                className="p-4 rounded-2xl bg-surface-container-low dark:bg-slate-800/60 hover:bg-surface-container dark:hover:bg-slate-800 transition-colors cursor-pointer border border-surface-container/60 dark:border-slate-700/60 flex items-center justify-between gap-3 min-w-0"
-              >
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary/10 dark:bg-indigo-500/20 text-primary dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-[22px]">directions_bus</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-on-surface dark:text-slate-100 text-sm sm:text-base truncate">{bus.registrationNumber}</span>
-                      <StatusBadge status={bus.status} type="bus" />
-                    </div>
-                    <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs mt-0.5 truncate">{bus.routeName}</p>
-                  </div>
-                </div>
-
-                <div className="text-right hidden sm:block flex-shrink-0">
-                  <span className="text-label-sm text-outline dark:text-slate-400 uppercase">Driver</span>
-                  <p className="text-body-md font-semibold text-on-surface dark:text-slate-200 text-sm">{bus.driverName}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Priority Action Required Maintenance */}
-        <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-5 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Urgent Maintenance Tasks</h3>
-            <button 
-              onClick={() => navigate('/maintenance')}
-              className="text-label-md text-primary dark:text-indigo-400 font-semibold hover:underline"
-            >
-              Service Center
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-3">
             {maintenanceRecords.slice(0, 2).map(record => (
               <div
                 key={record.id}
-                className="p-4 rounded-2xl bg-error-container/20 dark:bg-rose-950/30 border-l-4 border-error flex flex-col gap-2"
+                className="p-3.5 sm:p-4 rounded-2xl bg-error-container/20 dark:bg-rose-950/30 border-l-4 border-error flex flex-col gap-2 min-w-0"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-on-surface dark:text-slate-100">{record.busRegistration}</span>
-                    <StatusBadge status={record.priority} type="priority" />
-                  </div>
-                  <span className="text-body-md text-error dark:text-rose-400 font-medium text-xs">Due: {record.dueDate}</span>
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <span className="font-bold text-on-surface dark:text-slate-100 text-xs sm:text-sm">{record.busRegistration}</span>
+                  <StatusBadge status={record.priority} type="priority" />
                 </div>
-                <p className="text-body-md font-semibold text-on-surface dark:text-slate-200 text-sm">{record.serviceType}</p>
-                <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">{record.description}</p>
+                <p className="font-semibold text-on-surface dark:text-slate-200 text-xs truncate">{record.serviceType}</p>
+                <div className="flex items-center justify-between text-[11px] text-outline dark:text-slate-400 pt-1">
+                  <span>Due: {record.dueDate}</span>
+                  <span className="text-error dark:text-rose-400 font-bold">Action Needed</span>
+                </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-auto pt-2 border-t border-surface-container/60 dark:border-slate-800">
+            <button
+              type="button"
+              onClick={() => navigate('/app/maintenance')}
+              className="w-full py-2.5 rounded-xl bg-surface-container dark:bg-slate-800 hover:bg-surface-container-high dark:hover:bg-slate-700 text-on-surface dark:text-slate-200 font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 min-h-[44px]"
+            >
+              Open Service Center
+              <span className="material-symbols-outlined text-[18px]">build</span>
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const SmartSchedulingPage: React.FC = () => {
   const { buses, drivers, showToast } = useData();
@@ -23,62 +24,85 @@ export const SmartSchedulingPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
-        <div className="min-w-0">
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Smart Scheduling & Shift Roster Engine</h2>
-          <p className="text-xs text-outline dark:text-slate-400 truncate">Automated shift scheduling with AI conflict resolution & driver rest compliance</p>
-        </div>
+      <PageHeader
+        title="Smart Scheduling"
+        badge="AI Roster Engine"
+        subtitle="Automated shift scheduling with AI conflict resolution & driver rest compliance."
+        breadcrumb="Operations"
+        actions={[
+          {
+            label: isOptimizing ? 'AI Optimizing...' : 'Auto-Optimize Roster',
+            icon: 'auto_awesome',
+            onClick: handleAutoOptimize,
+            variant: 'primary'
+          }
+        ]}
+      />
 
-        <button
-          onClick={handleAutoOptimize}
-          disabled={isOptimizing}
-          className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-all flex items-center gap-2 disabled:opacity-50 flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[18px]">auto_awesome</span>
-          <span>{isOptimizing ? 'AI Optimizing Schedule...' : 'AI Auto-Optimize Roster'}</span>
-        </button>
-      </div>
-
-      {/* Roster Table */}
+      {/* Roster Container */}
       <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
         <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4 truncate">
           Today's Driver-Vehicle Shift Allocations
         </h3>
 
-        <div className="table-container no-scrollbar">
-        <table className="w-full text-left border-collapse text-xs min-w-[700px]">
-          <thead>
-            <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
-              <th className="py-3 px-4">Driver Name</th>
-              <th className="py-3 px-4">Assigned Vehicle</th>
-              <th className="py-3 px-4">Shift Time Window</th>
-              <th className="py-3 px-4">Shift Status</th>
-              <th className="py-3 px-4 text-right">Conflict Check</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-surface-container/60 dark:divide-slate-800 text-xs">
-            {rosterMatrix.map((r, idx) => (
-              <tr key={idx} className="hover:bg-surface-container/40 dark:hover:bg-slate-800/40">
-                <td className="py-3.5 px-4 font-bold text-on-surface dark:text-slate-100">{r.driver}</td>
-                <td className="py-3.5 px-4 font-semibold text-primary dark:text-indigo-400">{r.bus}</td>
-                <td className="py-3.5 px-4 text-outline dark:text-slate-300 font-mono">{r.time}</td>
-                <td className="py-3.5 px-4 font-bold text-on-surface dark:text-slate-200 capitalize">{r.status}</td>
-                <td className="py-3.5 px-4 text-right">
-                  {r.conflict ? (
-                    <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-500 font-extrabold text-[10px] uppercase">
-                      ⚠️ {r.reason}
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase">
-                      ✓ Valid Roster
-                    </span>
-                  )}
-                </td>
+        {/* Mobile View: Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:hidden">
+          {rosterMatrix.map((r, idx) => (
+            <div key={idx} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-on-surface dark:text-slate-100">{r.driver}</span>
+                {r.conflict ? (
+                  <span className="px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-500 font-extrabold text-[10px] uppercase">
+                    ⚠️ {r.reason}
+                  </span>
+                ) : (
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase">
+                    ✓ Valid
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-primary dark:text-indigo-400">{r.bus}</span>
+                <span className="text-outline dark:text-slate-400 font-mono text-[11px]">{r.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden sm:block table-container no-scrollbar">
+          <table className="w-full text-left border-collapse text-xs min-w-[700px]">
+            <thead>
+              <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">
+                <th className="py-3 px-4">Driver Name</th>
+                <th className="py-3 px-4">Assigned Vehicle</th>
+                <th className="py-3 px-4">Shift Time Window</th>
+                <th className="py-3 px-4">Shift Status</th>
+                <th className="py-3 px-4 text-right">Conflict Check</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-surface-container/60 dark:divide-slate-800 text-xs">
+              {rosterMatrix.map((r, idx) => (
+                <tr key={idx} className="hover:bg-surface-container/40 dark:hover:bg-slate-800/40">
+                  <td className="py-3.5 px-4 font-bold text-on-surface dark:text-slate-100">{r.driver}</td>
+                  <td className="py-3.5 px-4 font-semibold text-primary dark:text-indigo-400">{r.bus}</td>
+                  <td className="py-3.5 px-4 text-outline dark:text-slate-300 font-mono">{r.time}</td>
+                  <td className="py-3.5 px-4 font-bold text-on-surface dark:text-slate-200 capitalize">{r.status}</td>
+                  <td className="py-3.5 px-4 text-right">
+                    {r.conflict ? (
+                      <span className="px-3 py-1 rounded-full bg-rose-500/10 text-rose-500 font-extrabold text-[10px] uppercase">
+                        ⚠️ {r.reason}
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase">
+                        ✓ Valid Roster
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const AIRouteOptimizerPage: React.FC = () => {
   const { routes, updateRoute, showToast } = useData();
@@ -23,11 +24,20 @@ export const AIRouteOptimizerPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">AI Route Telemetry Optimizer</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Algorithmic corridor optimization based on traffic, fuel economy, and passenger density</p>
-      </div>
+      <PageHeader
+        title="AI Route Optimizer"
+        badge="Pareto AI Engine"
+        subtitle="Algorithmic corridor optimization based on traffic, fuel economy, and passenger density."
+        breadcrumb="Intelligence"
+        actions={[
+          {
+            label: isOptimizing ? 'Optimizing...' : 'Apply AI Route',
+            icon: 'alt_route',
+            onClick: handleApplyOptimization,
+            variant: 'primary'
+          }
+        ]}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start min-w-0">
         {/* Left Inputs Panel */}

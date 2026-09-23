@@ -3,6 +3,7 @@ import { useData } from '../context/DataContext';
 import type { Bus } from '../types';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Drawer } from '../components/common/Drawer';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const LiveTrackingPage: React.FC = () => {
   const { buses, routes } = useData();
@@ -34,34 +35,20 @@ export const LiveTrackingPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Map Control Header */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] p-4 sm:p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 min-w-0">
-        <div className="flex items-center gap-3 min-w-0 w-full sm:w-auto">
-          <div className="w-10 h-10 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary flex items-center justify-center flex-shrink-0">
-            <span className="material-symbols-outlined text-[24px]">near_me</span>
-          </div>
-          <div className="min-w-0">
-            <h2 className="text-title-lg font-bold text-on-surface dark:text-slate-100 truncate">Live Fleet GPS Tracker</h2>
-            <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs truncate">Simulating real-time transit telemetry & passenger loads</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <button
-            onClick={() => setIsSimulating(!isSimulating)}
-            className={`px-4 py-2 rounded-full text-label-md font-bold transition-all flex items-center gap-2 ${
-              isSimulating 
-                ? 'bg-success dark:bg-emerald-600 text-on-success' 
-                : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
-            }`}
-          >
-            <span className="material-symbols-outlined text-[18px]">
-              {isSimulating ? 'pause' : 'play_arrow'}
-            </span>
-            {isSimulating ? 'GPS Live (Active)' : 'GPS Simulation Paused'}
-          </button>
-        </div>
-      </div>
+      <PageHeader
+        title="Live Fleet Tracking"
+        badge={isSimulating ? 'GPS Live Feed' : 'Simulation Paused'}
+        subtitle="Simulating real-time transit telemetry, interactive route corridors, and passenger loads."
+        breadcrumb="Operations"
+        actions={[
+          {
+            label: isSimulating ? 'Pause GPS' : 'Resume GPS',
+            icon: isSimulating ? 'pause' : 'play_arrow',
+            onClick: () => setIsSimulating(!isSimulating),
+            variant: isSimulating ? 'primary' : 'outline'
+          }
+        ]}
+      />
 
       {/* Main Interactive Simulated Map Canvas Area */}
       <div className="relative w-full h-[380px] sm:h-[520px] rounded-[32px] overflow-hidden bg-slate-900 border border-slate-700 shadow-2xl min-w-0">

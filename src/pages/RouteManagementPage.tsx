@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useData } from '../context/DataContext';
 import type { Route } from '../types';
 import { Modal } from '../components/common/Modal';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const RouteManagementPage: React.FC = () => {
   const { routes, addRoute } = useData();
   const [selectedRoute, setSelectedRoute] = useState<Route>(routes[0]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Form State
   const [code, setCode] = useState('');
@@ -15,6 +17,17 @@ export const RouteManagementPage: React.FC = () => {
   const [destination, setDestination] = useState('');
   const [distanceKm] = useState('15');
   const [frequencyMins, setFrequencyMins] = useState('10');
+
+  const filteredRoutes = useMemo(() => {
+    if (!searchQuery.trim()) return routes;
+    const q = searchQuery.toLowerCase();
+    return routes.filter(r =>
+      r.code.toLowerCase().includes(q) ||
+      r.name.toLowerCase().includes(q) ||
+      r.origin.toLowerCase().includes(q) ||
+      r.destination.toLowerCase().includes(q)
+    );
+  }, [routes, searchQuery]);
 
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,33 +54,30 @@ export const RouteManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Mobile Page Header (Point 4) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
-            Transit Routes & Stop Timelines
-          </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
-            Manage active route corridors, frequency, and stop schedules.
-          </p>
-        </div>
-
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[20px]">add_location_alt</span>
-          <span>Create New Route</span>
-        </button>
-      </div>
+    <div className="flex flex-col gap-6 min-w-0">
+      {/* Standard Mobile Page Header */}
+      <PageHeader
+        title="Transit Routes & Stop Timelines"
+        description="Manage active route corridors, frequency, and stop schedules across the network."
+        primaryAction={{
+          label: 'Create New Route',
+          icon: 'add_location_alt',
+          onClick: () => setIsAddModalOpen(true)
+        }}
+        search={{
+          value: searchQuery,
+          onChange: setSearchQuery,
+          placeholder: 'Search routes by code, name, or terminal...',
+          onClear: () => setSearchQuery('')
+        }}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Route Selector List */}
         <div className="flex flex-col gap-3">
           <h3 className="text-title-lg font-bold text-on-surface dark:text-slate-100">Route Directory</h3>
           <div className="flex flex-col gap-3">
-            {routes.map((r) => {
+            {filteredRoutes.map((r) => {
               const isSelected = selectedRoute.id === r.id;
               return (
                 <div

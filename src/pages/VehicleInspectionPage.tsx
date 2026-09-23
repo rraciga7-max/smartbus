@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const VehicleInspectionPage: React.FC = () => {
   const { buses, drivers, inspectionReports, addInspectionReport } = useData();
@@ -45,11 +46,12 @@ export const VehicleInspectionPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Daily Pre-Trip Vehicle Inspection</h2>
-        <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Driver & Technician 10-Point Safety Audit Checklist</p>
-      </div>
+      <PageHeader
+        title="Vehicle Inspection"
+        badge="10-Point Safety Audit"
+        subtitle="Driver & Technician 10-Point safety checklist before dispatch clearance."
+        breadcrumb="Fleet"
+      />
 
       {/* Critical Failure Warning Banner */}
       {hasCriticalFail && (

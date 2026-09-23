@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { Modal } from '../components/common/Modal';
+import { PageHeader } from '../components/common/PageHeader';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 export const FuelManagementPage: React.FC = () => {
@@ -42,22 +43,21 @@ export const FuelManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fuel Intelligence & Energy Spend</h2>
-          <p className="text-xs text-outline dark:text-slate-400">Consumption analytics, efficiency ranking, and telemetry anomaly detection</p>
-        </div>
-
-        <button
-          onClick={() => setIsLogModalOpen(true)}
-          className="px-5 py-2.5 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs hover:bg-primary/90 transition-colors shadow-md flex items-center gap-2"
-        >
-          <span className="material-symbols-outlined text-[18px]">local_gas_station</span>
-          Log Fuel Entry
-        </button>
-      </div>
+    <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Fuel & Energy Spend"
+        badge="Efficiency Analytics"
+        subtitle="Consumption analytics, efficiency ranking, and telemetry anomaly detection."
+        breadcrumb="Fleet"
+        actions={[
+          {
+            label: 'Log Fuel Entry',
+            icon: 'local_gas_station',
+            onClick: () => setIsLogModalOpen(true),
+            variant: 'primary'
+          }
+        ]}
+      />
 
       {/* AI Anomaly Alert Banner */}
       <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 flex flex-wrap items-center justify-between gap-3 shadow-stitch-sm">
@@ -124,11 +124,34 @@ export const FuelManagementPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Fuel Log Table */}
+      {/* Fuel Log Container */}
       <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col gap-4 min-w-0">
         <h3 className="text-base font-bold text-on-surface dark:text-slate-100">Fueling Log & Telemetry Verification</h3>
 
-        <div className="table-container no-scrollbar">
+        {/* Mobile View: Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:hidden">
+          {fuelRecords.map((f) => (
+            <div key={f.id} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-on-surface dark:text-slate-100">{f.busRegistration}</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary dark:text-indigo-400 font-bold text-[11px]">
+                  {f.fuelType}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-outline dark:text-slate-400">{f.date}</span>
+                <span className="font-extrabold text-on-surface dark:text-slate-100">₹{f.cost.toLocaleString()}</span>
+              </div>
+              <div className="pt-2 border-t border-surface-container/40 dark:border-slate-700/40 flex items-center justify-between text-[11px] text-outline dark:text-slate-400">
+                <span>{f.litres} L • <strong className="text-emerald-600 dark:text-emerald-400">{f.mileageKmpl} km/L</strong></span>
+                <span className="truncate max-w-[150px]">{f.stationName}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden sm:block table-container no-scrollbar">
           <table className="w-full text-left border-collapse text-xs min-w-[650px]">
             <thead>
               <tr className="border-b border-surface-container text-outline text-xs uppercase tracking-wider font-bold">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import type { PassengerTicket } from '../types';
 import { Modal } from '../components/common/Modal';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const PassengerPage: React.FC = () => {
   const { tickets, bookTicket } = useData();
@@ -33,22 +34,20 @@ export const PassengerPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Top Banner / Passenger Home header (Stitch Screen 15) */}
-      <div className="bg-gradient-to-r from-primary to-primary-container dark:from-indigo-900 dark:to-slate-900 rounded-[28px] p-4 sm:p-6 text-on-primary shadow-stitch-float flex flex-col md:flex-row items-center justify-between gap-4 border border-primary/20 dark:border-indigo-500/20 min-w-0">
-        <div className="min-w-0 w-full md:w-auto">
-          <span className="text-label-sm uppercase tracking-wider font-semibold opacity-80">CityTransit Commuter Portal</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">Book Digital Bus Pass & Tickets</h2>
-          <p className="text-on-primary/80 text-body-md text-xs sm:text-sm mt-1">Contactless QR tickets, real-time fare calculation & live seat tracking</p>
-        </div>
-
-        <button
-          onClick={() => setIsBookModalOpen(true)}
-          className="w-full sm:w-auto justify-center px-6 py-3 rounded-full bg-white text-primary font-bold text-label-md hover:bg-surface-container transition-colors shadow-md flex items-center gap-2 active:scale-95 flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[20px]">confirmation_number</span>
-          Book New Ticket
-        </button>
-      </div>
+      <PageHeader
+        title="Commuter Passes & Tickets"
+        badge="Digital Ticketing"
+        subtitle="Contactless QR tickets, real-time fare calculation & live seat tracking."
+        breadcrumb="Operations"
+        actions={[
+          {
+            label: 'Book Ticket',
+            icon: 'confirmation_number',
+            onClick: () => setIsBookModalOpen(true),
+            variant: 'primary'
+          }
+        ]}
+      />
 
       {/* Issued Digital Ticket View (Matching Stitch Screen 2 & 4) */}
       <div className="flex flex-col gap-4 min-w-0">

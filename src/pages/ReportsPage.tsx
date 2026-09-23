@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { useTheme } from '../context/ThemeContext';
+import { PageHeader } from '../components/common/PageHeader';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, PieChart, Pie, Cell } from 'recharts';
 
 export const ReportsPage: React.FC = () => {
@@ -26,38 +27,39 @@ export const ReportsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Top Header & Range Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Fleet Analytics & Performance Reports</h2>
-          <p className="text-body-md text-on-surface-variant dark:text-slate-400 text-xs">Comprehensive operational insights, passenger trend graphs & cost tracking</p>
-        </div>
+    <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Fleet Analytics & Reports"
+        badge="Performance Hub"
+        subtitle="Comprehensive operational insights, passenger trend graphs & cost tracking."
+        breadcrumb="Intelligence"
+        actions={[
+          {
+            label: 'Export Report',
+            icon: 'download',
+            onClick: handleExportCSV,
+            variant: 'primary'
+          }
+        ]}
+      />
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="flex gap-1 bg-surface-container dark:bg-slate-900 p-1 rounded-full text-xs font-bold border border-transparent dark:border-slate-800">
-            {(['week', 'month', 'quarter'] as const).map(t => (
-              <button
-                key={t}
-                onClick={() => setTimeRange(t)}
-                className={`px-3 py-1.5 rounded-full capitalize transition-colors ${
-                  timeRange === t 
-                    ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
-                    : 'text-on-surface-variant dark:text-slate-400 hover:text-on-surface dark:hover:text-slate-200'
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={handleExportCSV}
-            className="px-4 py-2.5 rounded-full bg-primary dark:bg-indigo-600 text-on-primary font-bold text-label-md hover:bg-primary/90 dark:hover:bg-indigo-500 transition-colors shadow-md flex items-center gap-2 flex-shrink-0 active:scale-95"
-          >
-            <span className="material-symbols-outlined text-[18px]">download</span>
-            Export Report
-          </button>
+      {/* Time Range Selector */}
+      <div className="flex items-center justify-between gap-3 bg-surface-container-lowest dark:bg-slate-900 p-3 rounded-2xl border border-surface-container/60 dark:border-slate-800">
+        <span className="text-xs font-bold text-outline dark:text-slate-400 uppercase tracking-wider">Analysis Range</span>
+        <div className="flex gap-1 bg-surface-container dark:bg-slate-800 p-1 rounded-full text-xs font-bold">
+          {(['week', 'month', 'quarter'] as const).map(t => (
+            <button
+              key={t}
+              onClick={() => setTimeRange(t)}
+              className={`px-3.5 py-1 rounded-full capitalize transition-colors ${
+                timeRange === t 
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
+                  : 'text-on-surface-variant dark:text-slate-400 hover:text-on-surface dark:hover:text-slate-200'
+              }`}
+            >
+              {t}
+            </button>
+          ))}
         </div>
       </div>
 

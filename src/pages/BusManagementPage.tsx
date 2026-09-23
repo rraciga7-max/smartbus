@@ -6,6 +6,7 @@ import { StatusBadge } from '../components/common/StatusBadge';
 import { Drawer } from '../components/common/Drawer';
 import { Modal } from '../components/common/Modal';
 import { MobileFilterSheet } from '../components/common/MobileFilterSheet';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const BusManagementPage: React.FC = () => {
   const { buses, addBus, updateBus, deleteBus, changeBusStatus } = useData();
@@ -106,116 +107,82 @@ export const BusManagementPage: React.FC = () => {
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Mobile Page Header (Point 4) */}
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
-              Bus Fleet Management
-            </h1>
-            <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
-              Monitor, configure, and manage transit vehicles across all active depots and routes.
-            </p>
-          </div>
-
+    <div className="flex flex-col gap-6 min-w-0">
+      {/* Standard Mobile Page Header */}
+      <PageHeader
+        title="Bus Fleet Management"
+        description="Monitor, configure, and manage transit vehicles across all active depots and routes."
+        primaryAction={{
+          label: 'Register Bus',
+          icon: 'add_bus',
+          onClick: () => {
+            setRegNum('');
+            setIsAddModalOpen(true);
+          }
+        }}
+        search={{
+          value: searchQuery,
+          onChange: setSearchQuery,
+          placeholder: 'Search buses by plate, route, or driver name...',
+          onClear: () => setSearchQuery('')
+        }}
+        filter={{
+          label: 'Filters',
+          activeCount: activeFilter !== 'all' ? 1 : 0,
+          onClick: () => setIsFilterSheetOpen(true)
+        }}
+      >
+        {/* Desktop Filter Pills */}
+        <div className="hidden sm:flex gap-2 overflow-x-auto no-scrollbar py-1">
           <button
-            onClick={() => {
-              setRegNum('');
-              setIsAddModalOpen(true);
-            }}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
+            type="button"
+            onClick={() => setActiveFilter('all')}
+            className={`px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[40px] ${
+              activeFilter === 'all' 
+                ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
+                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+            }`}
           >
-            <span className="material-symbols-outlined text-[20px]">add_bus</span>
-            <span>Register Bus</span>
-          </button>
-        </div>
-
-        {/* Search & Filter Controls (Point 8 & Point 9) */}
-        <div className="mt-2 flex flex-col sm:flex-row items-center gap-2.5">
-          <div className="relative flex-1 w-full">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline dark:text-slate-400 text-[20px]">
-              search
-            </span>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search buses by plate, route, or driver name..."
-              className="w-full pl-11 pr-10 py-3 bg-surface-container dark:bg-slate-900 rounded-2xl text-xs sm:text-sm text-on-surface dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-indigo-500/30 transition-all shadow-sm border border-transparent dark:border-slate-800 min-h-[44px]"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant dark:text-slate-400 hover:bg-surface-container-high dark:hover:bg-slate-800 transition-colors"
-                aria-label="Clear search"
-              >
-                <span className="material-symbols-outlined text-[18px]">close</span>
-              </button>
-            )}
-          </div>
-
-          {/* Mobile Filter Toggle Button */}
-          <button
-            onClick={() => setIsFilterSheetOpen(true)}
-            className="sm:hidden w-full py-3 px-4 rounded-2xl bg-surface-container dark:bg-slate-900 border border-surface-container-high dark:border-slate-800 text-on-surface dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-2 min-h-[44px]"
-          >
-            <span className="material-symbols-outlined text-[18px] text-primary dark:text-indigo-400">tune</span>
-            <span>Filter Status</span>
-            {activeFilter !== 'all' && (
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            )}
+            All Buses ({buses.length})
           </button>
 
-          {/* Desktop Filter Pills */}
-          <div className="hidden sm:flex gap-2 overflow-x-auto no-scrollbar py-1">
-            <button
-              onClick={() => setActiveFilter('all')}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
-                activeFilter === 'all' 
-                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm' 
-                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-              }`}
-            >
-              All Buses ({buses.length})
-            </button>
+          <button
+            type="button"
+            onClick={() => setActiveFilter('active')}
+            className={`px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[40px] ${
+              activeFilter === 'active' 
+                ? 'bg-success text-on-success shadow-sm' 
+                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+            }`}
+          >
+            Active ({buses.filter(b => b.status === 'active').length})
+          </button>
 
-            <button
-              onClick={() => setActiveFilter('active')}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
-                activeFilter === 'active' 
-                  ? 'bg-success text-on-success shadow-sm' 
-                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-              }`}
-            >
-              Active ({buses.filter(b => b.status === 'active').length})
-            </button>
+          <button
+            type="button"
+            onClick={() => setActiveFilter('idle')}
+            className={`px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[40px] ${
+              activeFilter === 'idle' 
+                ? 'bg-amber-500 text-white shadow-sm' 
+                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+            }`}
+          >
+            Idle ({buses.filter(b => b.status === 'idle').length})
+          </button>
 
-            <button
-              onClick={() => setActiveFilter('idle')}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
-                activeFilter === 'idle' 
-                  ? 'bg-amber-500 text-white shadow-sm' 
-                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-              }`}
-            >
-              Idle ({buses.filter(b => b.status === 'idle').length})
-            </button>
-
-            <button
-              onClick={() => setActiveFilter('maintenance')}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] ${
-                activeFilter === 'maintenance' 
-                  ? 'bg-error text-on-error shadow-sm' 
-                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-              }`}
-            >
-              Maintenance ({buses.filter(b => b.status === 'maintenance').length})
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setActiveFilter('maintenance')}
+            className={`px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all min-h-[40px] ${
+              activeFilter === 'maintenance' 
+                ? 'bg-error text-on-error shadow-sm' 
+                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+            }`}
+          >
+            Maintenance ({buses.filter(b => b.status === 'maintenance').length})
+          </button>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Bus Grid Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-w-0">

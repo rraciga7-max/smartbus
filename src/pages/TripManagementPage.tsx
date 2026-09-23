@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useData } from '../context/DataContext';
 import type { TripStatus } from '../types';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Modal } from '../components/common/Modal';
+import { MobileFilterSheet } from '../components/common/MobileFilterSheet';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const TripManagementPage: React.FC = () => {
   const { trips, addTrip, updateTripStatus } = useData();
   const [activeTab, setActiveTab] = useState<'all' | TripStatus>('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Form State
   const [routeCode, setRouteCode] = useState('21A');
@@ -17,7 +21,19 @@ export const TripManagementPage: React.FC = () => {
   const [departureTime, setDepartureTime] = useState('09:00 AM');
   const [arrivalTime, setArrivalTime] = useState('09:45 AM');
 
-  const filteredTrips = trips.filter(t => activeTab === 'all' || t.status === activeTab);
+  const filteredTrips = useMemo(() => {
+    return trips.filter(t => {
+      const matchesTab = activeTab === 'all' || t.status === activeTab;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch = !q ||
+        t.id.toLowerCase().includes(q) ||
+        t.routeCode.toLowerCase().includes(q) ||
+        t.routeName.toLowerCase().includes(q) ||
+        t.busNumber.toLowerCase().includes(q) ||
+        t.driverName.toLowerCase().includes(q);
+      return matchesTab && matchesSearch;
+    });
+  }, [trips, activeTab, searchQuery]);
 
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,50 +55,90 @@ export const TripManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Mobile Page Header (Point 4) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight">
-            Active Trips & Schedule Logs
-          </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1">
-            Monitor live departures, passenger loads, and on-time status across active routes.
-          </p>
+    <div className="flex flex-col gap-6 min-w-0">
+      {/* Standard Mobile Page Header */}
+      <PageHeader
+        title="Active Trips & Schedule Logs"
+        description="Monitor live departures, passenger loads, and on-time status across active routes."
+        primaryAction={{
+          label: 'Dispatch New Trip',
+          icon: 'departure_board',
+          onClick: () => setIsAddModalOpen(true)
+        }}
+        search={{
+          value: searchQuery,
+          onChange: setSearchQuery,
+          placeholder: 'Search trips by ID, route, bus, driver...',
+          onClear: () => setSearchQuery('')
+        }}
+        filter={{
+          label: 'Filters',
+          activeCount: activeTab !== 'all' ? 1 : 0,
+          onClick: () => setIsFilterSheetOpen(true)
+        }}
+      >
+        {/* Desktop Filter Tabs */}
+        <div className="hidden sm:flex gap-2 overflow-x-auto no-scrollbar py-1">
+          {(['all', 'in_transit', 'scheduled', 'completed', 'delayed'] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-2xl text-xs font-semibold capitalize whitespace-nowrap transition-all min-h-[40px] ${
+                activeTab === tab
+                  ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm font-bold'
+                  : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
+              }`}
+            >
+              {tab.replace('_', ' ')}
+            </button>
+          ))}
         </div>
+      </PageHeader>
 
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-primary dark:bg-indigo-600 text-on-primary font-bold text-xs sm:text-sm hover:bg-primary/90 dark:hover:bg-indigo-500 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 min-h-[44px] flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[20px]">departure_board</span>
-          <span>Dispatch New Trip</span>
-        </button>
-      </div>
-
-      {/* Filter Tabs */}
-      <div className="flex gap-2 border-b border-surface-container dark:border-slate-800 pb-2 overflow-x-auto no-scrollbar">
-        {(['all', 'in_transit', 'scheduled', 'completed', 'delayed'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-semibold capitalize whitespace-nowrap transition-all min-h-[44px] ${
-              activeTab === tab
-                ? 'bg-primary dark:bg-indigo-600 text-on-primary shadow-sm'
-                : 'bg-surface-container dark:bg-slate-900 text-on-surface dark:text-slate-300 hover:bg-surface-container-high dark:hover:bg-slate-800 border border-transparent dark:border-slate-800'
-            }`}
-          >
-            {tab.replace('_', ' ')}
-          </button>
-        ))}
-      </div>
+      {/* Mobile Filter Sheet */}
+      <MobileFilterSheet
+        isOpen={isFilterSheetOpen}
+        onClose={() => setIsFilterSheetOpen(false)}
+        onReset={() => setActiveTab('all')}
+        activeFilterCount={activeTab !== 'all' ? 1 : 0}
+        title="Filter Trips"
+      >
+        <div className="space-y-3">
+          <label className="text-xs font-bold text-outline dark:text-slate-400 uppercase tracking-wider block">
+            Trip Status
+          </label>
+          <div className="flex flex-col gap-2">
+            {(['all', 'in_transit', 'scheduled', 'completed', 'delayed'] as const).map(tab => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => {
+                  setActiveTab(tab);
+                  setIsFilterSheetOpen(false);
+                }}
+                className={`w-full p-3 rounded-xl text-left text-xs font-bold capitalize flex items-center justify-between transition-colors ${
+                  activeTab === tab
+                    ? 'bg-primary text-on-primary shadow-sm'
+                    : 'bg-surface-container dark:bg-slate-800 text-on-surface dark:text-slate-200'
+                }`}
+              >
+                <span>{tab.replace('_', ' ')}</span>
+                {activeTab === tab && (
+                  <span className="material-symbols-outlined text-[18px]">check</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </MobileFilterSheet>
 
       {/* Trips Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-0">
         {filteredTrips.map((trip) => (
           <div
             key={trip.id}
-            className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-4 min-w-0"
+            className="card-responsive bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-5 shadow-stitch-card border border-surface-container/60 dark:border-slate-800 flex flex-col justify-between gap-4 min-w-0"
           >
             <div className="min-w-0">
               {/* Trip Code & Status */}

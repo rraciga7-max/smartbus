@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const DepotManagementPage: React.FC = () => {
   const { depots, buses } = useData();
@@ -10,11 +11,12 @@ export const DepotManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Depot Operations & Fuel Facilities</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Terminal parking capacity, workshop maintenance queues, and fuel inventory tracking</p>
-      </div>
+      <PageHeader
+        title="Depot Operations"
+        badge={`${depots.length} Facilities Active`}
+        subtitle="Terminal parking capacity, workshop maintenance queues, and fuel inventory tracking."
+        breadcrumb="Fleet"
+      />
 
       {/* Depot Overview Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 min-w-0">

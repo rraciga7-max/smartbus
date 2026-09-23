@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const VendorManagementPage: React.FC = () => {
   const { vendors, addVendor } = useData();
@@ -34,25 +35,51 @@ export const VendorManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 min-w-0">
-        <div className="min-w-0">
-          <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Vendor & Procurement Directory</h2>
-          <p className="text-xs text-outline dark:text-slate-400 truncate">Managing fuel suppliers, spare parts distributors, maintenance partners, and tech vendors</p>
+      <PageHeader
+        title="Vendor Directory"
+        badge={`${vendors.length} Vendors Registered`}
+        subtitle="Managing fuel suppliers, spare parts distributors, maintenance partners, and tech vendors."
+        breadcrumb="Finance"
+        actions={[
+          {
+            label: 'Add Vendor',
+            icon: 'add_business',
+            onClick: () => setIsModalOpen(true),
+            variant: 'primary'
+          }
+        ]}
+      />
+
+      {/* Vendors Container */}
+      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
+        {/* Mobile View: Cards */}
+        <div className="grid grid-cols-1 gap-3 sm:hidden">
+          {vendors.map(v => (
+            <div key={v.id} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-on-surface dark:text-slate-100">{v.name}</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-[10px] uppercase">
+                  {v.status}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-primary dark:text-indigo-400">{v.category}</span>
+                <span className="font-bold text-amber-500">{v.performanceRating} / 5 ⭐</span>
+              </div>
+              <div className="pt-2 border-t border-surface-container/40 dark:border-slate-700/40 text-xs text-outline dark:text-slate-400 flex flex-col gap-0.5">
+                <span className="font-medium text-on-surface dark:text-slate-200">{v.contactPerson}</span>
+                <span>{v.phone} • {v.email}</span>
+                <div className="flex justify-between pt-1 font-bold text-on-surface dark:text-slate-200">
+                  <span>{v.activeContracts} Contract(s)</span>
+                  <span>Spend: ₹{v.totalSpend.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs shadow-md hover:bg-primary/90 transition-colors flex items-center gap-2 flex-shrink-0"
-        >
-          <span className="material-symbols-outlined text-[18px]">add_business</span>
-          Add Enterprise Vendor
-        </button>
-      </div>
-
-      {/* Vendors Table */}
-      <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
-        <div className="table-container no-scrollbar">
+        {/* Desktop View: Table */}
+        <div className="hidden sm:block table-container no-scrollbar">
         <table className="w-full text-left border-collapse text-xs min-w-[750px]">
           <thead>
             <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">

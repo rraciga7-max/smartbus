@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const UserRoleManagementPage: React.FC = () => {
   const { userRoles } = useData();
@@ -40,11 +41,12 @@ export const UserRoleManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100">Enterprise Users & Role Access Matrix</h2>
-        <p className="text-xs text-outline dark:text-slate-400 mt-0.5">Configure RBAC security policies across 9 enterprise role tiers and granular permission flags</p>
-      </div>
+      <PageHeader
+        title="User & Role Access"
+        badge="RBAC Security"
+        subtitle="Configure RBAC security policies across enterprise role tiers and granular permission flags."
+        breadcrumb="Administration"
+      />
 
       {/* Role Permission Matrix Table */}
       <div className="bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">

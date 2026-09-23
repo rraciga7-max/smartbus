@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useData } from '../../context/DataContext';
+import { PageHeader } from '../../components/common/PageHeader';
 
 export const ProfilePage: React.FC = () => {
   const { user, updateProfile, updatePreferences, changePassword, terminateSession, terminateAllOtherSessions, openLogoutModal } = useAuth();
@@ -56,6 +57,20 @@ export const ProfilePage: React.FC = () => {
 
   return (
     <div className="space-y-6 sm:space-y-8 pb-12 min-w-0">
+      <PageHeader
+        title="My Profile"
+        badge={user.role}
+        subtitle="Manage personal profile information, preferences, and account security."
+        breadcrumb="Account"
+        actions={[
+          {
+            label: 'Sign Out',
+            icon: 'logout',
+            onClick: openLogoutModal,
+            variant: 'outline'
+          }
+        ]}
+      />
       {/* HEADER BAR */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 bg-surface-container-lowest dark:bg-slate-900 border border-surface-container dark:border-slate-800 rounded-[24px] sm:rounded-[28px] shadow-sm min-w-0">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">

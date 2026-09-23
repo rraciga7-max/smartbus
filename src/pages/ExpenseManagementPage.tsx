@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const ExpenseManagementPage: React.FC = () => {
   const { expenses, addExpense } = useData();
@@ -30,15 +31,12 @@ export const ExpenseManagementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Mobile Page Header (Point 4) */}
-      <div className="flex flex-col gap-1 min-w-0">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface dark:text-slate-100 tracking-tight truncate">
-          Enterprise Expense & Cost Management
-        </h1>
-        <p className="text-xs sm:text-sm text-on-surface-variant dark:text-slate-400 mt-1 truncate">
-          Budget vs actual expenditure audit across fuel, maintenance, payroll, and parts.
-        </p>
-      </div>
+      <PageHeader
+        title="Expense Management"
+        badge="Cost Control"
+        subtitle="Budget vs actual expenditure audit across fuel, maintenance, payroll, and parts."
+        breadcrumb="Finance"
+      />
 
       {/* Variance KPI Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 min-w-0">
@@ -119,13 +117,36 @@ export const ExpenseManagementPage: React.FC = () => {
           </button>
         </form>
 
-        {/* Expenses List Table */}
+        {/* Expenses List Container */}
         <div className="lg:col-span-2 bg-surface-container-lowest dark:bg-slate-900 rounded-[28px] p-4 sm:p-6 border border-surface-container dark:border-slate-800 shadow-stitch-md min-w-0">
           <h3 className="font-bold text-base text-on-surface dark:text-slate-100 border-b border-surface-container dark:border-slate-800 pb-3 mb-4 truncate">
             Expense Audit Trail Log
           </h3>
 
-          <div className="table-container no-scrollbar">
+          {/* Mobile View: Cards */}
+          <div className="grid grid-cols-1 gap-3 sm:hidden">
+            {expenses.map(e => (
+              <div key={e.id} className="p-4 rounded-2xl bg-surface-container/40 dark:bg-slate-800/40 border border-surface-container/60 dark:border-slate-800 flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary dark:text-indigo-400">
+                    {e.category}
+                  </span>
+                  <span className="font-mono text-xs font-bold text-outline dark:text-slate-400">{e.id}</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-xs text-on-surface dark:text-slate-100">{e.description}</p>
+                  <span className="text-[11px] text-outline dark:text-slate-400 block">{e.vendorName} • {e.date}</span>
+                </div>
+                <div className="pt-2 border-t border-surface-container/40 dark:border-slate-700/40 flex justify-between items-center text-xs">
+                  <span className="text-outline dark:text-slate-400">Amount:</span>
+                  <span className="font-black text-sm text-on-surface dark:text-slate-100">₹{e.amount.toLocaleString()}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop View: Table */}
+          <div className="hidden sm:block table-container no-scrollbar">
           <table className="w-full text-left border-collapse text-xs min-w-[600px]">
             <thead>
               <tr className="border-b border-surface-container dark:border-slate-800 text-outline dark:text-slate-400 uppercase font-bold">

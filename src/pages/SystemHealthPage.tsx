@@ -1,16 +1,18 @@
 import React from 'react';
 import { useData } from '../context/DataContext';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const SystemHealthPage: React.FC = () => {
   const { systemHealth } = useData();
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
-      {/* Header */}
-      <div className="min-w-0">
-        <h2 className="text-xl font-bold text-on-surface dark:text-slate-100 truncate">Infrastructure & System Health Monitoring</h2>
-        <p className="text-xs text-outline dark:text-slate-400 truncate">Realtime monitoring of GPS gateways, core REST APIs, databases, auth, and telematics synchronization</p>
-      </div>
+      <PageHeader
+        title="System Health"
+        badge="99.98% Gateway Uptime"
+        subtitle="Realtime monitoring of GPS gateways, core REST APIs, databases, auth, and telematics synchronization."
+        breadcrumb="Administration"
+      />
 
       {/* Services Health Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 min-w-0">

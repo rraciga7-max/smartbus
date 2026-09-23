@@ -62,6 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { label: 'Maintenance', icon: 'build_circle', path: '/app/maintenance' },
         { label: 'Inspections', icon: 'fact_check', path: '/app/inspections' },
+        { label: 'Work Orders', icon: 'assignment', path: '/app/maintenance' },
         { label: 'Fuel', icon: 'local_gas_station', path: '/app/fuel' },
       ]
     },
@@ -69,9 +70,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
       title: 'INTELLIGENCE',
       items: [
         { label: 'Analytics', icon: 'analytics', path: '/app/reports' },
-        { label: 'AI Insights', icon: 'smart_toy', path: '/app/ai-assistant' },
+        { label: 'AI Insights', icon: 'smart_toy', path: '/app/ai-insights' },
         { label: 'Demand Forecast', icon: 'trending_up', path: '/app/demand-forecast' },
         { label: 'Route Optimization', icon: 'route', path: '/app/route-optimizer' },
+      ]
+    },
+    {
+      title: 'SAFETY',
+      items: [
+        { label: 'Incidents', icon: 'report_problem', path: '/app/incidents' },
+        { label: 'Safety', icon: 'warning_amber', path: '/app/emergency', badge: activeEmergencyCount, badgeColor: 'bg-error text-on-error' },
+        { label: 'Compliance', icon: 'verified', path: '/app/compliance' },
       ]
     },
     {
@@ -82,20 +91,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ]
     },
     {
-      title: 'SAFETY & COMPLIANCE',
+      title: 'ADMINISTRATION',
       items: [
-        { label: 'Incidents', icon: 'report_problem', path: '/app/incidents' },
-        { label: 'Safety', icon: 'warning_amber', path: '/app/emergency', badge: activeEmergencyCount, badgeColor: 'bg-error text-on-error' },
-        { label: 'Compliance', icon: 'verified', path: '/app/compliance' },
+        { label: 'Notifications', icon: 'notifications', path: '/app/notifications', badge: unreadCount },
+        { label: 'Users & Roles', icon: 'manage_accounts', path: '/app/users' },
+        { label: 'Audit Logs', icon: 'history', path: '/app/audit-logs' },
+        { label: 'Settings', icon: 'settings', path: '/app/settings' },
       ]
     },
     {
-      title: 'ADMIN & SYSTEM',
+      title: 'ACCOUNT',
       items: [
-        { label: 'Users', icon: 'manage_accounts', path: '/app/users' },
-        { label: 'Notifications', icon: 'notifications', path: '/app/notifications', badge: unreadCount },
-        { label: 'Audit Logs', icon: 'history', path: '/app/audit-logs' },
-        { label: 'Settings', icon: 'settings', path: '/app/settings' },
+        { label: 'Profile', icon: 'person', path: '/app/profile' },
+        { label: 'Preferences', icon: 'tune', path: '/app/profile?tab=preferences' },
+        { label: 'Security', icon: 'security', path: '/app/profile?tab=security' },
       ]
     }
   ];
@@ -270,7 +279,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <aside className="relative w-80 max-w-[85vw] h-full bg-surface-container-lowest dark:bg-slate-900 border-r border-surface-container dark:border-slate-800 shadow-2xl flex flex-col z-50 animate-in slide-in-from-left duration-300">
             {/* Mobile Sidebar Header */}
             <div className="h-16 px-4 flex items-center justify-between gap-2 border-b border-surface-container/60 dark:border-slate-800 flex-shrink-0">
-              <NavLink to="/" onClick={onCloseMobile} className="flex items-center gap-3 min-w-0 flex-1">
+              <NavLink to="/app/dashboard" onClick={onCloseMobile} className="flex items-center gap-3 min-w-0 flex-1">
                 <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-2xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0 shadow-stitch-float overflow-visible">
                   <span className="material-symbols-outlined text-[24px] leading-none select-none">directions_bus</span>
                 </div>

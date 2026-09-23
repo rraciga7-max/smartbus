@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { BusDetailsModal } from '../components/bus/BusDetailsModal';
 import { DriverDetailsModal } from '../components/driver/DriverDetailsModal';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const CommandCenterPage: React.FC = () => {
   const { buses, trips, fleetSummary, emergencies, setSelectedDriverId, showToast } = useData();
@@ -32,6 +33,20 @@ export const CommandCenterPage: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 min-w-0">
+      <PageHeader
+        title="Command Center"
+        badge="Live Telemetry"
+        subtitle="Real-time fleet operations, GPS tracking, and proactive telemetry monitoring."
+        breadcrumb="Operations"
+        actions={[
+          {
+            label: 'Emergency Alert',
+            icon: 'warning',
+            onClick: () => window.location.href = '/app/emergency',
+            variant: 'outline'
+          }
+        ]}
+      />
       {/* Emergency Active Alert Banner if any */}
       {emergencies.length > 0 && (
         <div className="p-4 rounded-2xl bg-error text-on-error shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-pulse min-w-0">
@@ -110,7 +125,7 @@ export const CommandCenterPage: React.FC = () => {
           </div>
 
           {/* Interactive Map Visual Surface */}
-          <div className="relative w-full h-[520px] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center group">
+          <div className="relative w-full h-[360px] sm:h-[460px] lg:h-[520px] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner flex items-center justify-center group">
             {/* Grid overlay & Route Lines Canvas simulation */}
             <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
               <defs>
